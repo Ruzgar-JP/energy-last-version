@@ -9,7 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Sun, Wind, MapPin, Users, TrendingUp, Zap, ArrowLeft, Wallet } from 'lucide-react';
+import { Sun, Wind, MapPin, Users, TrendingUp, Zap, ArrowLeft, Wallet, DollarSign } from 'lucide-react';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -19,21 +19,27 @@ export default function ProjectDetailPage() {
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [investAmount, setInvestAmount] = useState('');
+  const [shares, setShares] = useState(1);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [investing, setInvesting] = useState(false);
+  const [usdRate, setUsdRate] = useState(38);
 
   useEffect(() => {
     axios.get(`${API}/projects/${id}`).then(r => setProject(r.data)).catch(() => toast.error('Proje bulunamadi')).finally(() => setLoading(false));
+    axios.get(`${API}/usd-rate`).then(r => setUsdRate(r.data.rate)).catch(() => {});
   }, [id]);
+
+  const SHARE_PRICE = 25000;
+  const investAmount = shares * SHARE_PRICE;
+  const rate = shares >= 10 ? 8 : 7;
+  const isUsdBased = shares >= 5;
+  const monthlyReturn = investAmount * rate / 100;
 
   const handleInvest = async () => {
     if (!user) { navigate('/login'); return; }
-    const amount = parseFloat(investAmount);
-    if (!amount || amount <= 0) { toast.error('Gecerli bir tutar girin'); return; }
     setInvesting(true);
     try {
-      await axios.post(`${API}/portfolio/invest`, { project_id: id, amount }, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.post(`${API}/portfolio/invest`, { project_id: id, amount: investAmount }, { headers: { Authorization: `Bearer ${token}` } });
       toast.success('Yatirim basarili!');
       setDialogOpen(false);
       refreshUser();
