@@ -9,7 +9,7 @@ import { Progress } from '@/components/ui/progress';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
-import { Sun, Wind, TrendingUp, ShieldCheck, Users, Wallet, ArrowRight, Star, MapPin, Zap, BarChart3, Eye, CheckCircle2, FileText, UserPlus, Calculator, Clock, Award, Target, Leaf, Globe, Building2 } from 'lucide-react';
+import { Sun, Wind, TrendingUp, ShieldCheck, Users, Wallet, ArrowRight, Star, MapPin, Zap, BarChart3, Eye, CheckCircle2, FileText, UserPlus, Calculator, Clock, Award, Target, Leaf, Globe, Building2, DollarSign } from 'lucide-react';
 import axios from 'axios';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -17,17 +17,23 @@ const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 export default function LandingPage() {
   const [projects, setProjects] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
-  const [calcAmount, setCalcAmount] = useState([50000]);
+  const [calcShares, setCalcShares] = useState([4]);
+  const [usdRate, setUsdRate] = useState(38);
 
   useEffect(() => {
     axios.get(`${API}/projects`).then(r => setProjects(r.data)).catch(() => {});
+    axios.get(`${API}/usd-rate`).then(r => setUsdRate(r.data.rate)).catch(() => {});
   }, []);
 
   const filtered = activeTab === 'all' ? projects : projects.filter(p => p.type === activeTab.toUpperCase());
 
-  const calcRate = calcAmount[0] >= 20000 ? 10 : calcAmount[0] >= 10000 ? 8 : 7;
-  const monthlyReturn = calcAmount[0] * calcRate / 100;
+  const SHARE_PRICE = 25000;
+  const calcAmount = calcShares[0] * SHARE_PRICE;
+  const calcRate = calcShares[0] >= 10 ? 8 : 7;
+  const isUsdBased = calcShares[0] >= 5;
+  const monthlyReturn = calcAmount * calcRate / 100;
   const yearlyReturn = monthlyReturn * 12;
+  const usdEquivalent = isUsdBased ? calcAmount / usdRate : null;
 
   return (
     <div className="min-h-screen" data-testid="landing-page">
