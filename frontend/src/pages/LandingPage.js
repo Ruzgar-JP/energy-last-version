@@ -80,7 +80,7 @@ export default function LandingPage() {
                   { icon: Wallet, value: '₺2.8B+', label: 'Toplam Yatırım Hacmi', color: 'from-emerald-500/20 to-teal-500/20' },
                   { icon: Zap, value: '47+', label: 'Aktif Enerji Projesi', color: 'from-sky-500/20 to-blue-500/20' },
                   { icon: Users, value: '1,200+', label: 'Kurumsal Yatırımcı', color: 'from-violet-500/20 to-purple-500/20' },
-                  { icon: TrendingUp, value: '%10', label: 'Maks. Aylık Getiri', color: 'from-amber-500/20 to-orange-500/20' },
+                  { icon: TrendingUp, value: '%8', label: 'Maks. Aylik Getiri', color: 'from-amber-500/20 to-orange-500/20' },
                 ].map((stat, i) => (
                   <div key={i} className={`bg-gradient-to-br ${stat.color} backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-in-up stagger-${i + 1}`}>
                     <stat.icon className="w-6 h-6 text-emerald-400 mb-3" />
