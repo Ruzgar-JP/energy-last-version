@@ -49,8 +49,8 @@ export default function Navbar({ transparent = false }) {
   const dashLinks = [
     { href: '/dashboard', label: 'Panel', icon: LayoutDashboard },
     { href: '/projects', label: 'Projeler', icon: Briefcase },
-    { href: '/deposit', label: 'Para Yatır', icon: null },
-    { href: '/withdraw', label: 'Para Çek', icon: null },
+    { href: '/deposit', label: 'Para Yatir', icon: null },
+    { href: '/withdraw', label: 'Para Cek', icon: null },
   ];
 
   const links = user && !isLanding ? dashLinks : landingLinks;
