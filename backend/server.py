@@ -495,6 +495,8 @@ async def update_transaction_status(transaction_id: str, data: TransactionStatus
     txn = await db.transactions.find_one({"transaction_id": transaction_id}, {"_id": 0})
     if not txn:
         raise HTTPException(status_code=404, detail="Islem bulunamadi")
+    if txn.get('status') != 'pending':
+        raise HTTPException(status_code=400, detail="Bu islem zaten islendi")
     await db.transactions.update_one({"transaction_id": transaction_id}, {"$set": {"status": data.status}})
     if data.status == 'approved' and txn['type'] == 'deposit':
         await db.users.update_one({"user_id": txn['user_id']}, {"$inc": {"balance": txn['amount']}})
@@ -503,18 +505,28 @@ async def update_transaction_status(transaction_id: str, data: TransactionStatus
             "title": "Para Yatirma Onaylandi", "message": f"{txn['amount']:,.0f} TL tutarindaki yatirma talebiniz onaylandi.",
             "type": "deposit_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
+    elif data.status == 'approved' and txn['type'] == 'withdrawal':
+        target_user = await db.users.find_one({"user_id": txn['user_id']}, {"_id": 0})
+        if not target_user or target_user.get('balance', 0) < txn['amount']:
+            await db.transactions.update_one({"transaction_id": transaction_id}, {"$set": {"status": "rejected"}})
+            raise HTTPException(status_code=400, detail="Kullanicinin bakiyesi yetersiz")
+        await db.users.update_one({"user_id": txn['user_id']}, {"$inc": {"balance": -txn['amount']}})
+        await db.notifications.insert_one({
+            "notification_id": str(uuid.uuid4()), "user_id": txn['user_id'],
+            "title": "Para Cekme Onaylandi", "message": f"{txn['amount']:,.0f} TL tutarindaki cekme talebiniz onaylandi ve hesabinizdan dusuldu.",
+            "type": "withdrawal_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        })
     elif data.status == 'rejected' and txn['type'] == 'withdrawal':
-        await db.users.update_one({"user_id": txn['user_id']}, {"$inc": {"balance": txn['amount']}})
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": txn['user_id'],
             "title": "Para Cekme Reddedildi", "message": f"{txn['amount']:,.0f} TL tutarindaki cekme talebiniz reddedildi.",
             "type": "withdrawal_rejected", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
-    elif data.status == 'approved' and txn['type'] == 'withdrawal':
+    elif data.status == 'rejected' and txn['type'] == 'deposit':
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": txn['user_id'],
-            "title": "Para Cekme Onaylandi", "message": f"{txn['amount']:,.0f} TL tutarindaki cekme talebiniz onaylandi.",
-            "type": "withdrawal_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+            "title": "Para Yatirma Reddedildi", "message": f"{txn['amount']:,.0f} TL tutarindaki yatirma talebiniz reddedildi.",
+            "type": "deposit_rejected", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
     return {"message": "Islem guncellendi"}
 
