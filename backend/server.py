@@ -542,42 +542,42 @@ async def seed_data():
              "location": "Izmir, Torbali", "capacity": "15 MW", "return_rate": 7.0,
              "total_target": 5000000, "funded_amount": 3250000, "investors_count": 342,
              "image_url": "https://images.unsplash.com/photo-1670519808965-16b9b2f724af?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
-             "details": "Bu proje, Izmir'in gunes potansiyelinden maksimum faydalanmak amaciyla tasarlanmistir. Tier-1 gunes panelleri kullanilarak yuksek verimlilik hedeflenmektedir. Proje, 20 yillik YEKDEM garantisi altindadir.",
+             "details": "Bu proje, İzmir'in güneş potansiyelinden maksimum faydalanmak amacıyla tasarlanmıştır. Tier-1 güneş panelleri kullanılarak yüksek verimlilik hedeflenmektedir. Proje, 20 yıllık YEKDEM garantisi altındadır.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()},
             {"project_id": str(uuid.uuid4()), "name": "Antalya Gunes Enerjisi Santrali", "type": "GES",
              "description": "Antalya Manavgat'ta 250 donum alanda kurulu buyuk olcekli gunes santrali. Turkiye'nin en verimli gunes bolgelerinden birinde yer almaktadir.",
              "location": "Antalya, Manavgat", "capacity": "25 MW", "return_rate": 7.5,
              "total_target": 8000000, "funded_amount": 5600000, "investors_count": 518,
              "image_url": "https://images.unsplash.com/photo-1770068511771-7c146210a55b?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
-             "details": "Antalya'nin yuksek guneslenme suresinden faydalanan bu proje, yilda 37.500 MWh enerji uretecektir.",
+             "details": "Antalya'nın yüksek güneşlenme süresinden faydalanan bu proje, yılda 37.500 MWh enerji üretecektir.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()},
             {"project_id": str(uuid.uuid4()), "name": "Istanbul Ruzgar Enerjisi Santrali", "type": "RES",
              "description": "Istanbul Catalca bolgesinde yuksek ruzgar potansiyeline sahip tepelerde kurulu ruzgar santrali. 20 adet turbin ile enerji uretimi yapilmaktadir.",
              "location": "Istanbul, Catalca", "capacity": "50 MW", "return_rate": 7.0,
              "total_target": 12000000, "funded_amount": 8400000, "investors_count": 876,
              "image_url": "https://images.unsplash.com/photo-1631096667365-00844efc3a92?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
-             "details": "Marmara bolgesinin guclu ruzgar koridorlarinda konumlanan bu santral, son teknoloji Vestas turbinleri ile donatilmistir.",
+             "details": "Marmara bölgesinin güçlü rüzgar koridorlarında konumlanan bu santral, son teknoloji Vestas türbinleri ile donatılmıştır.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()},
             {"project_id": str(uuid.uuid4()), "name": "Canakkale Ruzgar Enerjisi Santrali", "type": "RES",
              "description": "Canakkale Biga'da Ege Denizi ruzgarlarindan faydalanan modern ruzgar santrali.",
              "location": "Canakkale, Biga", "capacity": "35 MW", "return_rate": 6.5,
              "total_target": 9000000, "funded_amount": 4500000, "investors_count": 423,
              "image_url": "https://images.unsplash.com/photo-1636618732028-7e541a1cb994?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
-             "details": "Canakkale'nin guclu Ege ruzgarlarindan faydalanan bu proje, 14 adet 2.5 MW kapasiteli turbin icermektedir.",
+             "details": "Çanakkale'nin güçlü Ege rüzgarlarından faydalanan bu proje, 14 adet 2.5 MW kapasiteli türbin içermektedir.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()}
         ])
         logger.info("Ornek projeler olusturuldu")
 
     if await db.banks.count_documents({}) == 0:
         await db.banks.insert_many([
-            {"bank_id": str(uuid.uuid4()), "name": "Ziraat Bankasi", "iban": "TR33 0001 0000 0000 0000 0000 01",
-             "account_holder": "Alarko Enerji Yatirim A.S.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
-            {"bank_id": str(uuid.uuid4()), "name": "Is Bankasi", "iban": "TR62 0006 4000 0011 2340 0001 01",
-             "account_holder": "Alarko Enerji Yatirim A.S.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
+            {"bank_id": str(uuid.uuid4()), "name": "Ziraat Bankası", "iban": "TR33 0001 0000 0000 0000 0000 01",
+             "account_holder": "Alarko Enerji Yatırım A.Ş.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
+            {"bank_id": str(uuid.uuid4()), "name": "İş Bankası", "iban": "TR62 0006 4000 0011 2340 0001 01",
+             "account_holder": "Alarko Enerji Yatırım A.Ş.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
             {"bank_id": str(uuid.uuid4()), "name": "Garanti BBVA", "iban": "TR76 0006 2000 0000 0006 2960 01",
-             "account_holder": "Alarko Enerji Yatirim A.S.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
-            {"bank_id": str(uuid.uuid4()), "name": "Yapi Kredi", "iban": "TR86 0006 7010 0000 0012 3456 78",
-             "account_holder": "Alarko Enerji Yatirim A.S.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()}
+             "account_holder": "Alarko Enerji Yatırım A.Ş.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()},
+            {"bank_id": str(uuid.uuid4()), "name": "Yapı Kredi", "iban": "TR86 0006 7010 0000 0012 3456 78",
+             "account_holder": "Alarko Enerji Yatırım A.Ş.", "logo_url": "", "is_active": True, "created_at": datetime.now(timezone.utc).isoformat()}
         ])
         logger.info("Ornek bankalar olusturuldu")
 
