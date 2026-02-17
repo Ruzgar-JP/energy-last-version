@@ -144,7 +144,7 @@ async def register(data: UserRegister):
     token = create_token(user_id, "investor")
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user_id,
-        "title": "Hos Geldiniz!", "message": "Alarko Enerji platformuna hos geldiniz. Yatirim yapmak icin kimlik dogrulamanizi tamamlayin.",
+        "title": "Hoş Geldiniz!", "message": "Alarko Enerji platformuna hoş geldiniz. Yatırım yapmak için kimlik doğrulamanızı tamamlayın.",
         "type": "welcome", "is_read": False,
         "created_at": datetime.now(timezone.utc).isoformat()
     })
@@ -253,18 +253,27 @@ async def get_portfolio(user=Depends(get_current_user)):
 @api_router.post("/portfolio/invest")
 async def invest(data: InvestRequest, user=Depends(get_current_user)):
     if user.get('kyc_status') != 'approved':
-        raise HTTPException(status_code=400, detail="Yatirim yapabilmek icin kimlik dogrulamanizi tamamlayin")
+        raise HTTPException(status_code=400, detail="Yatırım yapabilmek için kimlik doğrulamanızı tamamlayın")
+    if data.amount < 5000:
+        raise HTTPException(status_code=400, detail="Minimum yatırım tutarı 5.000 TL'dir")
     if user.get('balance', 0) < data.amount:
         raise HTTPException(status_code=400, detail="Yetersiz bakiye")
     project = await db.projects.find_one({"project_id": data.project_id}, {"_id": 0})
     if not project:
-        raise HTTPException(status_code=404, detail="Proje bulunamadi")
-    monthly_return = data.amount * (project.get('return_rate', 7) / 100)
+        raise HTTPException(status_code=404, detail="Proje bulunamadı")
+    # Tiered return rates based on investment amount
+    if data.amount >= 20000:
+        actual_rate = 10.0
+    elif data.amount >= 10000:
+        actual_rate = 8.0
+    else:
+        actual_rate = 7.0
+    monthly_return = data.amount * (actual_rate / 100)
     entry = {
         "portfolio_id": str(uuid.uuid4()), "user_id": user['user_id'],
         "project_id": data.project_id, "project_name": project['name'],
         "project_type": project['type'], "amount": data.amount,
-        "monthly_return": monthly_return, "return_rate": project.get('return_rate', 7),
+        "monthly_return": monthly_return, "return_rate": actual_rate,
         "purchase_date": datetime.now(timezone.utc).isoformat(), "status": "active"
     }
     await db.portfolios.insert_one(entry)
@@ -272,7 +281,7 @@ async def invest(data: InvestRequest, user=Depends(get_current_user)):
     await db.projects.update_one({"project_id": data.project_id}, {"$inc": {"funded_amount": data.amount, "investors_count": 1}})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatirim Basarili", "message": f"{project['name']} projesine {data.amount:,.0f} TL yatirim yaptiniz.",
+        "title": "Yatırım Başarılı", "message": f"{project['name']} projesine {data.amount:,.0f} TL yatırım yaptınız.",
         "type": "investment", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
     return {"message": "Yatirim basariyla gerceklestirildi", "portfolio": {k: v for k, v in entry.items() if k != '_id'}}
@@ -286,7 +295,7 @@ async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
     await db.portfolios.delete_one({"portfolio_id": data.portfolio_id})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatirim Satildi", "message": f"{inv['amount']:,.0f} TL tutarindaki yatiriminiz satildi.",
+        "title": "Yatırım Satıldı", "message": f"{inv['amount']:,.0f} TL tutarındaki yatırımınız satıldı.",
         "type": "sale", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
     return {"message": "Yatirim basariyla satildi"}
@@ -373,8 +382,8 @@ async def approve_kyc(kyc_id: str, user=Depends(get_admin_user)):
     await db.users.update_one({"user_id": kyc['user_id']}, {"$set": {"kyc_status": "approved"}})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": kyc['user_id'],
-        "title": "Kimlik Dogrulamasi Onaylandi",
-        "message": "Kimliginiz basariyla dogrulandi. Artik yatirim yapabilirsiniz!",
+        "title": "Kimlik Doğrulaması Onaylandı",
+        "message": "Kimliğiniz başarıyla doğrulandı. Artık yatırım yapabilirsiniz!",
         "type": "kyc_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
     return {"message": "KYC onaylandi"}
@@ -388,8 +397,8 @@ async def reject_kyc(kyc_id: str, user=Depends(get_admin_user)):
     await db.users.update_one({"user_id": kyc['user_id']}, {"$set": {"kyc_status": "rejected"}})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": kyc['user_id'],
-        "title": "Kimlik Dogrulamasi Reddedildi",
-        "message": "Kimlik dogrulamaniz reddedildi. Lutfen gecerli bir kimlik belgesi yukleyin.",
+        "title": "Kimlik Doğrulaması Reddedildi",
+        "message": "Kimlik doğrulamanız reddedildi. Lütfen geçerli bir kimlik belgesi yükleyin.",
         "type": "kyc_rejected", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
     return {"message": "KYC reddedildi"}
@@ -444,7 +453,7 @@ async def update_user_balance(user_id: str, data: BalanceUpdate, admin=Depends(g
         })
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": user_id,
-            "title": "Para Yatirma Onaylandi", "message": f"Hesabiniza {data.amount:,.0f} TL yatirildi.",
+            "title": "Para Yatırma Onaylandı", "message": f"Hesabınıza {data.amount:,.0f} TL yatırıldı.",
             "type": "deposit_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
     elif data.type == 'subtract':
@@ -459,7 +468,7 @@ async def update_user_balance(user_id: str, data: BalanceUpdate, admin=Depends(g
         })
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": user_id,
-            "title": "Para Cekme Gerceklesti", "message": f"Hesabinizdan {data.amount:,.0f} TL cekildi.",
+            "title": "Para Çekme Gerçekleşti", "message": f"Hesabınızdan {data.amount:,.0f} TL çekildi.",
             "type": "withdrawal", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
     updated = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
