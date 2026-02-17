@@ -40,6 +40,7 @@ function AppRouter() {
       <Route path="/withdraw" element={<ProtectedRoute><WithdrawalPage /></ProtectedRoute>} />
       <Route path="/kyc" element={<ProtectedRoute><KYCPage /></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+      <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
       <Route path="/admin" element={<ProtectedRoute admin><AdminDashboard /></ProtectedRoute>} />
       <Route path="/admin/users" element={<ProtectedRoute admin><AdminUsers /></ProtectedRoute>} />
       <Route path="/admin/kyc" element={<ProtectedRoute admin><AdminKYC /></ProtectedRoute>} />
