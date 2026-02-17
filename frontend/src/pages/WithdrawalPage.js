@@ -24,7 +24,6 @@ export default function WithdrawalPage() {
       await axios.post(`${API}/transactions`, { amount: val, type: 'withdrawal' }, { headers });
       toast.success('Cekme talebi olusturuldu. Admin onayi bekleniyor.');
       setAmount('');
-      refreshUser();
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Hata');
     } finally {
