@@ -60,7 +60,7 @@ export default function WithdrawalPage() {
             <Input type="number" placeholder="Tutar (TL)" value={amount} onChange={e => setAmount(e.target.value)} className="h-12 text-lg mb-4" data-testid="withdraw-amount-input" />
             <div className="bg-amber-50 rounded-lg p-3 mb-4 flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
-              <p className="text-xs text-amber-700">Cekme talebi olusturuldugunda tutar bakiyenizden dondurulur. Admin onayi sonrasi hesabiniza aktarilir.</p>
+              <p className="text-xs text-amber-700">Cekme talebi olusturuldugunda bakiyeniz uzerinden admin onayi beklenir. Onay sonrasi tutar bakiyenizden dusulur ve hesabiniza aktarilir.</p>
             </div>
             <Button className="w-full h-12 bg-[#0F3935] hover:bg-[#0F3935]/90 text-white" onClick={handleWithdraw} disabled={loading} data-testid="withdraw-submit-btn">
               {loading ? 'Islem yapiliyor...' : 'Cekme Talebi Olustur'}
