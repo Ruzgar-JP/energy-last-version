@@ -344,8 +344,6 @@ async def create_transaction(data: TransactionRequest, user=Depends(get_current_
         "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.transactions.insert_one(txn)
-    if data.type == 'withdrawal':
-        await db.users.update_one({"user_id": user['user_id']}, {"$inc": {"balance": -data.amount}})
     return {k: v for k, v in txn.items() if k != '_id'}
 
 @api_router.get("/transactions")
