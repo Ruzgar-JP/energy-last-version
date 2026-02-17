@@ -416,14 +416,14 @@ export default function LandingPage() {
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {[
-              { q: 'Minimum yatırım tutarı nedir?', a: 'Minimum yatırım tutarı 5.000 TL\'dir. 5.000 - 9.999 TL arası yatırımlarda aylık %7, 10.000 - 19.999 TL arası %8, 20.000 TL ve üzeri yatırımlarda ise aylık %10 getiri oranı uygulanmaktadır.' },
-              { q: 'Aylık getiri nasıl hesaplanıyor?', a: 'Getiriler, yatırım tutarınıza göre kademeli olarak hesaplanır. Örneğin 50.000 TL yatırım yaparsanız aylık %10 = 5.000 TL getiri elde edersiniz. Getiriler her ayın ilk iş gününde hesabınıza tanımlanır.' },
-              { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet, yatırımlarınızı istediğiniz zaman satabilir ve bakiyenizi çekim talebinde bulunabilirsiniz. Çekim talepleri en geç 24 saat içinde işleme alınır.' },
-              { q: 'Kimlik doğrulaması zorunlu mu?', a: 'Evet, SPK düzenlemeleri gereği kimlik doğrulaması zorunludur. Kimlik belgenizi yükledikten sonra en geç 24 saat içerisinde onay verilmektedir. Bu süreç yatırım güvenliğiniz için gereklidir.' },
-              { q: 'Para nasıl yatırılır?', a: 'Havale veya EFT yöntemiyle para yatırabilirsiniz. Platformdaki "Para Yatır" bölümünden banka seçimi yaparak IBAN bilgilerini görüntüleyebilirsiniz. Yatırma talebiniz admin onayı sonrası bakiyenize eklenir.' },
-              { q: 'Hangi tür projeler görüntüleyebilirim?', a: 'Platformumuzda Güneş Enerjisi Santralleri (GES) ve Rüzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detaylı bilgileri, konum, kapasite ve fonlanma durumu görüntülenebilir.' },
-              { q: 'Getiriler vergiye tabi mi?', a: 'Enerji yatırımlarından elde edilen gelirler mevcut vergi mevzuatına tabidir. Kurumsal plan yatırımcılarımıza ücretsiz vergi danışmanlığı hizmeti sunulmaktadır.' },
-              { q: 'Yatırımlarım güvende mi?', a: 'Tüm projelerimiz YEKDEM devlet garantisi altındadır. Ayrıca SPK denetiminde faaliyet gösteriyor, ISO 27001 bilgi güvenliği sertifikasına sahibiz ve yatırımcı koruma fonu kapsamındayız.' },
+              { q: 'Minimum yatirim tutari nedir?', a: 'Minimum yatirim tutari 25.000 TL (1 hisse) olarak belirlenmistir. Her hisse 25.000 TL degerindedir ve katlari seklinde yatirim yapabilirsiniz.' },
+              { q: 'Getiri oranlari nasil belirleniyor?', a: '1-4 hisse icin aylik %7, 5-9 hisse icin aylik %7 + dolar kuru avantaji, 10 ve uzeri hisse icin aylik %8 + dolar kuru avantaji uygulanir.' },
+              { q: 'Dolar kuru avantaji ne anlama gelir?', a: '5 ve uzeri hisse alimlarinda yatiriminiz dolar kuru uzerinden hesaplanir. Dolar yukseldikce TL bazinda getiriniz de artar, boylece yatiriminiz kur riskine karsi korunmus olur.' },
+              { q: 'Yatirimlarimi geri cekebilir miyim?', a: 'Evet, yatirimlarinizi istediginiz zaman satabilir ve bakiyenizi cekim talebinde bulunabilirsiniz. Cekim talepleri admin onayi sonrasi bakiyenizden dusulur ve 1-3 is gunu icerisinde hesabiniza aktarilir.' },
+              { q: 'Kimlik dogrulamasi zorunlu mu?', a: 'Evet, SPK duzenlemeleri geregi kimlik dogrulamasi zorunludur. Kimlik belgenizi yukledikten sonra en gec 24 saat icerisinde onay verilmektedir.' },
+              { q: 'Para nasil yatirilir?', a: 'Havale veya EFT yontemiyle para yatirabilirsiniz. "Para Yatir" bolumunden banka secimi yaparak IBAN bilgilerini goruntuleyebilirsiniz. Yatirma talebiniz admin onayi sonrasi bakiyenize eklenir.' },
+              { q: 'Hangi tur projeler goruntuleyebilirim?', a: 'Platformumuzda Gunes Enerjisi Santralleri (GES) ve Ruzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detayli bilgileri, konum, kapasite ve fonlanma durumu goruntulenir.' },
+              { q: 'Yatirimlarim guvende mi?', a: 'Tum projelerimiz YEKDEM devlet garantisi altindadir. Ayrica SPK denetiminde faaliyet gosteriyor, ISO 27001 bilgi guvenligi sertifikasina sahibiz ve yatirimci koruma fonu kapsamindayiz.' },
             ].map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="bg-slate-50 rounded-xl border px-6" data-testid={`faq-item-${i}`}>
                 <AccordionTrigger className="text-left font-medium text-slate-900 hover:no-underline py-5">{item.q}</AccordionTrigger>
