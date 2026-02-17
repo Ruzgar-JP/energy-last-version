@@ -127,14 +127,28 @@ export default function ProjectDetailPage() {
                     <DialogHeader><DialogTitle className="font-[Sora]">Yatirim Yap - {project.name}</DialogTitle></DialogHeader>
                     <div className="space-y-4 pt-4">
                       {user && <p className="text-sm text-slate-500">Mevcut Bakiye: <span className="font-semibold text-slate-900">{(user.balance || 0).toLocaleString('tr-TR')} TL</span></p>}
-                      <Input type="number" placeholder="Yatirim Tutari (TL)" value={investAmount} onChange={e => setInvestAmount(e.target.value)} data-testid="invest-amount-input" />
-                      {investAmount > 0 && (
-                        <div className="bg-slate-50 rounded-lg p-3 text-sm">
-                          <p className="text-slate-500">Tahmini Aylik Getiri: <span className="font-semibold text-emerald-600">{(investAmount * project.return_rate / 100).toLocaleString('tr-TR')} TL</span></p>
+                      <div>
+                        <label className="text-sm font-medium text-slate-700">Hisse Adedi</label>
+                        <div className="flex items-center gap-3 mt-1">
+                          <Button size="sm" variant="outline" onClick={() => setShares(Math.max(1, shares - 1))} data-testid="shares-minus">-</Button>
+                          <span className="text-2xl font-bold text-[#0F3935] font-[Sora] w-12 text-center">{shares}</span>
+                          <Button size="sm" variant="outline" onClick={() => setShares(shares + 1)} data-testid="shares-plus">+</Button>
                         </div>
-                      )}
+                        <p className="text-xs text-slate-400 mt-1">1 Hisse = 25.000 TL</p>
+                      </div>
+                      <div className="bg-slate-50 rounded-lg p-3 space-y-2 text-sm">
+                        <div className="flex justify-between"><span className="text-slate-500">Toplam Tutar</span><span className="font-semibold">{investAmount.toLocaleString('tr-TR')} TL</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Getiri Orani</span><span className="font-semibold text-emerald-600">%{rate}/ay</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Tahmini Aylik Getiri</span><span className="font-semibold text-emerald-600">{monthlyReturn.toLocaleString('tr-TR')} TL</span></div>
+                        {isUsdBased && (
+                          <div className="flex justify-between items-center pt-1 border-t">
+                            <span className="text-sky-600 flex items-center gap-1"><DollarSign className="w-3 h-3" /> Dolar Bazli</span>
+                            <span className="font-semibold text-sky-600">${(investAmount / usdRate).toLocaleString('en-US', {maximumFractionDigits: 0})}</span>
+                          </div>
+                        )}
+                      </div>
                       <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white" onClick={handleInvest} disabled={investing} data-testid="confirm-invest-btn">
-                        {investing ? 'Islem yapiliyor...' : 'Yatirimi Onayla'}
+                        {investing ? 'Islem yapiliyor...' : `${shares} Hisse Satin Al`}
                       </Button>
                     </div>
                   </DialogContent>
