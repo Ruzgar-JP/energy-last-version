@@ -52,7 +52,7 @@ export default function LandingPage() {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Sora]">
                 Geleceğe Güç Veren <span className="text-emerald-400">Yatırımlar</span>
               </h1>
-              <p className="text-lg md:text-xl text-emerald-100/80 mb-3 font-semibold">RES & GES Projelerinde Aylık %10'a Varan Getiri</p>
+              <p className="text-lg md:text-xl text-emerald-100/80 mb-3 font-semibold">RES & GES Projelerinde Aylik %8'e Varan Getiri</p>
               <p className="text-base text-slate-300/60 mb-8 leading-relaxed max-w-lg">
                 Türkiye'nin öncü yenilenebilir enerji projelerine yatırım yapın. Profesyonel yatırım danışmanlığı ve şeffaf portföy yönetimiyle geleceğinizi güvence altına alın.
               </p>
