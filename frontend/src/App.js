@@ -14,6 +14,7 @@ import DepositPage from "@/pages/DepositPage";
 import WithdrawalPage from "@/pages/WithdrawalPage";
 import KYCPage from "@/pages/KYCPage";
 import NotificationsPage from "@/pages/NotificationsPage";
+import AccountPage from "@/pages/AccountPage";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminUsers from "@/pages/admin/AdminUsers";
 import AdminKYC from "@/pages/admin/AdminKYC";
