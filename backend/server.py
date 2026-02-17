@@ -88,6 +88,15 @@ class RoleUpdate(BaseModel):
 class TransactionStatusUpdate(BaseModel):
     status: str
 
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
+class UserInfoUpdate(BaseModel):
+    name: str = ""
+    email: str = ""
+    phone: str = ""
+
 # ===== AUTH HELPERS =====
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
