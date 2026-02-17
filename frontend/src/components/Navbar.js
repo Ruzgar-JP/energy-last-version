@@ -100,11 +100,14 @@ export default function Navbar({ transparent = false }) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={() => navigate('/account')} data-testid="menu-account">
+                    <UserCircle className="w-4 h-4 mr-2" /> Hesabim
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/dashboard')} data-testid="menu-dashboard">
                     <LayoutDashboard className="w-4 h-4 mr-2" /> Panel
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/kyc')} data-testid="menu-kyc">
-                    <Shield className="w-4 h-4 mr-2" /> Kimlik Doğrulama
+                    <Shield className="w-4 h-4 mr-2" /> Kimlik Dogrulama
                   </DropdownMenuItem>
                   {user.role === 'admin' && (
                     <DropdownMenuItem onClick={() => navigate('/admin')} data-testid="menu-admin">
