@@ -198,46 +198,71 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETİRİ HESAPLAMA</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora] mb-4">Yatırımınızın Getirisini Hesaplayın</h2>
-              <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">Yatırım tutarınıza göre aylık ve yıllık getiri oranlarınızı görün. Tutarınızı artırdıkça getiri oranınız da artar!</p>
+              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETiRi HESAPLAMA</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora] mb-4">Yatiriminizin Getirisini Hesaplayin</h2>
+              <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">Hisse adetinize gore aylik ve yillik getiri oranlarinizi gorun. 5 ve uzeri hisselerde dolar kuru avantaji!</p>
               <div className="space-y-6">
                 <div className="bg-slate-50 rounded-2xl p-6 border">
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm font-medium text-slate-700">Yatırım Tutarı</span>
-                    <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">₺{calcAmount[0].toLocaleString('tr-TR')}</span>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium text-slate-700">Hisse Adedi</span>
+                    <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">{calcShares[0]} Hisse</span>
                   </div>
-                  <Slider value={calcAmount} onValueChange={setCalcAmount} min={5000} max={500000} step={5000} className="mb-4" data-testid="calc-slider" />
-                  <div className="flex justify-between text-xs text-slate-400"><span>₺5.000</span><span>₺500.000</span></div>
+                  <div className="text-right text-sm text-slate-500 mb-4">= {calcAmount.toLocaleString('tr-TR')} TL</div>
+                  <Slider value={calcShares} onValueChange={setCalcShares} min={1} max={20} step={1} className="mb-4" data-testid="calc-slider" />
+                  <div className="flex justify-between text-xs text-slate-400"><span>1 Hisse</span><span>20 Hisse</span></div>
                 </div>
-                <div className="grid grid-cols-3 gap-3">
-                  {[{ label: 'Getiri Oranı', value: `%${calcRate}`, sub: 'aylık' }, { label: 'Aylık Getiri', value: `₺${monthlyReturn.toLocaleString('tr-TR')}`, sub: 'her ay' }, { label: 'Yıllık Getiri', value: `₺${yearlyReturn.toLocaleString('tr-TR')}`, sub: '12 ay' }].map((item, i) => (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[
+                    { label: 'Getiri Orani', value: `%${calcRate}`, sub: 'aylik' },
+                    { label: 'Aylik Getiri', value: `${monthlyReturn.toLocaleString('tr-TR')} TL`, sub: 'her ay' },
+                    { label: 'Yillik Getiri', value: `${yearlyReturn.toLocaleString('tr-TR')} TL`, sub: '12 ay' },
+                    { label: 'Dolar Bazli', value: isUsdBased ? 'Evet' : 'Hayir', sub: isUsdBased ? `$${usdEquivalent?.toLocaleString('en-US', {maximumFractionDigits: 0})}` : 'TL bazli' },
+                  ].map((item, i) => (
                     <div key={i} className="bg-emerald-50 rounded-xl p-4 text-center border border-emerald-100">
                       <p className="text-xs text-emerald-600 mb-1">{item.label}</p>
-                      <p className="text-xl font-bold text-emerald-700 font-[Sora]">{item.value}</p>
+                      <p className="text-lg font-bold text-emerald-700 font-[Sora]">{item.value}</p>
                       <p className="text-[10px] text-emerald-500 mt-0.5">{item.sub}</p>
                     </div>
                   ))}
                 </div>
+                {isUsdBased && (
+                  <div className="bg-sky-50 rounded-xl p-4 border border-sky-100 flex items-start gap-3">
+                    <DollarSign className="w-5 h-5 text-sky-600 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-sm font-medium text-sky-800">Dolar Kuru Avantaji</p>
+                      <p className="text-xs text-sky-600 mt-1">Yatiriminiz dolar kuru uzerinden hesaplanir. Guncel kur: 1$ = {usdRate.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-slate-900 font-[Sora] mb-6">Kademeli Getiri Sistemi</h3>
               {[
-                { min: '5.000', max: '9.999', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Başlangıç seviyesi yatırımcılar için ideal. Küçük tutarlarla yenilenebilir enerji sektörüne adım atın.' },
-                { min: '10.000', max: '19.999', rate: '%8', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Orta seviye yatırımcılar için. Daha yüksek getiri oranı ile portföyünüzü büyütün.' },
-                { min: '20.000', max: '∞', rate: '%10', color: 'border-l-violet-500 bg-violet-50/50', desc: 'Profesyonel ve kurumsal yatırımcılar için en yüksek getiri oranı. VIP danışmanlık dahil.' },
+                { shares: '1 - 4 Hisse', amount: '25.000 - 100.000', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Baslangic seviyesi yatirimcilar icin ideal. TL bazli aylik %7 getiri orani.', usd: false },
+                { shares: '5 - 9 Hisse', amount: '125.000 - 225.000', rate: '%7 + $', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Dolar kuru avantaji ile aylik %7 getiri. Yatiriminiz USD bazinda korunur.', usd: true },
+                { shares: '10+ Hisse', amount: '250.000+', rate: '%8 + $', color: 'border-l-violet-500 bg-violet-50/50', desc: 'En yuksek getiri orani + dolar kuru avantaji. VIP danismanlik dahil.', usd: true },
               ].map((tier, i) => (
                 <Card key={i} className={`border-0 shadow-sm rounded-xl border-l-4 ${tier.color}`}>
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-slate-700">₺{tier.min} - ₺{tier.max} TL</span>
-                      <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">{tier.rate}</span>
+                      <div>
+                        <span className="text-sm font-semibold text-slate-800">{tier.shares}</span>
+                        <span className="text-xs text-slate-400 ml-2">({tier.amount} TL)</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">{tier.rate}</span>
+                        {tier.usd && <DollarSign className="w-4 h-4 text-sky-500" />}
+                      </div>
                     </div>
                     <p className="text-sm text-slate-500">{tier.desc}</p>
                   </CardContent>
                 </Card>
               ))}
+              <div className="bg-slate-50 rounded-xl p-4 text-center border">
+                <p className="text-xs text-slate-500">1 Hisse = <span className="font-bold text-slate-900">25.000 TL</span></p>
+                <p className="text-xs text-slate-400 mt-1">Guncel USD/TRY: {usdRate.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL</p>
+              </div>
             </div>
           </div>
         </div>
