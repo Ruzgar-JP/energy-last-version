@@ -41,7 +41,7 @@ export default function Navbar({ transparent = false }) {
 
   const landingLinks = [
     { href: '#projects', label: 'Projeler' },
-    { href: '#plans', label: 'Yatirim Planlari' },
+    { href: '#plans', label: 'Yatırım Planları' },
     { href: '#benefits', label: 'Avantajlar' },
     { href: '#faq', label: 'SSS' },
   ];
@@ -49,8 +49,8 @@ export default function Navbar({ transparent = false }) {
   const dashLinks = [
     { href: '/dashboard', label: 'Panel', icon: LayoutDashboard },
     { href: '/projects', label: 'Projeler', icon: Briefcase },
-    { href: '/deposit', label: 'Para Yatir', icon: null },
-    { href: '/withdraw', label: 'Para Cek', icon: null },
+    { href: '/deposit', label: 'Para Yatır', icon: null },
+    { href: '/withdraw', label: 'Para Çek', icon: null },
   ];
 
   const links = user && !isLanding ? dashLinks : landingLinks;
@@ -104,7 +104,7 @@ export default function Navbar({ transparent = false }) {
                     <LayoutDashboard className="w-4 h-4 mr-2" /> Panel
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/kyc')} data-testid="menu-kyc">
-                    <Shield className="w-4 h-4 mr-2" /> Kimlik Dogrulama
+                    <Shield className="w-4 h-4 mr-2" /> Kimlik Doğrulama
                   </DropdownMenuItem>
                   {user.role === 'admin' && (
                     <DropdownMenuItem onClick={() => navigate('/admin')} data-testid="menu-admin">
@@ -113,7 +113,7 @@ export default function Navbar({ transparent = false }) {
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
-                    <LogOut className="w-4 h-4 mr-2" /> Cikis Yap
+                    <LogOut className="w-4 h-4 mr-2" /> Çıkış Yap
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -121,10 +121,10 @@ export default function Navbar({ transparent = false }) {
           ) : (
             <>
               <Link to="/login">
-                <Button variant="ghost" className={`${textClass} hover:bg-white/10`} data-testid="nav-login-btn">Giris Yap</Button>
+                <Button variant="ghost" className={`${textClass} hover:bg-white/10`} data-testid="nav-login-btn">Giriş Yap</Button>
               </Link>
               <Link to="/register">
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white" data-testid="nav-register-btn">Yatirima Basla</Button>
+                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white" data-testid="nav-register-btn">Yatırıma Başla</Button>
               </Link>
             </>
           )}
@@ -150,13 +150,13 @@ export default function Navbar({ transparent = false }) {
                   <Link to="/notifications" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10 flex items-center gap-2">
                     <Bell className="w-5 h-5" /> Bildirimler {unreadCount > 0 && <Badge className="bg-red-500">{unreadCount}</Badge>}
                   </Link>
-                  <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="text-lg font-medium py-2 text-left text-red-400">Cikis Yap</button>
+                  <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="text-lg font-medium py-2 text-left text-red-400">Çıkış Yap</button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10">Giris Yap</Link>
+                  <Link to="/login" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10">Giriş Yap</Link>
                   <Link to="/register" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 mt-2">Yatirima Basla</Button>
+                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 mt-2">Yatırıma Başla</Button>
                   </Link>
                 </>
               )}
