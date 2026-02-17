@@ -288,27 +288,41 @@ async def get_portfolio(user=Depends(get_current_user)):
 @api_router.post("/portfolio/invest")
 async def invest(data: InvestRequest, user=Depends(get_current_user)):
     if user.get('kyc_status') != 'approved':
-        raise HTTPException(status_code=400, detail="Yatırım yapabilmek için kimlik doğrulamanızı tamamlayın")
-    if data.amount < 5000:
-        raise HTTPException(status_code=400, detail="Minimum yatırım tutarı 5.000 TL'dir")
+        raise HTTPException(status_code=400, detail="Yatirim yapabilmek icin kimlik dogrulamanizi tamamlayin")
+    if data.amount < SHARE_PRICE:
+        raise HTTPException(status_code=400, detail=f"Minimum yatirim tutari {SHARE_PRICE:,.0f} TL (1 hisse)")
+    if data.amount % SHARE_PRICE != 0:
+        raise HTTPException(status_code=400, detail=f"Yatirim tutari {SHARE_PRICE:,.0f} TL'nin katlari olmalidir")
     if user.get('balance', 0) < data.amount:
         raise HTTPException(status_code=400, detail="Yetersiz bakiye")
     project = await db.projects.find_one({"project_id": data.project_id}, {"_id": 0})
     if not project:
-        raise HTTPException(status_code=404, detail="Proje bulunamadı")
-    # Tiered return rates based on investment amount
-    if data.amount >= 20000:
-        actual_rate = 10.0
-    elif data.amount >= 10000:
+        raise HTTPException(status_code=404, detail="Proje bulunamadi")
+    shares = int(data.amount / SHARE_PRICE)
+    usd_rate = get_usd_rate()
+    # Tiered return rates based on share count
+    if shares >= 10:
         actual_rate = 8.0
+        usd_based = True
+    elif shares >= 5:
+        actual_rate = 7.0
+        usd_based = True
     else:
         actual_rate = 7.0
-    monthly_return = data.amount * (actual_rate / 100)
+        usd_based = False
+    if usd_based:
+        usd_amount = data.amount / usd_rate
+        monthly_return_usd = usd_amount * (actual_rate / 100)
+        monthly_return = monthly_return_usd * usd_rate
+    else:
+        monthly_return = data.amount * (actual_rate / 100)
     entry = {
         "portfolio_id": str(uuid.uuid4()), "user_id": user['user_id'],
         "project_id": data.project_id, "project_name": project['name'],
         "project_type": project['type'], "amount": data.amount,
-        "monthly_return": monthly_return, "return_rate": actual_rate,
+        "shares": shares, "usd_based": usd_based,
+        "usd_rate_at_purchase": usd_rate if usd_based else None,
+        "monthly_return": round(monthly_return, 2), "return_rate": actual_rate,
         "purchase_date": datetime.now(timezone.utc).isoformat(), "status": "active"
     }
     await db.portfolios.insert_one(entry)
@@ -316,7 +330,7 @@ async def invest(data: InvestRequest, user=Depends(get_current_user)):
     await db.projects.update_one({"project_id": data.project_id}, {"$inc": {"funded_amount": data.amount, "investors_count": 1}})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatırım Başarılı", "message": f"{project['name']} projesine {data.amount:,.0f} TL yatırım yaptınız.",
+        "title": "Yatirim Basarili", "message": f"{project['name']} projesine {shares} hisse ({data.amount:,.0f} TL) yatirim yaptiniz.",
         "type": "investment", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
     return {"message": "Yatirim basariyla gerceklestirildi", "portfolio": {k: v for k, v in entry.items() if k != '_id'}}
