@@ -252,6 +252,31 @@ async def update_project(project_id: str, data: ProjectCreate, user=Depends(get_
     project = await db.projects.find_one({"project_id": project_id}, {"_id": 0})
     return project
 
+# ===== USD RATE =====
+SHARE_PRICE = 25000
+_usd_cache = {"rate": 38.0, "updated_at": None}
+
+def get_usd_rate():
+    now = datetime.now(timezone.utc)
+    if _usd_cache["updated_at"] and (now - _usd_cache["updated_at"]).total_seconds() < 3600:
+        return _usd_cache["rate"]
+    try:
+        resp = requests.get("https://open.er-api.com/v6/latest/USD", timeout=5)
+        if resp.status_code == 200:
+            data = resp.json()
+            rate = data.get("rates", {}).get("TRY", 38.0)
+            _usd_cache["rate"] = round(rate, 4)
+            _usd_cache["updated_at"] = now
+            logger.info(f"USD/TRY kuru guncellendi: {_usd_cache['rate']}")
+    except Exception as e:
+        logger.warning(f"USD kuru alinamadi, cache kullaniliyor: {e}")
+    return _usd_cache["rate"]
+
+@api_router.get("/usd-rate")
+async def get_usd_rate_endpoint():
+    rate = get_usd_rate()
+    return {"rate": rate, "share_price": SHARE_PRICE}
+
 # ===== PORTFOLIO ROUTES =====
 @api_router.get("/portfolio")
 async def get_portfolio(user=Depends(get_current_user)):
