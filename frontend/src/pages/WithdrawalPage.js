@@ -39,7 +39,7 @@ export default function WithdrawalPage() {
         <Link to="/dashboard" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Panele Don
         </Link>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Manrope] mb-2">Para Cek</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora] mb-2">Para Cek</h1>
         <p className="text-slate-500 mb-8">Bakiyenizden para cekme talebi olusturun.</p>
 
         <Card className="border-0 shadow-sm rounded-2xl mb-6">
@@ -49,14 +49,14 @@ export default function WithdrawalPage() {
             </div>
             <div>
               <p className="text-sm text-slate-500">Mevcut Bakiye</p>
-              <p className="text-2xl font-bold text-slate-900 font-[Manrope]">{(user?.balance || 0).toLocaleString('tr-TR')} TL</p>
+              <p className="text-2xl font-bold text-slate-900 font-[Sora]">{(user?.balance || 0).toLocaleString('tr-TR')} TL</p>
             </div>
           </CardContent>
         </Card>
 
         <Card className="border-0 shadow-sm rounded-2xl">
           <CardContent className="p-6">
-            <h3 className="font-semibold text-slate-900 font-[Manrope] mb-4">Cekme Tutari</h3>
+            <h3 className="font-semibold text-slate-900 font-[Sora] mb-4">Cekme Tutari</h3>
             <Input type="number" placeholder="Tutar (TL)" value={amount} onChange={e => setAmount(e.target.value)} className="h-12 text-lg mb-4" data-testid="withdraw-amount-input" />
             <div className="bg-amber-50 rounded-lg p-3 mb-4 flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />

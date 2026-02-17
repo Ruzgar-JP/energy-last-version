@@ -65,7 +65,7 @@ export default function LandingPage() {
             ].map((stat, i) => (
               <div key={i} className={`bg-white/5 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/10 animate-fade-in-up stagger-${i + 1}`}>
                 <stat.icon className="w-5 h-5 text-emerald-400 mb-2" />
-                <div className="text-2xl md:text-3xl font-bold text-white font-[Manrope]">{stat.value}</div>
+                <div className="text-2xl md:text-3xl font-bold text-white font-[Sora]">{stat.value}</div>
                 <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
               </div>
             ))}
@@ -78,7 +78,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NASIL CALISIR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">4 Adimda Yatirima Baslayin</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">4 Adimda Yatirima Baslayin</h2>
             <p className="text-slate-500 mt-3 max-w-2xl mx-auto">Basit ve seffaf surecimiz ile dusuk riskle yuksek getirili yenilenebilir enerji yatirimlarina ortak olun.</p>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
@@ -93,8 +93,8 @@ export default function LandingPage() {
                   <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
                     <step.icon className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <div className="absolute top-4 right-4 text-4xl font-bold text-slate-200/50 font-[Manrope]">0{i + 1}</div>
-                  <h3 className="font-semibold text-slate-900 mb-2 font-[Manrope]">{step.title}</h3>
+                  <div className="absolute top-4 right-4 text-4xl font-bold text-slate-200/50 font-[Sora]">0{i + 1}</div>
+                  <h3 className="font-semibold text-slate-900 mb-2 font-[Sora]">{step.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
                 </CardContent>
               </Card>
@@ -108,7 +108,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-10">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">AKTIF PROJELER</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Aktif Enerji Projeleri</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Aktif Enerji Projeleri</h2>
             <p className="text-slate-500 mt-3">Turkiye genelinde yatirima acik yenilenebilir enerji projelerini kesfet.</p>
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
@@ -130,7 +130,7 @@ export default function LandingPage() {
                       {p.type === 'GES' ? <Sun className="w-3 h-3 mr-1" /> : <Wind className="w-3 h-3 mr-1" />} {p.type}
                     </Badge>
                     <div className="absolute bottom-3 left-3 text-white">
-                      <h3 className="font-bold text-lg font-[Manrope]">{p.name}</h3>
+                      <h3 className="font-bold text-lg font-[Sora]">{p.name}</h3>
                       <div className="flex items-center gap-1 text-xs opacity-80"><MapPin className="w-3 h-3" /> {p.location}</div>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">YATIRIM PLANLARI</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Size Uygun Plani Secin</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Size Uygun Plani Secin</h2>
             <p className="text-slate-500 mt-3">Her biri yatirimci profiline uygun cesitlendirilmis yatirim planlariyla getiri elde edin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -181,10 +181,10 @@ export default function LandingPage() {
               <Card key={i} className={`relative rounded-2xl transition-shadow ${plan.popular ? 'border-2 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.02]' : 'border shadow-sm hover:shadow-md'}`}>
                 {plan.popular && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><Badge className="bg-emerald-500 text-white border-0 px-4">En Populer</Badge></div>}
                 <CardContent className="p-6 md:p-8">
-                  <h3 className="font-bold text-lg font-[Manrope] text-slate-900">{plan.name}</h3>
+                  <h3 className="font-bold text-lg font-[Sora] text-slate-900">{plan.name}</h3>
                   <p className="text-sm text-slate-500 mt-1">Aylik getiri orani</p>
                   <div className="mt-4 mb-6">
-                    <span className="text-5xl font-bold text-[#0F3935] font-[Manrope]">%{plan.rate}</span>
+                    <span className="text-5xl font-bold text-[#0F3935] font-[Sora]">%{plan.rate}</span>
                   </div>
                   <p className="text-sm text-slate-500 mb-4">Min. yatirim: <span className="font-semibold text-slate-700">{plan.min}</span></p>
                   <ul className="space-y-3 mb-6">
@@ -212,7 +212,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NEDEN BIZ</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Alarko Enerji Avantajlari</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Alarko Enerji Avantajlari</h2>
             <p className="text-slate-500 mt-3">Yenilenebilir enerji yatirimlarinizda neden bizi tercih etmelisiniz?</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -229,7 +229,7 @@ export default function LandingPage() {
                   <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
                     <b.icon className="w-6 h-6 text-emerald-600" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 mb-2 font-[Manrope]">{b.title}</h3>
+                  <h3 className="font-semibold text-slate-900 mb-2 font-[Sora]">{b.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
                 </CardContent>
               </Card>
@@ -243,7 +243,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">REFERANSLAR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Yatirimcilarimiz Ne Diyor?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Yatirimcilarimiz Ne Diyor?</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -276,7 +276,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">SSS</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Sikca Sorulan Sorular</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Sikca Sorulan Sorular</h2>
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {[
@@ -303,7 +303,7 @@ export default function LandingPage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Manrope] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Sora] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
           <p className="text-emerald-100/60 mb-8">Uzman danismanlarimiz sizinle iletisime gecerek en uygun yatirim planini belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/register">

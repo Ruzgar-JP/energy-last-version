@@ -45,9 +45,9 @@ export default function LoginPage() {
         <div className="relative z-10 p-12 max-w-md">
           <div className="flex items-center gap-2 mb-8">
             <div className="w-10 h-10 rounded-lg bg-emerald-500 flex items-center justify-center"><Sun className="w-6 h-6 text-white" /></div>
-            <span className="text-2xl font-bold text-white font-[Manrope]">Alarko Enerji</span>
+            <span className="text-2xl font-bold text-white font-[Sora]">Alarko Enerji</span>
           </div>
-          <h2 className="text-3xl font-bold text-white font-[Manrope] mb-4">Yenilenebilir Enerjiye Yatirim Yapin</h2>
+          <h2 className="text-3xl font-bold text-white font-[Sora] mb-4">Yenilenebilir Enerjiye Yatirim Yapin</h2>
           <p className="text-emerald-200/60 leading-relaxed">RES ve GES projelerinde aylik %7 getiri. Guvenilir, seffaf ve profesyonel yatirim platformu.</p>
         </div>
       </div>
@@ -56,9 +56,9 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <Link to="/" className="flex items-center gap-2 mb-8 lg:hidden">
             <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center"><Sun className="w-4 h-4 text-white" /></div>
-            <span className="font-bold text-lg text-slate-900 font-[Manrope]">Alarko Enerji</span>
+            <span className="font-bold text-lg text-slate-900 font-[Sora]">Alarko Enerji</span>
           </Link>
-          <h1 className="text-2xl font-bold text-slate-900 font-[Manrope] mb-2">Giris Yap</h1>
+          <h1 className="text-2xl font-bold text-slate-900 font-[Sora] mb-2">Giris Yap</h1>
           <p className="text-slate-500 text-sm mb-8">Hesabiniza giris yapin ve yatirimlarinizi takip edin.</p>
 
           <Button variant="outline" className="w-full h-11 mb-4 border-slate-200" onClick={handleGoogleLogin} data-testid="google-login-btn">

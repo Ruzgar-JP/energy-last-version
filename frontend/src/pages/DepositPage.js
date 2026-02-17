@@ -51,11 +51,11 @@ export default function DepositPage() {
         <Link to="/dashboard" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Panele Don
         </Link>
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Manrope] mb-2">Para Yatir</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora] mb-2">Para Yatir</h1>
         <p className="text-slate-500 mb-8">Asagidaki bankalardan birini secerek havale/EFT yapabilirsiniz.</p>
 
         <div className="space-y-4 mb-8">
-          <h3 className="font-semibold text-slate-900 font-[Manrope]">Banka Secin</h3>
+          <h3 className="font-semibold text-slate-900 font-[Sora]">Banka Secin</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {banks.map(bank => (
               <Card key={bank.bank_id}
@@ -94,7 +94,7 @@ export default function DepositPage() {
         {selectedBank && (
           <Card className="border-0 shadow-sm rounded-2xl">
             <CardContent className="p-6">
-              <h3 className="font-semibold text-slate-900 font-[Manrope] mb-4">Yatirma Tutari</h3>
+              <h3 className="font-semibold text-slate-900 font-[Sora] mb-4">Yatirma Tutari</h3>
               <Input type="number" placeholder="Tutar (TL)" value={amount} onChange={e => setAmount(e.target.value)} className="h-12 text-lg mb-4" data-testid="deposit-amount-input" />
               <Button className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 text-white" onClick={handleDeposit} disabled={loading} data-testid="deposit-submit-btn">
                 {loading ? 'Islem yapiliyor...' : 'Yatirma Talebi Olustur'}

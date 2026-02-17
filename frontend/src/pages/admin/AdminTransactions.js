@@ -42,7 +42,7 @@ export default function AdminTransactions() {
       <div data-testid="admin-transactions">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 font-[Manrope]">Islemler</h1>
+            <h1 className="text-2xl font-bold text-slate-900 font-[Sora]">Islemler</h1>
             <p className="text-slate-500 text-sm">Para yatirma ve cekme taleplerini yonetin.</p>
           </div>
           <Select value={filter} onValueChange={setFilter}>

@@ -26,7 +26,7 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div data-testid="admin-dashboard">
-        <h1 className="text-2xl font-bold text-slate-900 font-[Manrope] mb-2">Admin Paneli</h1>
+        <h1 className="text-2xl font-bold text-slate-900 font-[Sora] mb-2">Admin Paneli</h1>
         <p className="text-slate-500 mb-8">Platformun genel durumunu buradan takip edin.</p>
         {stats ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${s.color}`}><s.icon className="w-6 h-6" /></div>
                   <div>
                     <p className="text-sm text-slate-500">{s.label}</p>
-                    <p className="text-2xl font-bold text-slate-900 font-[Manrope]">{s.value}</p>
+                    <p className="text-2xl font-bold text-slate-900 font-[Sora]">{s.value}</p>
                   </div>
                 </CardContent>
               </Card>

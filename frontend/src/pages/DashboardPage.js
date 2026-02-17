@@ -49,7 +49,7 @@ export default function DashboardPage() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Manrope]">Hos Geldiniz, {user?.name}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora]">Hos Geldiniz, {user?.name}</h1>
           <p className="text-slate-500 mt-1">Yatirim portfoyunuzu buradan yonetin.</p>
         </div>
 
@@ -77,7 +77,7 @@ export default function DashboardPage() {
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${s.color}`}><s.icon className="w-6 h-6" /></div>
                 <div>
                   <p className="text-sm text-slate-500">{s.label}</p>
-                  <p className="text-xl font-bold text-slate-900 font-[Manrope]">{s.value}</p>
+                  <p className="text-xl font-bold text-slate-900 font-[Sora]">{s.value}</p>
                 </div>
               </CardContent>
             </Card>
@@ -93,7 +93,7 @@ export default function DashboardPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Manrope] text-lg">Aktif Yatirimlar</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Sora] text-lg">Aktif Yatirimlar</CardTitle></CardHeader>
               <CardContent>
                 {portfolio?.investments?.length > 0 ? (
                   <div className="space-y-4">
@@ -133,7 +133,7 @@ export default function DashboardPage() {
 
           <div>
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Manrope] text-lg">Son Islemler</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Sora] text-lg">Son Islemler</CardTitle></CardHeader>
               <CardContent>
                 {transactions.length > 0 ? (
                   <div className="space-y-3">

@@ -45,7 +45,7 @@ export default function AdminKYC() {
   return (
     <AdminLayout>
       <div data-testid="admin-kyc">
-        <h1 className="text-2xl font-bold text-slate-900 font-[Manrope] mb-2">Kimlik Dogrulama</h1>
+        <h1 className="text-2xl font-bold text-slate-900 font-[Sora] mb-2">Kimlik Dogrulama</h1>
         <p className="text-slate-500 mb-6 text-sm">Yatirimci kimlik belgelerini inceleyin ve onaylayin.</p>
 
         <Card className="border-0 shadow-sm rounded-2xl overflow-hidden">
@@ -82,7 +82,7 @@ export default function AdminKYC() {
 
         <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
           <DialogContent className="max-w-2xl">
-            <DialogHeader><DialogTitle className="font-[Manrope]">Kimlik Inceleme - {selected?.user_name}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle className="font-[Sora]">Kimlik Inceleme - {selected?.user_name}</DialogTitle></DialogHeader>
             {selected && (
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-2 text-sm text-slate-500">

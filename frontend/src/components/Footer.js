@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center">
                 <Sun className="w-5 h-5 text-white" />
               </div>
-              <span className="font-[Manrope] font-bold text-xl tracking-tight">Alarko Enerji</span>
+              <span className="font-[Sora] font-bold text-xl tracking-tight">Alarko Enerji</span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed mb-6">
               RES ve GES projelerine profesyonel yatirim yapmanin en guvenilir adresi. Yenilenebilir enerjiye yatirim yapin, geleceginizi guvence altina alin.
@@ -25,7 +25,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-[Manrope] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Kurumsal</h4>
+            <h4 className="font-[Sora] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Kurumsal</h4>
             <ul className="space-y-3">
               {['Hakkimizda', 'Ekibimiz', 'Kariyer', 'Basinda Biz'].map(item => (
                 <li key={item}><a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">{item}</a></li>
@@ -33,7 +33,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-[Manrope] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Yatirim</h4>
+            <h4 className="font-[Sora] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Yatirim</h4>
             <ul className="space-y-3">
               {[{ l: 'Projeler', h: '/projects' }, { l: 'Nasil Calisir', h: '#' }, { l: 'Getiri Hesaplama', h: '#' }, { l: 'Risk Bilgilendirme', h: '#' }].map(item => (
                 <li key={item.l}><Link to={item.h} className="text-sm text-slate-400 hover:text-white transition-colors">{item.l}</Link></li>
@@ -41,7 +41,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-[Manrope] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Iletisim</h4>
+            <h4 className="font-[Sora] font-semibold mb-4 text-emerald-400 text-sm uppercase tracking-wider">Iletisim</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-slate-400"><Phone className="w-4 h-4 text-emerald-400" /> +90 212 000 00 00</li>
               <li className="flex items-center gap-2 text-sm text-slate-400"><Mail className="w-4 h-4 text-emerald-400" /> info@alarkoenerji.com</li>

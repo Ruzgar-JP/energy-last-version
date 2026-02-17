@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
             <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
               <Sun className="w-4 h-4 text-white" />
             </div>
-            <span className="font-[Manrope] font-bold text-lg">Alarko Enerji</span>
+            <span className="font-[Sora] font-bold text-lg">Alarko Enerji</span>
           </Link>
           <p className="text-xs text-emerald-300/60 ml-10">Admin Paneli</p>
         </div>

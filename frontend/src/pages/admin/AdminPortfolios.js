@@ -18,7 +18,7 @@ export default function AdminPortfolios() {
   return (
     <AdminLayout>
       <div data-testid="admin-portfolios">
-        <h1 className="text-2xl font-bold text-slate-900 font-[Manrope] mb-2">Portfolyolar</h1>
+        <h1 className="text-2xl font-bold text-slate-900 font-[Sora] mb-2">Portfolyolar</h1>
         <p className="text-slate-500 mb-6 text-sm">Tum yatirimci portfolyolarini goruntuleyin.</p>
 
         <Card className="border-0 shadow-sm rounded-2xl overflow-hidden">

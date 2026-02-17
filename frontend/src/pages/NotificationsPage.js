@@ -53,7 +53,7 @@ export default function NotificationsPage() {
         </Link>
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Manrope]">Bildirimler</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora]">Bildirimler</h1>
             <p className="text-slate-500 text-sm mt-1">{data.unread_count} okunmamis bildirim</p>
           </div>
           {data.unread_count > 0 && (

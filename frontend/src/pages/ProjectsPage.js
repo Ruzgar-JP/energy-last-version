@@ -28,7 +28,7 @@ export default function ProjectsPage() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Manrope]">Enerji Projeleri</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Enerji Projeleri</h1>
           <p className="text-slate-500 mt-2">Turkiye genelinde aktif yenilenebilir enerji projelerini inceleyin ve yatirim yapin.</p>
         </div>
 
@@ -55,7 +55,7 @@ export default function ProjectsPage() {
                       {p.type === 'GES' ? <Sun className="w-3 h-3 mr-1" /> : <Wind className="w-3 h-3 mr-1" />} {p.type}
                     </Badge>
                     <div className="absolute bottom-3 left-3 text-white">
-                      <h3 className="font-bold font-[Manrope]">{p.name}</h3>
+                      <h3 className="font-bold font-[Sora]">{p.name}</h3>
                       <div className="flex items-center gap-1 text-xs opacity-80"><MapPin className="w-3 h-3" /> {p.location}</div>
                     </div>
                   </div>
