@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Bell, Menu, User, LogOut, LayoutDashboard, Briefcase, ChevronDown, Shield, Sun, Wind } from 'lucide-react';
+import { Bell, Menu, User, LogOut, LayoutDashboard, Briefcase, ChevronDown, Shield, Sun, Wind, UserCircle } from 'lucide-react';
 import axios from 'axios';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
