@@ -541,6 +541,40 @@ async def get_admin_portfolios(user_id: str = None, user=Depends(get_admin_user)
             p['user_email'] = u.get('email', '')
     return portfolios
 
+# ===== PASSWORD CHANGE =====
+@api_router.post("/auth/change-password")
+async def change_password(data: PasswordChange, user=Depends(get_current_user)):
+    if not user.get('password_hash'):
+        raise HTTPException(status_code=400, detail="Bu hesap Google ile olusturulmus. Sifre degistirilemez.")
+    if not verify_password(data.current_password, user['password_hash']):
+        raise HTTPException(status_code=400, detail="Mevcut sifre hatali")
+    if len(data.new_password) < 6:
+        raise HTTPException(status_code=400, detail="Yeni sifre en az 6 karakter olmali")
+    await db.users.update_one({"user_id": user['user_id']}, {"$set": {"password_hash": hash_password(data.new_password)}})
+    return {"message": "Sifre basariyla degistirildi"}
+
+# ===== ADMIN USER INFO UPDATE =====
+@api_router.put("/admin/users/{user_id}/info")
+async def update_user_info(user_id: str, data: UserInfoUpdate, admin=Depends(get_admin_user)):
+    target = await db.users.find_one({"user_id": user_id}, {"_id": 0})
+    if not target:
+        raise HTTPException(status_code=404, detail="Kullanici bulunamadi")
+    update_data = {}
+    if data.name:
+        update_data['name'] = data.name
+    if data.email:
+        existing = await db.users.find_one({"email": data.email, "user_id": {"$ne": user_id}}, {"_id": 0})
+        if existing:
+            raise HTTPException(status_code=400, detail="Bu e-posta adresi baska bir kullanici tarafindan kullaniliyor")
+        update_data['email'] = data.email
+    if data.phone:
+        update_data['phone'] = data.phone
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Guncellenecek bilgi bulunamadi")
+    await db.users.update_one({"user_id": user_id}, {"$set": update_data})
+    updated = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
+    return updated
+
 # ===== SEED DATA =====
 @app.on_event("startup")
 async def seed_data():
