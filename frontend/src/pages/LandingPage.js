@@ -49,7 +49,7 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 mb-6 px-4 py-1.5 text-sm">Yenilenebilir Enerji Yatırım Platformu</Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Sora]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Poppins]">
                 Geleceğe Güç Veren <span className="text-emerald-400">Yatırımlar</span>
               </h1>
               <p className="text-lg md:text-xl text-emerald-100/80 mb-3 font-semibold">RES & GES Projelerinde Aylik %8'e Varan Getiri</p>
@@ -84,7 +84,7 @@ export default function LandingPage() {
                 ].map((stat, i) => (
                   <div key={i} className={`bg-gradient-to-br ${stat.color} backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-in-up stagger-${i + 1}`}>
                     <stat.icon className="w-6 h-6 text-emerald-400 mb-3" />
-                    <div className="text-3xl font-bold text-white font-[Sora]">{stat.value}</div>
+                    <div className="text-3xl font-bold text-white font-[Poppins]">{stat.value}</div>
                     <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
                   </div>
                 ))}
@@ -108,7 +108,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NASIL ÇALIŞIR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">4 Adımda Yatırıma Başlayın</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">4 Adımda Yatırıma Başlayın</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3 max-w-2xl mx-auto">Basit ve şeffaf sürecimiz ile düşük riskle yüksek getirili yenilenebilir enerji yatırımlarına ortak olun.</p>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
@@ -124,8 +124,8 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
                     <step.icon className="w-7 h-7 text-emerald-600 group-hover:text-white transition-colors" />
                   </div>
-                  <div className="absolute top-5 right-5 text-5xl font-bold text-slate-200/40 font-[Sora]">0{i + 1}</div>
-                  <h3 className="font-semibold text-slate-900 mb-3 font-[Sora] text-lg">{step.title}</h3>
+                  <div className="absolute top-5 right-5 text-5xl font-bold text-slate-200/40 font-[Poppins]">0{i + 1}</div>
+                  <h3 className="font-semibold text-slate-900 mb-3 font-[Poppins] text-lg">{step.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed mb-4">{step.desc}</p>
                   <div className="flex items-center gap-1 text-xs text-emerald-600"><Clock className="w-3 h-3" /> {step.time}</div>
                 </CardContent>
@@ -140,7 +140,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">AKTİF PROJELER</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Aktif Enerji Projeleri</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Aktif Enerji Projeleri</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Türkiye genelinde yatırıma açık yenilenebilir enerji projelerini keşfet.</p>
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
@@ -162,7 +162,7 @@ export default function LandingPage() {
                       {p.type === 'GES' ? <Sun className="w-3 h-3 mr-1" /> : <Wind className="w-3 h-3 mr-1" />} {p.type}
                     </Badge>
                     <div className="absolute bottom-3 left-4 text-white">
-                      <h3 className="font-bold text-lg font-[Sora]">{p.name}</h3>
+                      <h3 className="font-bold text-lg font-[Poppins]">{p.name}</h3>
                       <div className="flex items-center gap-1 text-xs opacity-80"><MapPin className="w-3 h-3" /> {p.location}</div>
                     </div>
                   </div>
@@ -199,13 +199,13 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETiRi HESAPLAMA</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora] mb-4">Yatiriminizin Getirisini Hesaplayin</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins] mb-4">Yatiriminizin Getirisini Hesaplayin</h2>
               <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">Hisse adetinize gore aylik ve yillik getiri oranlarinizi gorun. 5 ve uzeri hisselerde dolar kuru avantaji!</p>
               <div className="space-y-6">
                 <div className="bg-slate-50 rounded-2xl p-6 border">
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium text-slate-700">Hisse Adedi</span>
-                    <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">{calcShares[0]} Hisse</span>
+                    <span className="text-2xl font-bold text-[#0F3935] font-[Poppins]">{calcShares[0]} Hisse</span>
                   </div>
                   <div className="text-right text-sm text-slate-500 mb-4">= {calcAmount.toLocaleString('tr-TR')} TL</div>
                   <Slider value={calcShares} onValueChange={setCalcShares} min={1} max={20} step={1} className="mb-4" data-testid="calc-slider" />
@@ -220,7 +220,7 @@ export default function LandingPage() {
                   ].map((item, i) => (
                     <div key={i} className="bg-emerald-50 rounded-xl p-4 text-center border border-emerald-100">
                       <p className="text-xs text-emerald-600 mb-1">{item.label}</p>
-                      <p className="text-lg font-bold text-emerald-700 font-[Sora]">{item.value}</p>
+                      <p className="text-lg font-bold text-emerald-700 font-[Poppins]">{item.value}</p>
                       <p className="text-[10px] text-emerald-500 mt-0.5">{item.sub}</p>
                     </div>
                   ))}
@@ -237,7 +237,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-slate-900 font-[Sora] mb-6">Kademeli Getiri Sistemi</h3>
+              <h3 className="text-xl font-bold text-slate-900 font-[Poppins] mb-6">Kademeli Getiri Sistemi</h3>
               {[
                 { shares: '1 - 4 Hisse', amount: '25.000 - 100.000', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Baslangic seviyesi yatirimcilar icin ideal. TL bazli aylik %7 getiri orani.', usd: false },
                 { shares: '5 - 9 Hisse', amount: '125.000 - 225.000', rate: '%7 + $', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Dolar kuru avantaji ile aylik %7 getiri. Yatiriminiz USD bazinda korunur.', usd: true },
@@ -251,7 +251,7 @@ export default function LandingPage() {
                         <span className="text-xs text-slate-400 ml-2">({tier.amount} TL)</span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-2xl font-bold text-[#0F3935] font-[Sora]">{tier.rate}</span>
+                        <span className="text-2xl font-bold text-[#0F3935] font-[Poppins]">{tier.rate}</span>
                         {tier.usd && <DollarSign className="w-4 h-4 text-sky-500" />}
                       </div>
                     </div>
@@ -273,7 +273,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">YATIRIM PLANLARI</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Size Uygun Planı Seçin</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Size Uygun Planı Seçin</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Her biri yatırımcı profiline uygun çeşitlendirilmiş yatırım planlarıyla getiri elde edin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
@@ -289,11 +289,11 @@ export default function LandingPage() {
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${plan.popular ? 'bg-emerald-500 text-white' : 'bg-slate-100 text-slate-600'}`}>
                       <plan.icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-bold text-xl font-[Sora] text-slate-900">{plan.name}</h3>
+                    <h3 className="font-bold text-xl font-[Poppins] text-slate-900">{plan.name}</h3>
                   </div>
                   <p className="text-sm text-slate-500 mb-2">Aylik getiri orani</p>
                   <div className="mb-2 flex items-baseline gap-2">
-                    <span className="text-5xl font-bold text-[#0F3935] font-[Sora]">%{plan.rate}</span>
+                    <span className="text-5xl font-bold text-[#0F3935] font-[Poppins]">%{plan.rate}</span>
                     {plan.usdTag && <span className="text-sm font-medium text-sky-600">{plan.usdTag}</span>}
                   </div>
                   <p className="text-sm text-slate-500 mb-1">{plan.shares}</p>
@@ -323,7 +323,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NEDEN BİZ</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Alarko Enerji Avantajları</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Alarko Enerji Avantajları</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Yenilenebilir enerji yatırımlarınızda neden bizi tercih etmelisiniz?</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -341,7 +341,7 @@ export default function LandingPage() {
                   <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5 group-hover:bg-emerald-500 transition-all duration-300">
                     <b.icon className="w-7 h-7 text-emerald-600 group-hover:text-white transition-colors" />
                   </div>
-                  <h3 className="font-semibold text-slate-900 mb-3 font-[Sora] text-lg">{b.title}</h3>
+                  <h3 className="font-semibold text-slate-900 mb-3 font-[Poppins] text-lg">{b.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed">{b.desc}</p>
                 </CardContent>
               </Card>
@@ -361,7 +361,7 @@ export default function LandingPage() {
               { value: '350 MW', label: 'Toplam Kurulu Güç' },
             ].map((s, i) => (
               <div key={i} className="py-4">
-                <div className="text-3xl md:text-4xl font-bold text-white font-[Sora] mb-2">{s.value}</div>
+                <div className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-2">{s.value}</div>
                 <div className="text-sm text-emerald-300/60">{s.label}</div>
               </div>
             ))}
@@ -374,7 +374,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">REFERANSLAR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Yatırımcılarımız Ne Diyor?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Yatırımcılarımız Ne Diyor?</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Binlerce memnun yatırımcımızın deneyimlerinden bazıları.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -411,7 +411,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">SSS</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Sora]">Sıkça Sorulan Sorular</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Sıkça Sorulan Sorular</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Yatırım süreciniz hakkında merak ettiğiniz her şey.</p>
           </div>
           <Accordion type="single" collapsible className="space-y-3">
@@ -441,7 +441,7 @@ export default function LandingPage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Sora] mb-4">Yatırıma Başlamaya Hazır Mısınız?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatırıma Başlamaya Hazır Mısınız?</h2>
           <p className="text-emerald-100/60 mb-8 text-lg">Uzman danışmanlarımız sizinle iletişime geçerek en uygun yatırım planını belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/register">

@@ -53,14 +53,14 @@ export default function AccountPage() {
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora]" data-testid="account-title">Hesabim</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins]" data-testid="account-title">Hesabim</h1>
           <p className="text-slate-500 mt-1">Hesap bilgilerinizi ve guvenlik ayarlarinizi yonetin.</p>
         </div>
 
         {/* Profile Info */}
         <Card className="border-0 shadow-sm rounded-2xl mb-6" data-testid="profile-card">
           <CardHeader>
-            <CardTitle className="font-[Sora] text-lg">Profil Bilgileri</CardTitle>
+            <CardTitle className="font-[Poppins] text-lg">Profil Bilgileri</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
             <div className="flex items-center gap-4 mb-2">
@@ -113,7 +113,7 @@ export default function AccountPage() {
         {/* Password Change */}
         <Card className="border-0 shadow-sm rounded-2xl" data-testid="password-card">
           <CardHeader>
-            <CardTitle className="font-[Sora] text-lg flex items-center gap-2">
+            <CardTitle className="font-[Poppins] text-lg flex items-center gap-2">
               <Lock className="w-5 h-5" /> Sifre Degistir
             </CardTitle>
           </CardHeader>

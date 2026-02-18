@@ -70,7 +70,7 @@ export default function ProjectDetailPage() {
           <Badge className={`${project.type === 'GES' ? 'bg-amber-500' : 'bg-sky-500'} text-white border-0 mb-2`}>
             {project.type === 'GES' ? <Sun className="w-3 h-3 mr-1" /> : <Wind className="w-3 h-3 mr-1" />} {project.type}
           </Badge>
-          <h1 className="text-2xl md:text-4xl font-bold text-white font-[Sora]">{project.name}</h1>
+          <h1 className="text-2xl md:text-4xl font-bold text-white font-[Poppins]">{project.name}</h1>
           <div className="flex items-center gap-1 text-white/70 text-sm mt-1"><MapPin className="w-4 h-4" /> {project.location}</div>
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function ProjectDetailPage() {
           <div className="lg:col-span-2 space-y-6">
             <Card className="border-0 shadow-sm rounded-2xl">
               <CardContent className="p-6 md:p-8">
-                <h2 className="text-xl font-bold text-slate-900 font-[Sora] mb-4">Proje Hakkinda</h2>
+                <h2 className="text-xl font-bold text-slate-900 font-[Poppins] mb-4">Proje Hakkinda</h2>
                 <p className="text-slate-600 leading-relaxed mb-6">{project.description}</p>
                 {project.details && <p className="text-slate-500 leading-relaxed">{project.details}</p>}
               </CardContent>
@@ -96,7 +96,7 @@ export default function ProjectDetailPage() {
                   <CardContent className="p-4 text-center">
                     <s.icon className="w-5 h-5 text-emerald-600 mx-auto mb-2" />
                     <p className="text-xs text-slate-500">{s.label}</p>
-                    <p className="font-bold text-slate-900 font-[Sora]">{s.value}</p>
+                    <p className="font-bold text-slate-900 font-[Poppins]">{s.value}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -106,7 +106,7 @@ export default function ProjectDetailPage() {
           <div>
             <Card className="border-0 shadow-sm rounded-2xl sticky top-24">
               <CardContent className="p-6">
-                <h3 className="font-bold text-slate-900 font-[Sora] mb-4">Yatirim Yap</h3>
+                <h3 className="font-bold text-slate-900 font-[Poppins] mb-4">Yatirim Yap</h3>
                 <div className="mb-4">
                   <div className="flex justify-between text-sm text-slate-500 mb-1"><span>Fonlama Durumu</span><span>{progress}%</span></div>
                   <Progress value={progress} className="h-3" />
@@ -117,21 +117,21 @@ export default function ProjectDetailPage() {
                 </div>
                 <div className="bg-emerald-50 rounded-xl p-4 mb-4">
                   <p className="text-sm text-emerald-700">Aylik Getiri Orani</p>
-                  <p className="text-3xl font-bold text-emerald-700 font-[Sora]">%{project.return_rate}</p>
+                  <p className="text-3xl font-bold text-emerald-700 font-[Poppins]">%{project.return_rate}</p>
                 </div>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
                     <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12" data-testid="invest-project-btn">Yatirim Yap</Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <DialogHeader><DialogTitle className="font-[Sora]">Yatirim Yap - {project.name}</DialogTitle></DialogHeader>
+                    <DialogHeader><DialogTitle className="font-[Poppins]">Yatirim Yap - {project.name}</DialogTitle></DialogHeader>
                     <div className="space-y-4 pt-4">
                       {user && <p className="text-sm text-slate-500">Mevcut Bakiye: <span className="font-semibold text-slate-900">{(user.balance || 0).toLocaleString('tr-TR')} TL</span></p>}
                       <div>
                         <label className="text-sm font-medium text-slate-700">Hisse Adedi</label>
                         <div className="flex items-center gap-3 mt-1">
                           <Button size="sm" variant="outline" onClick={() => setShares(Math.max(1, shares - 1))} data-testid="shares-minus">-</Button>
-                          <span className="text-2xl font-bold text-[#0F3935] font-[Sora] w-12 text-center">{shares}</span>
+                          <span className="text-2xl font-bold text-[#0F3935] font-[Poppins] w-12 text-center">{shares}</span>
                           <Button size="sm" variant="outline" onClick={() => setShares(shares + 1)} data-testid="shares-plus">+</Button>
                         </div>
                         <p className="text-xs text-slate-400 mt-1">1 Hisse = 25.000 TL</p>

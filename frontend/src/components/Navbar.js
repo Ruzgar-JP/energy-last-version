@@ -62,7 +62,7 @@ export default function Navbar({ transparent = false }) {
           <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center">
             <Sun className="w-5 h-5 text-white" />
           </div>
-          <span className="font-[Sora] tracking-tight">Alarko Enerji</span>
+          <span className="font-[Poppins] tracking-tight">Alarko Enerji</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

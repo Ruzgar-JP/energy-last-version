@@ -50,10 +50,10 @@ export default function LoginPage() {
               <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center">
                 <Leaf className="w-5 h-5 text-white" />
               </div>
-              <span className="font-[Sora] font-bold text-2xl text-white">Alarko Enerji</span>
+              <span className="font-[Poppins] font-bold text-2xl text-white">Alarko Enerji</span>
             </Link>
           </div>
-          <h2 className="text-3xl xl:text-4xl font-bold text-white font-[Sora] leading-tight mb-4">
+          <h2 className="text-3xl xl:text-4xl font-bold text-white font-[Poppins] leading-tight mb-4">
             Yenilenebilir Enerjide <br />
             <span className="text-emerald-400">Guvenli Yatirim</span>
           </h2>
@@ -92,10 +92,10 @@ export default function LoginPage() {
               <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center">
                 <Leaf className="w-5 h-5 text-white" />
               </div>
-              <span className="font-[Sora] font-bold text-xl text-slate-900">Alarko Enerji</span>
+              <span className="font-[Poppins] font-bold text-xl text-slate-900">Alarko Enerji</span>
             </Link>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora] mb-2" data-testid="login-title">Giris Yap</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins] mb-2" data-testid="login-title">Giris Yap</h1>
           <p className="text-slate-500 mb-8">Hesabiniza giris yaparak yatirimlarinizi yonetin.</p>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
