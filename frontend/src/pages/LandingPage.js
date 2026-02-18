@@ -322,18 +322,18 @@ export default function LandingPage() {
       <section id="benefits" className="py-20 md:py-28 bg-white" data-testid="benefits-section">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
-            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NEDEN BİZ</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Alarko Enerji Avantajları</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Yenilenebilir enerji yatırımlarınızda neden bizi tercih etmelisiniz?</p>
+            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NEDEN BIZ</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Alarko Enerji Avantajlari</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Yenilenebilir enerji yatirimlarinizda neden bizi tercih etmelisiniz?</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: ShieldCheck, title: 'Garantili Getiri', desc: 'Aylık %10\'a varan garantili getiri oranları ile yatırımınızı güvence altına alın. YEKDEM devlet garantisi altında projeler.' },
-              { icon: Eye, title: 'Şeffaf Yönetim', desc: 'Tüm yatırım süreçlerinizi gerçek zamanlı takip edin. Detaylı raporlama, analiz ve portföy performans grafikleri.' },
-              { icon: BarChart3, title: 'Çeşitlendirilmiş Portföy', desc: 'RES ve GES projelerinden oluşan çeşitlendirilmiş portföy ile riskinizi minimize edin.' },
-              { icon: Users, title: 'Uzman Kadro', desc: 'Alanında 10+ yıllık deneyime sahip enerji mühendisleri ve yatırım danışmanları ile profesyonel rehberlik.' },
-              { icon: FileText, title: 'Devlet Teşvikleri', desc: 'YEKDEM garantisi ve devlet teşviklerinden faydalanan projelerle güvenceli ve düzenli getiri elde edin.' },
-              { icon: Leaf, title: 'Sürdürülebilir Gelecek', desc: 'Yatırımınızla hem kazanç elde edin hem de sürdürülebilir bir gelecek ve temiz enerji üretimine katkı sağlayın.' },
+              { icon: ShieldCheck, title: 'Garantili Getiri', desc: 'Aylik %8\'e varan garantili getiri oranlari ile yatiriminizi guvence altina alin. YEKDEM devlet garantisi altinda projeler.' },
+              { icon: Eye, title: 'Seffaf Yonetim', desc: 'Tum yatirim sureclerinizi gercek zamanli takip edin. Detayli raporlama, analiz ve portfolyo performans grafikleri.' },
+              { icon: BarChart3, title: 'Cesitlendirilmis Portfolyo', desc: 'RES ve GES projelerinden olusan cesitlendirilmis portfolyo ile riskinizi minimize edin.' },
+              { icon: Users, title: 'Uzman Kadro', desc: 'Alaninda 10+ yillik deneyime sahip enerji muhendisleri ve yatirim danismanlari ile profesyonel rehberlik.' },
+              { icon: FileText, title: 'Devlet Tesvikleri', desc: 'YEKDEM garantisi ve devlet tesviklerinden faydalanan projelerle guvenceli ve duzenli getiri elde edin.' },
+              { icon: Leaf, title: 'Surdurulebilir Gelecek', desc: 'Yatiriminizla hem kazanc elde edin hem de surdurulebilir bir gelecek ve temiz enerji uretimine katki saglayin.' },
             ].map((b, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg transition-all duration-300 rounded-2xl bg-slate-50 group overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
@@ -355,10 +355,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: '₺2.8 Milyar', label: 'Toplam Yatırım Hacmi' },
-              { value: '15.000+', label: 'Aktif Yatırımcı' },
-              { value: '₺500M+', label: 'Ödenen Toplam Getiri' },
-              { value: '350 MW', label: 'Toplam Kurulu Güç' },
+              { value: '₺2.8 Milyar', label: 'Toplam Yatirim Hacmi' },
+              { value: '15.000+', label: 'Aktif Yatirimci' },
+              { value: '₺500M+', label: 'Odenen Toplam Getiri' },
+              { value: '350 MW', label: 'Toplam Kurulu Guc' },
             ].map((s, i) => (
               <div key={i} className="py-4">
                 <div className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-2">{s.value}</div>
@@ -374,8 +374,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">REFERANSLAR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Yatırımcılarımız Ne Diyor?</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Binlerce memnun yatırımcımızın deneyimlerinden bazıları.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Yatirimcilarimiz Ne Diyor?</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Binlerce memnun yatirimcimizin deneyimlerinden bazilari.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
@@ -411,8 +411,8 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">SSS</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Sıkça Sorulan Sorular</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Yatırım süreciniz hakkında merak ettiğiniz her şey.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Sikca Sorulan Sorular</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Yatirim sureciniz hakkinda merak ettiginiz her sey.</p>
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {[
@@ -441,18 +441,18 @@ export default function LandingPage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatırıma Başlamaya Hazır Mısınız?</h2>
-          <p className="text-emerald-100/60 mb-8 text-lg">Uzman danışmanlarımız sizinle iletişime geçerek en uygun yatırım planını belirlesin.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
+          <p className="text-emerald-100/60 mb-8 text-lg">Uzman danismanlarimiz sizinle iletisime gecerek en uygun yatirim planini belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/register">
               <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-10 h-13 rounded-xl text-base" data-testid="cta-register-btn">
-                Hemen Başvurun <ArrowRight className="w-5 h-5 ml-2" />
+                Hemen Basvurun <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm text-emerald-200/40">
-            <span>Ücretsiz kayıt</span>
-            <span>Hızlı onay süreci</span>
+            <span>Ucretsiz kayit</span>
+            <span>Hizli onay sureci</span>
             <span>7/24 destek</span>
           </div>
         </div>
