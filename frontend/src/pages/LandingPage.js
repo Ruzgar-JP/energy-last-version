@@ -115,7 +115,7 @@ export default function LandingPage() {
             {[
               { icon: UserPlus, title: 'Kayıt & Profil Oluşturun', desc: 'Hızlı kayıt işlemiyle yatırım hesabınızı oluşturun. E-posta veya Google hesabınızla anında kayıt olabilirsiniz. Ardından kimlik doğrulamanızı tamamlayarak yatırıma hazır hale gelin.', time: '2 dakika' },
               { icon: Eye, title: 'Projeleri İnceleyin', desc: 'GES ve RES projelerinin detaylarını, getiri oranlarını, konum bilgilerini ve risk analizlerini detaylı şekilde inceleyin. Her projenin fonlanma durumunu ve yatırımcı sayısını takip edin.', time: '5 dakika' },
-              { icon: Wallet, title: 'Yatırım Portföyünüzü Kurun', desc: 'Banka hesabınızdan havale/EFT ile bakiye yükleyin. Size uygun yatırım planını seçin: 5.000 TL ile başlayın, tutarınızı artırdıkça getiri oranınız da artsın. Portföyünüzü çeşitlendirin.', time: '10 dakika' },
+              { icon: Wallet, title: 'Yatirim Portfolyonuzu Kurun', desc: 'Banka hesabinizdan havale/EFT ile bakiye yukleyin. Size uygun yatirim planini secin: 25.000 TL ile baslayin, hisse adetinizi artirdikca getiri oraniniz da artsin.', time: '10 dakika' },
               { icon: TrendingUp, title: 'Getiri Kazanın', desc: 'Aylık düzenli getiri kazanın ve yatırımlarınızı gerçek zamanlı takip edin. Getirilerinizi yeniden yatırıma dönüştürerek bileşik getiri avantajından yararlanın.', time: 'Her ay' },
             ].map((step, i) => (
               <Card key={i} className="relative border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-slate-50 rounded-2xl group overflow-hidden">
@@ -381,7 +381,7 @@ export default function LandingPage() {
             {[
               { name: 'Ahmet Yılmaz', role: 'Kurumsal Yatırımcı', text: 'Alarko Enerji ile 2 yıldır yatırım yapıyorum. Aylık getiriler düzenli ve şeffaf bir şekilde hesabıma yatırılıyor. Portföy yönetim paneli harika, tüm yatırımlarımı anlık takip edebiliyorum.', stars: 5, investment: '₺250.000' },
               { name: 'Elif Demir', role: 'Profesyonel Yatırımcı', text: 'Yenilenebilir enerji sektörüne giriş için mükemmel bir platform. Uzman kadro ve detaylı raporlama ile kendimi güvende hissediyorum. Müşteri hizmetleri de son derece ilgili.', stars: 5, investment: '₺120.000' },
-              { name: 'Mehmet Kaya', role: 'Bireysel Yatırımcı', text: 'Başlangıç planı ile 5.000 TL yatırarak başladım, şimdi profesyonel plana geçtim. Getiri oranları söz verilenden bile yüksek. Hem kazanıyorum hem de temiz enerjiye katkı sağlıyorum.', stars: 5, investment: '₺45.000' },
+              { name: 'Mehmet Kaya', role: 'Bireysel Yatirimci', text: 'Baslangic plani ile 25.000 TL yatirarak basladim, simdi profesyonel plana gectim. Getiri oranlari soz verilenden bile yuksek. Hem kazaniyorum hem de temiz enerjiye katki sagliyorum.', stars: 5, investment: '125.000 TL' },
             ].map((t, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg rounded-2xl transition-all duration-300 bg-white">
                 <CardContent className="p-7">
