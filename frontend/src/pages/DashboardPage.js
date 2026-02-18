@@ -73,7 +73,7 @@ export default function DashboardPage() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora]">Hoş Geldiniz, {user?.name}</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins]">Hoş Geldiniz, {user?.name}</h1>
           <p className="text-slate-500 mt-1">Yatırım portföyünüzü buradan yönetin.</p>
         </div>
 
@@ -103,7 +103,7 @@ export default function DashboardPage() {
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${s.color}`}><s.icon className="w-6 h-6" /></div>
                 <div>
                   <p className="text-sm text-slate-500">{s.label}</p>
-                  <p className="text-xl font-bold text-slate-900 font-[Sora]">{s.value}</p>
+                  <p className="text-xl font-bold text-slate-900 font-[Poppins]">{s.value}</p>
                   <p className="text-[10px] text-slate-400">{s.sub}</p>
                 </div>
               </CardContent>
@@ -123,7 +123,7 @@ export default function DashboardPage() {
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
             {/* Portfolio Distribution */}
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Sora] text-lg">Portföy Dağılımı</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Poppins] text-lg">Portföy Dağılımı</CardTitle></CardHeader>
               <CardContent>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
 
             {/* Monthly Return Chart */}
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Sora] text-lg">Maliyet & Aylık Getiri</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Poppins] text-lg">Maliyet & Aylık Getiri</CardTitle></CardHeader>
               <CardContent>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -175,7 +175,7 @@ export default function DashboardPage() {
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Sora] text-lg">Aktif Yatırımlar</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Poppins] text-lg">Aktif Yatırımlar</CardTitle></CardHeader>
               <CardContent>
                 {portfolio?.investments?.length > 0 ? (
                   <div className="space-y-3">
@@ -204,9 +204,9 @@ export default function DashboardPage() {
                     {/* Summary */}
                     <div className="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100">
                       <div className="grid grid-cols-3 gap-4 text-center">
-                        <div><p className="text-xs text-emerald-600">Toplam Maliyet</p><p className="font-bold text-emerald-800 font-[Sora]">₺{(portfolio.total_invested || 0).toLocaleString('tr-TR')}</p></div>
-                        <div><p className="text-xs text-emerald-600">Aylık Getiri</p><p className="font-bold text-emerald-800 font-[Sora]">₺{(portfolio.total_monthly_return || 0).toLocaleString('tr-TR')}</p></div>
-                        <div><p className="text-xs text-emerald-600">Yıllık Getiri</p><p className="font-bold text-emerald-800 font-[Sora]">₺{((portfolio.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}</p></div>
+                        <div><p className="text-xs text-emerald-600">Toplam Maliyet</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_invested || 0).toLocaleString('tr-TR')}</p></div>
+                        <div><p className="text-xs text-emerald-600">Aylık Getiri</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_monthly_return || 0).toLocaleString('tr-TR')}</p></div>
+                        <div><p className="text-xs text-emerald-600">Yıllık Getiri</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{((portfolio.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}</p></div>
                       </div>
                     </div>
                   </div>
@@ -224,7 +224,7 @@ export default function DashboardPage() {
 
           <div>
             <Card className="border-0 shadow-sm rounded-2xl">
-              <CardHeader><CardTitle className="font-[Sora] text-lg">Son İşlemler</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="font-[Poppins] text-lg">Son İşlemler</CardTitle></CardHeader>
               <CardContent>
                 {transactions.length > 0 ? (
                   <div className="space-y-3">
