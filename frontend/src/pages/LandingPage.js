@@ -139,9 +139,9 @@ export default function LandingPage() {
       <section id="projects" className="py-20 md:py-28 bg-slate-50" data-testid="projects-section">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-12">
-            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">AKTİF PROJELER</Badge>
+            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">AKTIF PROJELER</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Aktif Enerji Projeleri</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Türkiye genelinde yatırıma açık yenilenebilir enerji projelerini keşfet.</p>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Turkiye genelinde yatirima acik yenilenebilir enerji projelerini kesfet.</p>
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
             <TabsList className="bg-white border mx-auto w-fit">
