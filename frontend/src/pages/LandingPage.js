@@ -145,7 +145,7 @@ export default function LandingPage() {
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
             <TabsList className="bg-white border mx-auto w-fit">
-              <TabsTrigger value="all" data-testid="tab-all">Tümü</TabsTrigger>
+              <TabsTrigger value="all" data-testid="tab-all">Tumu</TabsTrigger>
               <TabsTrigger value="ges" data-testid="tab-ges"><Sun className="w-4 h-4 mr-1" /> GES</TabsTrigger>
               <TabsTrigger value="res" data-testid="tab-res"><Wind className="w-4 h-4 mr-1" /> RES</TabsTrigger>
             </TabsList>
@@ -171,7 +171,7 @@ export default function LandingPage() {
                     <div className="grid grid-cols-3 gap-3 mb-4 text-center">
                       <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Kapasite</div><div className="font-semibold text-sm mt-0.5">{p.capacity}</div></div>
                       <div className="bg-emerald-50 rounded-xl p-3"><div className="text-xs text-emerald-600">Getiri</div><div className="font-bold text-sm text-emerald-700 mt-0.5">%{p.return_rate}</div></div>
-                      <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Yatırımcı</div><div className="font-semibold text-sm mt-0.5">{p.investors_count}</div></div>
+                      <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Yatirimci</div><div className="font-semibold text-sm mt-0.5">{p.investors_count}</div></div>
                     </div>
                     <div className="mb-4">
                       <div className="flex justify-between text-xs text-slate-500 mb-1.5"><span>{(p.funded_amount / 1000000).toFixed(1)}M ₺</span><span className="font-semibold">{progress}%</span></div>
@@ -179,7 +179,7 @@ export default function LandingPage() {
                     </div>
                     <Link to={`/projects/${p.project_id}`}>
                       <Button className="w-full bg-[#0F3935] hover:bg-[#0F3935]/90 text-white rounded-xl h-11" data-testid={`project-detail-btn-${p.project_id}`}>
-                        Detaylı İncele <ArrowRight className="w-4 h-4 ml-2" />
+                        Detayli Incele <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
                   </CardContent>
@@ -188,7 +188,7 @@ export default function LandingPage() {
             })}
           </div>
           <div className="text-center mt-10">
-            <Link to="/projects"><Button variant="outline" size="lg" className="rounded-xl" data-testid="view-all-projects">Tüm Projeleri Gör <ArrowRight className="w-4 h-4 ml-2" /></Button></Link>
+            <Link to="/projects"><Button variant="outline" size="lg" className="rounded-xl" data-testid="view-all-projects">Tum Projeleri Gor <ArrowRight className="w-4 h-4 ml-2" /></Button></Link>
           </div>
         </div>
       </section>
@@ -273,8 +273,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">YATIRIM PLANLARI</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Size Uygun Planı Seçin</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Her biri yatırımcı profiline uygun çeşitlendirilmiş yatırım planlarıyla getiri elde edin.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Size Uygun Plani Secin</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Her biri yatirimci profiline uygun cesitlendirilmis yatirim planlariyla getiri elde edin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {[
