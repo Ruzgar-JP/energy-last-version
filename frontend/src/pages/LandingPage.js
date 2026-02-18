@@ -97,7 +97,7 @@ export default function LandingPage() {
       {/* Partners / Trust Bar */}
       <section className="py-8 bg-white border-b" data-testid="trust-bar">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-wrap items-center justify-center gap-8 md:gap-16 text-slate-400 text-sm">
-          {['SPK Onaylı Platform', 'YEKDEM Garantili Projeler', '₺500M+ Ödenen Getiri', 'ISO 27001 Sertifikalı', 'Yatırımcı Koruma Fonu'].map((t, i) => (
+          {['SPK Onayli Platform', 'YEKDEM Garantili Projeler', '₺500M+ Odenen Getiri', 'ISO 27001 Sertifikali', 'Yatirimci Koruma Fonu'].map((t, i) => (
             <span key={i} className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500" />{t}</span>
           ))}
         </div>
@@ -107,16 +107,16 @@ export default function LandingPage() {
       <section className="py-20 md:py-28 bg-white" data-testid="steps-section">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
-            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NASIL ÇALIŞIR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">4 Adımda Yatırıma Başlayın</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3 max-w-2xl mx-auto">Basit ve şeffaf sürecimiz ile düşük riskle yüksek getirili yenilenebilir enerji yatırımlarına ortak olun.</p>
+            <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NASIL CALISIR</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">4 Adimda Yatirima Baslayin</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3 max-w-2xl mx-auto">Basit ve seffaf surecimiz ile dusuk riskle yuksek getirili yenilenebilir enerji yatirimlarinda ortak olun.</p>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { icon: UserPlus, title: 'Kayıt & Profil Oluşturun', desc: 'Hızlı kayıt işlemiyle yatırım hesabınızı oluşturun. E-posta veya Google hesabınızla anında kayıt olabilirsiniz. Ardından kimlik doğrulamanızı tamamlayarak yatırıma hazır hale gelin.', time: '2 dakika' },
-              { icon: Eye, title: 'Projeleri İnceleyin', desc: 'GES ve RES projelerinin detaylarını, getiri oranlarını, konum bilgilerini ve risk analizlerini detaylı şekilde inceleyin. Her projenin fonlanma durumunu ve yatırımcı sayısını takip edin.', time: '5 dakika' },
+              { icon: UserPlus, title: 'Kayit & Profil Olusturun', desc: 'Hizli kayit islemiyle yatirim hesabinizi olusturun. E-posta veya Google hesabinizla aninda kayit olabilirsiniz. Ardindan kimlik dogrulamanizi tamamlayarak yatirima hazir hale gelin.', time: '2 dakika' },
+              { icon: Eye, title: 'Projeleri Inceleyin', desc: 'GES ve RES projelerinin detaylarini, getiri oranlarini, konum bilgilerini ve risk analizlerini detayli sekilde inceleyin. Her projenin fonlanma durumunu ve yatirimci sayisini takip edin.', time: '5 dakika' },
               { icon: Wallet, title: 'Yatirim Portfolyonuzu Kurun', desc: 'Banka hesabinizdan havale/EFT ile bakiye yukleyin. Size uygun yatirim planini secin: 25.000 TL ile baslayin, hisse adetinizi artirdikca getiri oraniniz da artsin.', time: '10 dakika' },
-              { icon: TrendingUp, title: 'Getiri Kazanın', desc: 'Aylık düzenli getiri kazanın ve yatırımlarınızı gerçek zamanlı takip edin. Getirilerinizi yeniden yatırıma dönüştürerek bileşik getiri avantajından yararlanın.', time: 'Her ay' },
+              { icon: TrendingUp, title: 'Getiri Kazanin', desc: 'Aylik duzenli getiri kazanin ve yatirimlarinizi gercek zamanli takip edin. Getirilerinizi yeniden yatirima donusturerek bilesik getiri avantajindan yararlanin.', time: 'Her ay' },
             ].map((step, i) => (
               <Card key={i} className="relative border-0 shadow-sm hover:shadow-lg transition-all duration-300 bg-slate-50 rounded-2xl group overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
