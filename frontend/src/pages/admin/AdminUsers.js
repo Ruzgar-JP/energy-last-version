@@ -87,7 +87,7 @@ export default function AdminUsers() {
       <div data-testid="admin-users">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 font-[Sora]">Kullanicilar</h1>
+            <h1 className="text-2xl font-bold text-slate-900 font-[Poppins]">Kullanicilar</h1>
             <p className="text-slate-500 text-sm">{users.length} kayitli kullanici</p>
           </div>
           <div className="relative w-full md:w-72">
@@ -142,7 +142,7 @@ export default function AdminUsers() {
                           </Button>
                         </DialogTrigger>
                         <DialogContent>
-                          <DialogHeader><DialogTitle className="font-[Sora]">Kullanici Duzenle - {u.name}</DialogTitle></DialogHeader>
+                          <DialogHeader><DialogTitle className="font-[Poppins]">Kullanici Duzenle - {u.name}</DialogTitle></DialogHeader>
                           <div className="space-y-4 pt-2">
                             <div>
                               <Label className="text-sm text-slate-700">Ad Soyad</Label>
@@ -170,7 +170,7 @@ export default function AdminUsers() {
                           </Button>
                         </DialogTrigger>
                         <DialogContent>
-                          <DialogHeader><DialogTitle className="font-[Sora]">Bakiye Islemleri - {u.name}</DialogTitle></DialogHeader>
+                          <DialogHeader><DialogTitle className="font-[Poppins]">Bakiye Islemleri - {u.name}</DialogTitle></DialogHeader>
                           <div className="space-y-4 pt-2">
                             <p className="text-sm text-slate-500">Mevcut Bakiye: <span className="font-bold text-slate-900">{(u.balance || 0).toLocaleString('tr-TR')} TL</span></p>
                             <div className="flex gap-2">

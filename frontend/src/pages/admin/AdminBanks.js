@@ -61,7 +61,7 @@ export default function AdminBanks() {
       <div data-testid="admin-banks">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 font-[Sora]">Bankalar</h1>
+            <h1 className="text-2xl font-bold text-slate-900 font-[Poppins]">Bankalar</h1>
             <p className="text-slate-500 text-sm">Yatirim icin banka ve IBAN bilgilerini yonetin.</p>
           </div>
           <Button onClick={openNew} className="bg-emerald-500 hover:bg-emerald-600 text-white" data-testid="add-bank-btn">
@@ -104,7 +104,7 @@ export default function AdminBanks() {
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent>
-            <DialogHeader><DialogTitle className="font-[Sora]">{editBank ? 'Banka Duzenle' : 'Yeni Banka Ekle'}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle className="font-[Poppins]">{editBank ? 'Banka Duzenle' : 'Yeni Banka Ekle'}</DialogTitle></DialogHeader>
             <div className="space-y-4 pt-2">
               <div><Label>Banka Adi</Label><Input value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} placeholder="Banka Adi" data-testid="bank-name-input" /></div>
               <div><Label>IBAN</Label><Input value={form.iban} onChange={e => setForm(p => ({ ...p, iban: e.target.value }))} placeholder="TR00 0000 0000 0000 0000 0000 00" data-testid="bank-iban-input" /></div>
