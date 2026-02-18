@@ -379,8 +379,8 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { name: 'Ahmet Yılmaz', role: 'Kurumsal Yatırımcı', text: 'Alarko Enerji ile 2 yıldır yatırım yapıyorum. Aylık getiriler düzenli ve şeffaf bir şekilde hesabıma yatırılıyor. Portföy yönetim paneli harika, tüm yatırımlarımı anlık takip edebiliyorum.', stars: 5, investment: '₺250.000' },
-              { name: 'Elif Demir', role: 'Profesyonel Yatırımcı', text: 'Yenilenebilir enerji sektörüne giriş için mükemmel bir platform. Uzman kadro ve detaylı raporlama ile kendimi güvende hissediyorum. Müşteri hizmetleri de son derece ilgili.', stars: 5, investment: '₺120.000' },
+              { name: 'Ahmet Yilmaz', role: 'Kurumsal Yatirimci', text: 'Alarko Enerji ile 2 yildir yatirim yapiyorum. Aylik getiriler duzenli ve seffaf bir sekilde hesabima yatiriliyor. Portfolyo yonetim paneli harika, tum yatirimlarimi anlik takip edebiliyorum.', stars: 5, investment: '500.000 TL' },
+              { name: 'Elif Demir', role: 'Profesyonel Yatirimci', text: 'Yenilenebilir enerji sektorune giris icin mukemmel bir platform. Uzman kadro ve detayli raporlama ile kendimi guvende hissediyorum. Musteri hizmetleri de son derece ilgili.', stars: 5, investment: '200.000 TL' },
               { name: 'Mehmet Kaya', role: 'Bireysel Yatirimci', text: 'Baslangic plani ile 25.000 TL yatirarak basladim, simdi profesyonel plana gectim. Getiri oranlari soz verilenden bile yuksek. Hem kazaniyorum hem de temiz enerjiye katki sagliyorum.', stars: 5, investment: '125.000 TL' },
             ].map((t, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg rounded-2xl transition-all duration-300 bg-white">
