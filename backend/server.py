@@ -643,6 +643,10 @@ async def update_user_info(user_id: str, data: UserInfoUpdate, admin=Depends(get
         update_data['email'] = data.email
     if data.phone:
         update_data['phone'] = data.phone
+    if data.new_password:
+        if len(data.new_password) < 6:
+            raise HTTPException(status_code=400, detail="Sifre en az 6 karakter olmali")
+        update_data['password_hash'] = hash_password(data.new_password)
     if not update_data:
         raise HTTPException(status_code=400, detail="Guncellenecek bilgi bulunamadi")
     await db.users.update_one({"user_id": user_id}, {"$set": update_data})
