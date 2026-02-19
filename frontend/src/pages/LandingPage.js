@@ -51,10 +51,10 @@ export default function LandingPage() {
         {/* Video Background Carousel */}
         <div className="absolute inset-0">
           {[
-            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/k94bd5wp_259949.mp4',
-            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/gsd6h122_117843-713302310_small.mp4',
-            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/ztjclhd2_318540_small.mp4',
-            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/k6ry9euq_310115_medium.mp4',
+            '/videos/video1.mp4',
+            '/videos/video2.mp4',
+            '/videos/video3.mp4',
+            '/videos/video4.mp4',
           ].map((src, i) => (
             <video
               key={i}
