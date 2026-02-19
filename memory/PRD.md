@@ -18,13 +18,22 @@ RES ve GES projelerine yatirim platformu. Turkce, icerik dolu web sitesi.
 - [x] Auth: register, login (JWT + Google), password change
 - [x] KYC verification, notification system
 - [x] Dashboard with portfolio PieChart + BarChart
-- [x] Withdrawal with admin approval
+- [x] Withdrawal with bank selection + custom IBAN ("Diger Bankalar") + admin approval
+- [x] Deposit with bank selection + admin approval
 - [x] Account page (profile + password change)
 - [x] Admin panel (users, KYC, banks, transactions, portfolios)
 - [x] Admin edit user info, mobile responsive, full Turkish
+- [x] Admin transactions page shows withdrawal bank/IBAN details with "Manuel" badge
+
+## Key API Endpoints
+- POST /api/transactions/withdraw - New withdrawal with bank_id OR manual iban/account_holder
+- GET /api/banks - List system banks
+- POST /api/transactions - Deposit flow
+- POST /api/portfolio/invest - Share-based investment
+- GET /api/usd-rate - Live USD/TRY rate
 
 ## Backlog
 P1: Self-edit profile, email notifications, PDF export, admin project CRUD
-P2: 2FA, project docs viewer, referral program
+P2: 2FA, project docs viewer, referral program, backend refactoring (split server.py)
 
 ## Admin: admin@alarkoenerji.com / admin123
