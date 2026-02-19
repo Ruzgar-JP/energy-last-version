@@ -9,7 +9,7 @@ import os
 
 class AlarkoEnerjiAPITester:
     def __init__(self):
-        self.base_url = "https://alarko-enerji.preview.emergentagent.com/api"
+        self.base_url = "https://res-ges-portal.preview.emergentagent.com/api"
         self.admin_token = None
         self.user_token = None
         self.test_user_id = None
