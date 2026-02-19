@@ -156,6 +156,11 @@ export default function AdminUsers() {
                               <Label className="text-sm text-slate-700">Telefon</Label>
                               <Input value={editForm.phone} onChange={e => setEditForm(p => ({ ...p, phone: e.target.value }))} placeholder="Telefon" className="mt-1" data-testid="edit-phone-input" />
                             </div>
+                            <div>
+                              <Label className="text-sm text-slate-700">Yeni Sifre</Label>
+                              <Input type="password" value={editForm.new_password} onChange={e => setEditForm(p => ({ ...p, new_password: e.target.value }))} placeholder="Bos birakirsaniz degismez" className="mt-1" data-testid="edit-password-input" />
+                              <p className="text-xs text-slate-400 mt-1">En az 6 karakter. Bos birakirsaniz mevcut sifre korunur.</p>
+                            </div>
                             <Button className="w-full bg-[#0F3935] text-white" onClick={handleEditUser} disabled={loading} data-testid="edit-submit-btn">
                               {loading ? 'Kaydediliyor...' : 'Kaydet'}
                             </Button>
