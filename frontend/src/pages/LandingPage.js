@@ -65,8 +65,8 @@ export default function LandingPage() {
             />
           ))}
           {/* Gradient overlay - lighter to show video */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A2220]/80 via-[#0A2220]/60 to-[#0A2220]/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A2220]/70 via-transparent to-[#0A2220]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A2220]/75 via-[#0A2220]/50 to-[#0A2220]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A2220]/60 via-transparent to-[#0A2220]/30" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-32 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
