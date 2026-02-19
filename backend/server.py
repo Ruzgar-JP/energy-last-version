@@ -393,6 +393,32 @@ async def create_transaction(data: TransactionRequest, user=Depends(get_current_
     await db.transactions.insert_one(txn)
     return {k: v for k, v in txn.items() if k != '_id'}
 
+@api_router.post("/transactions/withdraw")
+async def create_withdrawal(data: WithdrawRequest, user=Depends(get_current_user)):
+    if data.amount <= 0:
+        raise HTTPException(status_code=400, detail="Gecerli bir tutar girin")
+    if user.get('balance', 0) < data.amount:
+        raise HTTPException(status_code=400, detail="Yetersiz bakiye")
+    withdrawal_details = {}
+    if data.bank_id:
+        bank = await db.banks.find_one({"bank_id": data.bank_id, "is_active": True}, {"_id": 0})
+        if not bank:
+            raise HTTPException(status_code=404, detail="Banka bulunamadi")
+        withdrawal_details = {"bank_name": bank['name'], "iban": bank['iban'], "account_holder": bank['account_holder'], "source": "system"}
+    elif data.iban and data.account_holder:
+        withdrawal_details = {"bank_name": data.bank_name or "Diger", "iban": data.iban, "account_holder": data.account_holder, "source": "manual"}
+    else:
+        raise HTTPException(status_code=400, detail="Banka secimi veya IBAN bilgisi gereklidir")
+    txn = {
+        "transaction_id": str(uuid.uuid4()), "user_id": user['user_id'],
+        "user_name": user.get('name', ''), "type": "withdrawal",
+        "amount": data.amount, "bank_id": data.bank_id,
+        "withdrawal_details": withdrawal_details,
+        "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.transactions.insert_one(txn)
+    return {k: v for k, v in txn.items() if k != '_id'}
+
 @api_router.get("/transactions")
 async def get_transactions(user=Depends(get_current_user)):
     return await db.transactions.find({"user_id": user['user_id']}, {"_id": 0}).sort("created_at", -1).to_list(100)
