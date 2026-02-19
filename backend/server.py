@@ -104,6 +104,7 @@ class UserInfoUpdate(BaseModel):
     name: str = ""
     email: str = ""
     phone: str = ""
+    new_password: str = ""
 
 # ===== AUTH HELPERS =====
 def hash_password(password: str) -> str:
