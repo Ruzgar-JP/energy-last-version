@@ -79,6 +79,13 @@ class TransactionRequest(BaseModel):
     bank_id: str = ""
     type: str
 
+class WithdrawRequest(BaseModel):
+    amount: float
+    bank_id: str = ""
+    bank_name: str = ""
+    iban: str = ""
+    account_holder: str = ""
+
 class BalanceUpdate(BaseModel):
     amount: float
     type: str
