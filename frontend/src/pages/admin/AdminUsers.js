@@ -21,7 +21,7 @@ export default function AdminUsers() {
   const [balanceAmount, setBalanceAmount] = useState('');
   const [balanceType, setBalanceType] = useState('add');
   const [editUser, setEditUser] = useState(null);
-  const [editForm, setEditForm] = useState({ name: '', email: '', phone: '' });
+  const [editForm, setEditForm] = useState({ name: '', email: '', phone: '', new_password: '' });
   const [loading, setLoading] = useState(false);
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -58,7 +58,7 @@ export default function AdminUsers() {
 
   const openEditDialog = (u) => {
     setEditUser(u);
-    setEditForm({ name: u.name || '', email: u.email || '', phone: u.phone || '' });
+    setEditForm({ name: u.name || '', email: u.email || '', phone: u.phone || '', new_password: '' });
   };
 
   const handleEditUser = async () => {
