@@ -40,35 +40,51 @@ export default function LandingPage() {
       <Navbar transparent />
 
       {/* Hero */}
-      <section className="relative min-h-[92vh] flex items-center bg-[#0F3935] overflow-hidden" data-testid="hero-section">
+      <section className="relative min-h-[92vh] flex items-center bg-[#0A2220] overflow-hidden" data-testid="hero-section">
+        {/* Video Background Carousel */}
         <div className="absolute inset-0">
-          <img src="https://images.pexels.com/photos/671585/pexels-photo-671585.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="" className="w-full h-full object-cover opacity-15" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F3935] via-[#0F3935]/95 to-[#0F3935]/80" />
+          {[
+            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/k94bd5wp_259949.mp4',
+            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/gsd6h122_117843-713302310_small.mp4',
+            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/ztjclhd2_318540_small.mp4',
+            'https://customer-assets.emergentagent.com/job_b10d1575-a41c-4960-9cd8-2442b0ac8002/artifacts/k6ry9euq_310115_medium.mp4',
+          ].map((src, i) => (
+            <video
+              key={i}
+              src={src}
+              autoPlay muted loop playsInline
+              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out"
+              style={{ opacity: videoIndex === i ? 1 : 0 }}
+            />
+          ))}
+          {/* Gradient overlay - lighter to show video */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A2220]/80 via-[#0A2220]/60 to-[#0A2220]/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A2220]/70 via-transparent to-[#0A2220]/40" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-32 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 mb-6 px-4 py-1.5 text-sm">Yenilenebilir Enerji Yatirim Platformu</Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Poppins]">
+              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 mb-6 px-4 py-1.5 text-sm backdrop-blur-sm">Yenilenebilir Enerji Yatirim Platformu</Badge>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Poppins] drop-shadow-lg">
                 Gelecege Guc Veren <span className="text-emerald-400">Yatirimlar</span>
               </h1>
-              <p className="text-lg md:text-xl text-emerald-100/80 mb-3 font-semibold">RES & GES Projelerinde Aylik %8'e Varan Getiri</p>
-              <p className="text-base md:text-lg text-slate-300/60 mb-8 leading-relaxed max-w-lg">
+              <p className="text-lg md:text-xl text-emerald-100/90 mb-3 font-semibold drop-shadow-md">RES & GES Projelerinde Aylik %8'e Varan Getiri</p>
+              <p className="text-base md:text-lg text-slate-200/70 mb-8 leading-relaxed max-w-lg drop-shadow-sm">
                 Turkiye'nin oncu yenilenebilir enerji projelerine yatirim yapin. Profesyonel yatirim danismanligi ve seffaf portfolyo yonetimiyle geleceginizi guvence altina alin.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <Link to="/register">
-                  <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-13 text-base rounded-xl" data-testid="hero-cta-register">
+                  <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-13 text-base rounded-xl shadow-lg shadow-emerald-500/25" data-testid="hero-cta-register">
                     Yatirima Basla <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
                 <Link to="/projects">
-                  <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 px-8 h-13 text-base rounded-xl" data-testid="hero-cta-projects">
+                  <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/15 px-8 h-13 text-base rounded-xl backdrop-blur-sm" data-testid="hero-cta-projects">
                     <Eye className="w-5 h-5 mr-2" /> Projeleri Incele
                   </Button>
                 </Link>
               </div>
-              <div className="flex items-center gap-6 text-sm text-emerald-200/50">
+              <div className="flex items-center gap-6 text-sm text-emerald-200/60">
                 <span className="flex items-center gap-1"><ShieldCheck className="w-4 h-4" /> SPK Lisansli</span>
                 <span className="flex items-center gap-1"><Award className="w-4 h-4" /> YEKDEM Garantili</span>
                 <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Uluslararasi Standart</span>
@@ -82,15 +98,21 @@ export default function LandingPage() {
                   { icon: Users, value: '1,200+', label: 'Kurumsal Yatirimci', color: 'from-violet-500/20 to-purple-500/20' },
                   { icon: TrendingUp, value: '%8', label: 'Maks. Aylik Getiri', color: 'from-amber-500/20 to-orange-500/20' },
                 ].map((stat, i) => (
-                  <div key={i} className={`bg-gradient-to-br ${stat.color} backdrop-blur-sm rounded-2xl p-6 border border-white/10 animate-fade-in-up stagger-${i + 1}`}>
+                  <div key={i} className={`bg-gradient-to-br ${stat.color} backdrop-blur-md rounded-2xl p-6 border border-white/15 animate-fade-in-up stagger-${i + 1}`}>
                     <stat.icon className="w-6 h-6 text-emerald-400 mb-3" />
                     <div className="text-3xl font-bold text-white font-[Poppins]">{stat.value}</div>
-                    <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
+                    <div className="text-xs text-slate-300 mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
+        </div>
+        {/* Video indicator dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          {[0, 1, 2, 3].map(i => (
+            <button key={i} onClick={() => setVideoIndex(i)} className={`w-2 h-2 rounded-full transition-all duration-300 ${videoIndex === i ? 'bg-emerald-400 w-6' : 'bg-white/30 hover:bg-white/50'}`} data-testid={`video-dot-${i}`} />
+          ))}
         </div>
       </section>
 
