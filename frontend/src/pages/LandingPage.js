@@ -19,10 +19,17 @@ export default function LandingPage() {
   const [activeTab, setActiveTab] = useState('all');
   const [calcShares, setCalcShares] = useState([4]);
   const [usdRate, setUsdRate] = useState(38);
+  const [videoIndex, setVideoIndex] = useState(0);
 
   useEffect(() => {
     axios.get(`${API}/projects`).then(r => setProjects(r.data)).catch(() => {});
     axios.get(`${API}/usd-rate`).then(r => setUsdRate(r.data.rate)).catch(() => {});
+  }, []);
+
+  // Auto-rotate videos every 8 seconds
+  useEffect(() => {
+    const timer = setInterval(() => setVideoIndex(prev => (prev + 1) % 4), 8000);
+    return () => clearInterval(timer);
   }, []);
 
   const filtered = activeTab === 'all' ? projects : projects.filter(p => p.type === activeTab.toUpperCase());
