@@ -18,14 +18,13 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     try {
-      const { data } = await axios.post(`${API}/auth/login`, form);
-      login(data.token, data.user);
-      navigate(data.user.role === 'admin' ? '/admin' : '/dashboard');
+      const userData = await login(form.email, form.password);
+      navigate(userData.role === 'admin' ? '/admin' : '/dashboard');
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Giris basarisiz');
-    } finally {
       setLoading(false);
     }
   };
