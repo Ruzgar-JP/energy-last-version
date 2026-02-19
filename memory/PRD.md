@@ -22,11 +22,12 @@ RES ve GES projelerine yatirim platformu. Turkce, icerik dolu web sitesi.
 - [x] Deposit with bank selection + admin approval
 - [x] Account page (profile + password change)
 - [x] Admin panel (users, KYC, banks, transactions, portfolios)
-- [x] Admin edit user info, mobile responsive, full Turkish
+- [x] Admin edit user info (name, email, phone, password), mobile responsive, full Turkish
 - [x] Admin transactions page shows withdrawal bank/IBAN details with "Manuel" badge
 
 ## Key API Endpoints
-- POST /api/transactions/withdraw - New withdrawal with bank_id OR manual iban/account_holder
+- PUT /api/admin/users/{user_id}/info - Admin edit user name, email, phone, password
+- POST /api/transactions/withdraw - Withdrawal with bank_id OR manual iban/account_holder
 - GET /api/banks - List system banks
 - POST /api/transactions - Deposit flow
 - POST /api/portfolio/invest - Share-based investment
