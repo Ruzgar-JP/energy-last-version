@@ -65,6 +65,7 @@ export default function AdminTransactions() {
                 <TableHead>Kullanici</TableHead>
                 <TableHead>Tip</TableHead>
                 <TableHead>Tutar</TableHead>
+                <TableHead>Banka / IBAN</TableHead>
                 <TableHead>Durum</TableHead>
                 <TableHead>Tarih</TableHead>
                 <TableHead>Islem</TableHead>
@@ -80,6 +81,16 @@ export default function AdminTransactions() {
                     </Badge>
                   </TableCell>
                   <TableCell className="font-semibold">{(t.amount || 0).toLocaleString('tr-TR')} TL</TableCell>
+                  <TableCell className="text-xs max-w-[200px]">
+                    {t.withdrawal_details ? (
+                      <div className="space-y-0.5">
+                        <p className="font-medium text-slate-800">{t.withdrawal_details.bank_name}</p>
+                        <p className="font-mono text-slate-500">{t.withdrawal_details.iban}</p>
+                        <p className="text-slate-500">{t.withdrawal_details.account_holder}</p>
+                        {t.withdrawal_details.source === 'manual' && <Badge className="bg-blue-100 text-blue-700 text-[9px]">Manuel</Badge>}
+                      </div>
+                    ) : <span className="text-slate-400">-</span>}
+                  </TableCell>
                   <TableCell>{statusBadge(t.status)}</TableCell>
                   <TableCell className="text-sm text-slate-500">{new Date(t.created_at).toLocaleDateString('tr-TR')}</TableCell>
                   <TableCell>
@@ -97,7 +108,7 @@ export default function AdminTransactions() {
                 </TableRow>
               ))}
               {filtered.length === 0 && (
-                <TableRow><TableCell colSpan={6} className="text-center py-8 text-slate-400">Islem yok</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-400">Islem yok</TableCell></TableRow>
               )}
             </TableBody>
           </Table>
