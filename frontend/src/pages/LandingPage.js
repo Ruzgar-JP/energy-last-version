@@ -60,6 +60,8 @@ export default function LandingPage() {
               key={i}
               src={src}
               autoPlay muted loop playsInline
+              preload="auto"
+              poster="https://images.unsplash.com/photo-1545209575-704d1434f9cd?w=1600&q=80"
               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-in-out"
               style={{ opacity: videoIndex === i ? 1 : 0 }}
             />
