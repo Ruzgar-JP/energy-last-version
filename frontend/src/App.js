@@ -6,7 +6,6 @@ import AuthCallback from "@/components/AuthCallback";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import LandingPage from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
-import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
 import ProjectsPage from "@/pages/ProjectsPage";
 import ProjectDetailPage from "@/pages/ProjectDetailPage";
@@ -21,6 +20,7 @@ import AdminKYC from "@/pages/admin/AdminKYC";
 import AdminBanks from "@/pages/admin/AdminBanks";
 import AdminPortfolios from "@/pages/admin/AdminPortfolios";
 import AdminTransactions from "@/pages/admin/AdminTransactions";
+import AdminTradeRequests from "@/pages/admin/AdminTradeRequests";
 
 function AppRouter() {
   const location = useLocation();
@@ -32,7 +32,6 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
       <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/projects/:id" element={<ProjectDetailPage />} />
       <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
@@ -47,6 +46,7 @@ function AppRouter() {
       <Route path="/admin/banks" element={<ProtectedRoute admin><AdminBanks /></ProtectedRoute>} />
       <Route path="/admin/portfolios" element={<ProtectedRoute admin><AdminPortfolios /></ProtectedRoute>} />
       <Route path="/admin/transactions" element={<ProtectedRoute admin><AdminTransactions /></ProtectedRoute>} />
+      <Route path="/admin/trade-requests" element={<ProtectedRoute admin><AdminTradeRequests /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
