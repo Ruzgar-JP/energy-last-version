@@ -106,7 +106,7 @@ export default function ProjectDetailPage() {
           <div>
             <Card className="border-0 shadow-sm rounded-2xl sticky top-24">
               <CardContent className="p-6">
-                <h3 className="font-bold text-slate-900 font-[Poppins] mb-4">Yatirim Yap</h3>
+                <h3 className="font-bold text-slate-900 font-[Poppins] mb-4">Yatirim Talebi</h3>
                 <div className="mb-4">
                   <div className="flex justify-between text-sm text-slate-500 mb-1"><span>Fonlama Durumu</span><span>{progress}%</span></div>
                   <Progress value={progress} className="h-3" />
@@ -121,10 +121,10 @@ export default function ProjectDetailPage() {
                 </div>
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12" data-testid="invest-project-btn">Yatirim Yap</Button>
+                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white h-12" data-testid="invest-project-btn">Alim Talebi Olustur</Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <DialogHeader><DialogTitle className="font-[Poppins]">Yatirim Yap - {project.name}</DialogTitle></DialogHeader>
+                    <DialogHeader><DialogTitle className="font-[Poppins]">Alim Talebi - {project.name}</DialogTitle></DialogHeader>
                     <div className="space-y-4 pt-4">
                       {user && <p className="text-sm text-slate-500">Mevcut Bakiye: <span className="font-semibold text-slate-900">{(user.balance || 0).toLocaleString('tr-TR')} TL</span></p>}
                       <div>
@@ -148,7 +148,7 @@ export default function ProjectDetailPage() {
                         )}
                       </div>
                       <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white" onClick={handleInvest} disabled={investing} data-testid="confirm-invest-btn">
-                        {investing ? 'Islem yapiliyor...' : `${shares} Hisse Satin Al`}
+                        {investing ? 'Islem yapiliyor...' : `${shares} Hisse Alim Talebi Olustur`}
                       </Button>
                     </div>
                   </DialogContent>
