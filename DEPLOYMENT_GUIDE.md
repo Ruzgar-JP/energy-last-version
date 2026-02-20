@@ -1,307 +1,406 @@
-# Alarko Enerji - Teknik Dokumantasyon ve Deployment Rehberi
+# Alarko Enerji - Deployment Rehberi & API Entegrasyonlari
 
-## 1. PROJE YAPISI
+---
+
+## 1. SISTEM GEREKSINIMLERI
+
+| Bilesken | Minimum | Onerilen |
+|----------|---------|----------|
+| CPU | 1 vCPU | 2 vCPU |
+| RAM | 1 GB | 2 GB |
+| Disk | 10 GB | 20 GB SSD |
+| OS | Ubuntu 20.04+ | Ubuntu 22.04 LTS |
+| Node.js | 18.x | 20.x LTS |
+| Python | 3.10+ | 3.11+ |
+| MongoDB | 6.0+ | 7.0+ |
+
+---
+
+## 2. PROJE YAPISI
 
 ```
-alarko-enerji/
+/app/
 ├── backend/
-│   ├── server.py          # Ana backend uygulamasi (FastAPI)
-│   ├── requirements.txt   # Python bagimliliklari
-│   ├── .env               # Backend ortam degiskenleri
-│   └── uploads/           # KYC belge yukleme klasoru
+│   ├── server.py           # FastAPI ana uygulama
+│   ├── requirements.txt    # Python bagimliliklari
+│   ├── .env                # Backend ortam degiskenleri
+│   └── uploads/            # KYC belgeleri
 ├── frontend/
-│   ├── src/
-│   │   ├── components/    # UI bilesenleri (Navbar, Footer, AdminLayout, shadcn/ui)
-│   │   ├── context/       # AuthContext.js (auth state management)
-│   │   ├── pages/         # Tum sayfalar + admin alt sayfalari
-│   │   └── App.js         # Ana router
-│   ├── public/
-│   │   └── videos/        # Hero arkaplan videolari (4 adet mp4)
-│   ├── package.json       # Node bagimliliklari
-│   └── .env               # Frontend ortam degiskenleri
-└── memory/
-    └── PRD.md             # Proje gereksinimleri dokumani
+│   ├── src/                # React kaynak kodu
+│   ├── public/             # Statik dosyalar (videolar dahil)
+│   ├── package.json        # Node bagimliliklari
+│   └── .env                # Frontend ortam degiskenleri
 ```
 
 ---
 
-## 2. DATABASE (MongoDB)
+## 3. ORTAM DEGISKENLERI (ENV)
 
-### Nasil Calisiyor?
-- **MongoDB** NoSQL veritabani kullaniliyor
-- Backend `motor` kutuphanesi ile async olarak baglanir
-- Baglanti URL'si `.env` dosyasindan alinir: `MONGO_URL`
-- Veritabani adi: `DB_NAME` ortam degiskeninden gelir
+### Backend (.env)
+```env
+# MongoDB Baglantisi (ZORUNLU)
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=alarko_enerji
 
-### Koleksiyonlar (Tablolar):
-| Koleksiyon | Aciklama |
-|---|---|
-| `users` | Kullanici bilgileri, sifre hash, bakiye, KYC durumu |
-| `projects` | GES/RES projeleri, fonlanma durumu |
-| `portfolios` | Yatirimci portfolyoleri, hisse bilgileri |
-| `banks` | Banka IBAN bilgileri |
-| `transactions` | Para yatirma/cekme islemleri |
-| `kyc_documents` | Kimlik dogrulama belgeleri |
-| `notifications` | Bildirimler |
+# JWT Sifresi (ZORUNLU - guclu bir sifre kullanin)
+JWT_SECRET=cok-guclu-rastgele-bir-sifre-buraya-yazin-min-32-karakter
 
-### Seed Data (Baslangic Verileri):
-Backend ilk calistirildiginda otomatik olusturulur (`startup_db_client` fonksiyonu):
-- 1 Admin kullanici: `admin@alarkoenerji.com` / `admin123`
-- 4 Ornek proje (2 GES + 2 RES)
-- 4 Banka bilgisi
-
-### Disari Aktarma Icin:
-```bash
-# MongoDB veritabanini disa aktar
-mongodump --uri="mongodb://localhost:27017" --db=test_database --out=./backup
-
-# Geri yukle
-mongorestore --uri="mongodb://YENI_MONGO_URL" --db=production_db ./backup/test_database
-```
-
----
-
-## 3. BACKEND (FastAPI)
-
-### Teknolojiler:
-| Kutuphane | Versiyon | Amac |
-|---|---|---|
-| FastAPI | 0.110.1 | Web framework |
-| Motor | 3.3.1 | Async MongoDB driver |
-| PyJWT | 2.11.0 | JWT token uretimi/dogrulama |
-| bcrypt | 4.1.3 | Sifre hashleme |
-| requests | 2.32.5 | Canli dolar kuru API cagrisi |
-| python-dotenv | 1.2.1 | .env dosyasi okuma |
-| uvicorn | 0.25.0 | ASGI server |
-| python-multipart | 0.0.22 | Dosya yukleme destegi |
-
-### Ortam Degiskenleri (backend/.env):
-```
-MONGO_URL=mongodb://localhost:27017    # MongoDB baglanti adresi
-DB_NAME=test_database                  # Veritabani adi
-CORS_ORIGINS=*                         # CORS izinleri (prod'da kisitla!)
-JWT_SECRET=alarko-enerji-jwt-secret    # JWT token sifresi (prod'da degistir!)
-```
-
-### API Endpoint'leri:
-| Endpoint | Method | Aciklama |
-|---|---|---|
-| `/api/auth/register` | POST | Yeni kullanici kaydi |
-| `/api/auth/login` | POST | E-posta/sifre ile giris |
-| `/api/auth/me` | GET | Mevcut kullanici bilgisi (token gerekli) |
-| `/api/auth/change-password` | POST | Sifre degistirme |
-| `/api/auth/google` | GET | Google OAuth baslatma |
-| `/api/auth/google-callback` | POST | Google OAuth donus |
-| `/api/usd-rate` | GET | Canli USD/TRY kuru |
-| `/api/projects` | GET | Proje listesi |
-| `/api/projects/{id}` | GET | Proje detayi |
-| `/api/portfolio` | GET | Kullanici portfolyosu |
-| `/api/portfolio/invest` | POST | Yatirim yap (hisse bazli) |
-| `/api/portfolio/sell` | POST | Yatirim sat |
-| `/api/transactions` | GET/POST | Islem listele/olustur |
-| `/api/banks` | GET | Banka listesi |
-| `/api/kyc/upload` | POST | KYC belge yukle |
-| `/api/kyc/status` | GET | KYC durumu |
-| `/api/notifications` | GET | Bildirimler |
-| `/api/admin/*` | - | Admin islemleri (kullanici, KYC, banka, islem yonetimi) |
-
-### Canli Dolar Kuru:
-- API: `https://open.er-api.com/v6/latest/USD` (ucretsiz, API key gerekmez)
-- 1 saat cache suresi
-- Fallback: Cache'deki son deger veya 38.0 TL
-
-### Yatirim Mantigi:
-```
-1 Hisse = 25.000 TL
-1-4 Hisse  → %7/ay (TL bazli)
-5-9 Hisse  → %7/ay (USD bazli)
-10+ Hisse  → %8/ay (USD bazli)
-```
-
----
-
-## 4. FRONTEND (React)
-
-### Teknolojiler:
-| Kutuphane | Amac |
-|---|---|
-| React 18 | UI framework |
-| React Router DOM | Sayfa yonlendirme |
-| TailwindCSS | CSS framework |
-| shadcn/ui | UI bilesenler (Button, Card, Dialog, vs.) |
-| Radix UI | shadcn'nin altyapisi |
-| Axios | HTTP istekleri |
-| Recharts | Grafik/chart bilesenleri |
-| Lucide React | Ikon kutuphanesi |
-| Sonner | Toast bildirimleri |
-
-### Ortam Degiskenleri (frontend/.env):
-```
-REACT_APP_BACKEND_URL=https://your-domain.com   # Backend API adresi
-```
-
-### Sayfa Yapisi:
-| Sayfa | Yol | Aciklama |
-|---|---|---|
-| LandingPage | `/` | Ana sayfa (hero video, projeler, planlar, FAQ) |
-| LoginPage | `/login` | Giris yapma |
-| RegisterPage | `/register` | Kayit olma |
-| DashboardPage | `/dashboard` | Yatirimci paneli (grafik, portfolyo) |
-| ProjectsPage | `/projects` | Proje listesi |
-| ProjectDetailPage | `/projects/:id` | Proje detay + yatirim |
-| AccountPage | `/account` | Hesap bilgileri + sifre degistirme |
-| DepositPage | `/deposit` | Para yatirma |
-| WithdrawalPage | `/withdraw` | Para cekme |
-| KYCPage | `/kyc` | Kimlik dogrulama |
-| NotificationsPage | `/notifications` | Bildirimler |
-| Admin/* | `/admin/*` | Admin paneli (6 alt sayfa) |
-
-### Google Auth (Emergent Auth):
-- Giris/kayit sayfalarinda "Google ile Giris" butonu
-- Emergent Auth servisi uzerinden calisiyor
-- Redirect URL: `https://auth.emergentagent.com/`
-- Callback: `window.location.origin + '/dashboard'`
-
----
-
-## 5. DISARI AKTARMA VE YAYINLAMA REHBERI
-
-### A. Oncelikle Degistirilmesi Gerekenler:
-
-#### 1. JWT Secret (KRITIK!)
-```bash
-# backend/.env
-JWT_SECRET=GUCLU-BENZERSIZ-SIFRE-URETINIZ-BURAYA
-```
-Ornek: `openssl rand -hex 64` komutuyla uretebilirsiniz.
-
-#### 2. MongoDB URL
-```bash
-# backend/.env
-MONGO_URL=mongodb+srv://username:password@cluster.mongodb.net/alarkoenerji
-DB_NAME=alarkoenerji_prod
-```
-Onerilen servisler: MongoDB Atlas (ucretsiz tier mevcut), AWS DocumentDB, DigitalOcean
-
-#### 3. CORS Ayarlari
-```bash
-# backend/.env
+# CORS (frontend domaininizi yazin)
 CORS_ORIGINS=https://www.alarkoenerji.com
-```
-Prod'da `*` KULLANMAYIN! Sadece kendi domain'inizi yazin.
 
-#### 4. Frontend API URL
-```bash
-# frontend/.env
+# E-posta - Resend (OPSIYONEL - asagida detayli aciklama)
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+SENDER_EMAIL=bilgi@alarkoenerji.com
+```
+
+### Frontend (.env)
+```env
+# Backend URL (ZORUNLU - domaininizi yazin)
 REACT_APP_BACKEND_URL=https://api.alarkoenerji.com
 ```
 
-#### 5. Google Auth
-Simdi Emergent Auth kullaniliyor. Kendi sunucunuzda:
-- Google Cloud Console'dan OAuth 2.0 credentials olusturun
-- `backend/server.py` icindeki Google auth endpoint'lerini guncelleyin
-- Veya Firebase Auth, Auth0 gibi servisler kullanabilirsiniz
+---
 
-### B. Kurulum Adimlari:
+## 4. ADIM ADIM DEPLOYMENT
 
-#### Backend:
+### Adim 1: Sunucuyu Hazirlayin
+
 ```bash
-cd backend
-python -m venv venv
-source venv/bin/activate       # Linux/Mac
+# Sistem guncellemesi
+sudo apt update && sudo apt upgrade -y
+
+# Node.js 20 kurulumu
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Python 3.11 kurulumu
+sudo apt install -y python3.11 python3.11-venv python3-pip
+
+# MongoDB 7.0 kurulumu
+# https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/
+wget -qO - https://www.mongodb.org/static/pgp/server-7.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt update && sudo apt install -y mongodb-org
+sudo systemctl start mongod && sudo systemctl enable mongod
+
+# Nginx kurulumu
+sudo apt install -y nginx
+```
+
+### Adim 2: Proje Dosyalarini Yukleyin
+
+```bash
+# Proje klasorunu olusturun
+sudo mkdir -p /var/www/alarko-enerji
+cd /var/www/alarko-enerji
+
+# Dosyalari yukleyin (GitHub, SCP veya FTP ile)
+# Ornek: git clone <repo-url> .
+# veya: scp -r ./app/* user@sunucu:/var/www/alarko-enerji/
+```
+
+### Adim 3: Backend Kurulumu
+
+```bash
+cd /var/www/alarko-enerji/backend
+
+# Virtual environment
+python3.11 -m venv venv
+source venv/bin/activate
+
+# Bagimliliklari yukle
 pip install -r requirements.txt
-# .env dosyasini yapilandirin
-uvicorn server:app --host 0.0.0.0 --port 8001
+
+# .env dosyasini duzenle
+nano .env
+# Yukaridaki degerleri girin
+
+# Test edin
+python -c "from server import app; print('Backend OK')"
 ```
 
-#### Frontend:
+### Adim 4: Frontend Build
+
 ```bash
-cd frontend
-yarn install                    # veya npm install
-# .env dosyasini yapilandirin
-yarn build                      # Production build
-```
-Build ciktisi `frontend/build/` klasorunde olusur.
+cd /var/www/alarko-enerji/frontend
 
-### C. Hosting Secenekleri:
+# .env dosyasini duzenle (REACT_APP_BACKEND_URL degerini girin)
+nano .env
 
-| Secenek | Backend | Frontend | Database |
-|---|---|---|---|
-| **VPS (Hetzner, DigitalOcean)** | Uvicorn + Nginx | Nginx static | MongoDB kurulu |
-| **AWS** | EC2/ECS + ALB | S3 + CloudFront | MongoDB Atlas |
-| **Railway** | FastAPI container | Static deploy | MongoDB Atlas |
-| **Vercel + Railway** | Railway | Vercel | MongoDB Atlas |
-| **Docker** | Docker container | Docker container | Docker container |
+# Bagimliliklari yukle ve build alin
+npm install --legacy-peer-deps
+# veya: yarn install
 
-### D. Docker ile Deploy:
+npm run build
+# veya: yarn build
 
-#### Backend Dockerfile:
-```dockerfile
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 8001
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8001"]
+# Build ciktisi: /var/www/alarko-enerji/frontend/build/
 ```
 
-#### Frontend Dockerfile:
-```dockerfile
-FROM node:18-alpine AS build
-WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install
-COPY . .
-RUN yarn build
+### Adim 5: Systemd Servisi (Backend)
 
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+```bash
+sudo nano /etc/systemd/system/alarko-backend.service
 ```
 
-### E. Kontrol Listesi (Deployment Checklist):
+```ini
+[Unit]
+Description=Alarko Enerji Backend
+After=network.target mongod.service
 
-- [ ] JWT_SECRET degistirildi (guclu, benzersiz)
-- [ ] MONGO_URL prod veritabanina yonlendirildi
-- [ ] CORS_ORIGINS sadece kendi domain'iniz
-- [ ] REACT_APP_BACKEND_URL prod API adresine ayarlandi
-- [ ] Google Auth kendi credentials'larinizla yapilandirdi
-- [ ] SSL/HTTPS aktif (Let's Encrypt veya Cloudflare)
-- [ ] MongoDB index'leri olusturuldu (email unique, user_id index)
-- [ ] Video dosyalari CDN'e yuklendi (buyuk dosyalar icin)
-- [ ] Admin sifresi degistirildi (ilk giristen sonra)
-- [ ] KYC upload klasoru yazma izinleri ayarlandi
-- [ ] Backup stratejisi belirlendi (MongoDB otomatik backup)
-- [ ] Error logging yapilandirildi (Sentry, CloudWatch vs.)
-- [ ] Rate limiting eklendi (guvenlik icin)
+[Service]
+User=www-data
+WorkingDirectory=/var/www/alarko-enerji/backend
+Environment=PATH=/var/www/alarko-enerji/backend/venv/bin
+EnvironmentFile=/var/www/alarko-enerji/backend/.env
+ExecStart=/var/www/alarko-enerji/backend/venv/bin/uvicorn server:app --host 0.0.0.0 --port 8001
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start alarko-backend
+sudo systemctl enable alarko-backend
+sudo systemctl status alarko-backend
+```
+
+### Adim 6: Nginx Konfigurasyonu
+
+```bash
+sudo nano /etc/nginx/sites-available/alarko-enerji
+```
+
+```nginx
+server {
+    listen 80;
+    server_name alarkoenerji.com www.alarkoenerji.com;
+
+    # Frontend (React build)
+    root /var/www/alarko-enerji/frontend/build;
+    index index.html;
+
+    # React SPA routing
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Backend API proxy
+    location /api/ {
+        proxy_pass http://127.0.0.1:8001/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 10M;
+    }
+
+    # KYC upload dosyalari
+    location /uploads/ {
+        alias /var/www/alarko-enerji/backend/uploads/;
+    }
+}
+```
+
+```bash
+sudo ln -s /etc/nginx/sites-available/alarko-enerji /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+### Adim 7: SSL Sertifikasi (Let's Encrypt)
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+sudo certbot --nginx -d alarkoenerji.com -d www.alarkoenerji.com
+# E-posta adresinizi girin ve sartlari kabul edin
+# Otomatik yenileme zaten aktif olacak
+```
 
 ---
 
-## 6. ONEMLI NOTLAR
+## 5. API ENTEGRASYONLARI
 
-### Guvenlik:
-- Sifreler bcrypt ile hashleniyor (guvende)
-- JWT token'lar 24 saat gecerli (server.py icinde `timedelta(hours=24)`)
-- KYC belgeleri sunucuda saklanir, dosya yolu DB'de tutulur
-- Para cekme islemleri admin onayi gerektirir
+### 5.1 Resend (E-posta Bildirimleri)
 
-### Performans:
-- USD kuru 1 saat cache'leniyor (gereksiz API cagrisi onleniyor)
-- MongoDB async driver (motor) kullaniliyor
-- Frontend lazy loading yok (gerekirse eklenebilir)
+**Ne icin kullaniliyor:** Hesap acilisi, para yatirma/cekme onay bildirimleri
 
-### Mock/Simule Edilen Ozellikler:
-- Para yatirma: Gercek odeme entegrasyonu yok, IBAN gosteriliyor
-- Para cekme: Admin onayi var ama gercek banka transferi yok
-- Getiri hesaplama: Otomatik aylik odeme sistemi yok (manuel admin islemi)
+**Kurulum:**
+1. https://resend.com adresine gidin
+2. Ucretsiz hesap olusturun (ayda 3.000 e-posta ucretsiz)
+3. Dashboard > API Keys > "Create API Key" tiklayin
+4. Olusturulan anahtari kopyalayin
 
-### Prod'da Eklenmesi Gerekenler:
-1. Rate limiting (brute force koruması)
-2. Email dogrulama (kayit sirasinda)
-3. Otomatik aylik getiri hesaplama (cron job)
-4. Odeme gateway entegrasyonu (Stripe, iyzico vs.)
-5. Log yonetimi (dosya/servis bazli)
-6. Health check endpoint'i
-7. API versiyonlama
+**Kurumsal domain ekleme (onerilen):**
+1. Resend Dashboard > Domains > "Add Domain"
+2. Domaininizi girin: `alarkoenerji.com`
+3. DNS kayitlarini ekleyin (Resend size verecek):
+   - SPF kaydı (TXT)
+   - DKIM kaydı (TXT)
+   - MX kaydı (opsiyonel)
+4. "Verify" tiklayin
+5. Dogrulama sonrasi `SENDER_EMAIL=bilgi@alarkoenerji.com` kullanabilirsiniz
+
+**Backend .env'e ekleyin:**
+```env
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+SENDER_EMAIL=bilgi@alarkoenerji.com
+```
+
+**Fiyatlandirma:**
+| Plan | Aylik E-posta | Fiyat |
+|------|--------------|-------|
+| Free | 3.000 | $0 |
+| Pro | 50.000 | $20/ay |
+| Enterprise | 100.000+ | Ozel |
+
+---
+
+### 5.2 Exchange Rate API (Doviz Kuru)
+
+**Ne icin kullaniliyor:** Canli USD/TRY kuru (yatirim getiri hesaplari)
+
+**API:** `https://open.er-api.com/v6/latest/USD`
+
+**Ozellikler:**
+- Tamamen ucretsiz, API key gerektirmez
+- Gunluk guncelleme
+- Rate limit: 1500 istek/ay (ucretsiz)
+- Backend otomatik olarak kullaniyor, ek kurulum gerektirmez
+
+**Alternatif (yuksek hacim icin):**
+- https://exchangeratesapi.io - Ucretsiz plan mevcut
+- https://fixer.io - Aylik 100 istek ucretsiz
+
+---
+
+### 5.3 MongoDB
+
+**Ne icin kullaniliyor:** Tum veri depolama (kullanicilar, portfolyolar, islemler)
+
+**Secenekler:**
+
+| Secenek | Fiyat | Ozellik |
+|---------|-------|---------|
+| Kendi sunucunuz | $0 | Tam kontrol, yedekleme sizde |
+| MongoDB Atlas (Free) | $0 | 512 MB, bulut, otomatik yedekleme |
+| MongoDB Atlas (M10) | ~$60/ay | 10 GB, production-ready |
+
+**MongoDB Atlas kurulumu (onerilen):**
+1. https://cloud.mongodb.com hesap acin
+2. "Build a Cluster" > Free Tier (M0) secin
+3. Region: Frankfurt (Turkiye'ye yakin)
+4. "Connect" > "Connect your application"
+5. Connection string'i kopyalayin
+
+**Backend .env'e ekleyin:**
+```env
+MONGO_URL=mongodb+srv://kullanici:sifre@cluster.xxxxx.mongodb.net/alarko_enerji?retryWrites=true&w=majority
+DB_NAME=alarko_enerji
+```
+
+---
+
+## 6. GUVENLIK KONTROL LISTESI
+
+```
+[x] JWT_SECRET icin en az 32 karakterlik rastgele deger kullanin
+[x] CORS_ORIGINS sadece kendi domaininizi icersin (* kullanmayin)
+[x] MongoDB'ye disaridan erisimi kapatin (bind_ip: 127.0.0.1)
+[x] SSL sertifikasi aktif (HTTPS zorunlu)
+[x] Sunucu firewall aktif (sadece 80, 443, 22 portlari acik)
+[x] MongoDB Atlas kullaniyorsaniz IP whitelist yapin
+[x] Admin sifrelerini degistirin (admin123 kullanmayin!)
+[x] .env dosyalarini git'e eklemeyin (.gitignore)
+```
+
+**Guclu JWT Secret olusturma:**
+```bash
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+---
+
+## 7. YEDEKLEME
+
+```bash
+# MongoDB yedekleme (cronjob olarak ekleyin)
+mongodump --db alarko_enerji --out /backup/$(date +%Y%m%d)
+
+# Otomatik gunluk yedekleme
+sudo crontab -e
+# Ekleyin:
+0 3 * * * mongodump --db alarko_enerji --out /backup/$(date +\%Y\%m\%d) --gzip
+```
+
+---
+
+## 8. IZLEME & BAKIM
+
+```bash
+# Backend loglarini kontrol edin
+sudo journalctl -u alarko-backend -f
+
+# Nginx loglarini kontrol edin
+sudo tail -f /var/log/nginx/error.log
+
+# MongoDB durumu
+sudo systemctl status mongod
+
+# Disk kullanimi
+df -h
+
+# Backend guncelleme
+cd /var/www/alarko-enerji/backend
+source venv/bin/activate
+pip install -r requirements.txt
+sudo systemctl restart alarko-backend
+
+# Frontend guncelleme
+cd /var/www/alarko-enerji/frontend
+npm install --legacy-peer-deps && npm run build
+# Nginx otomatik yeni build'i servir eder
+```
+
+---
+
+## 9. HIZLI BASLANGIÇ OZETI
+
+| Adim | Ne Yapmali | Nereden |
+|------|-----------|---------|
+| 1 | Resend API Key al | https://resend.com |
+| 2 | MongoDB Atlas olustur (veya local) | https://cloud.mongodb.com |
+| 3 | Domain + SSL al | Herhangi bir domain saglayici |
+| 4 | VPS/Sunucu al | DigitalOcean, Hetzner, AWS |
+| 5 | Bu rehberi takip et | Yukaridaki adimlar |
+| 6 | Admin sifrelerini degistir | /admin/login |
+| 7 | CORS ve JWT degerlerini guncelle | backend/.env |
+
+---
+
+## 10. VARSAYILAN HESAPLAR
+
+```
+Admin Girisi (/admin/login):
+  E-posta: admin@alarkoenerji.com
+  Sifre:   admin123  ← MUTLAKA DEGISTIRIN!
+
+Test Yatirimci (/login):
+  TC Kimlik: 12345678901
+  Sifre:     sifre123  ← Test sonrasi silin
+```
+
+---
+
+## DESTEK
+
+Sorun yasarsaniz kontrol edin:
+1. `sudo systemctl status alarko-backend` - Backend calisiyor mu?
+2. `sudo systemctl status mongod` - MongoDB calisiyor mu?
+3. `sudo nginx -t` - Nginx konfigurasyonu dogru mu?
+4. `sudo journalctl -u alarko-backend -n 50` - Backend hatalari
+5. Tarayici Console (F12) - Frontend hatalari
