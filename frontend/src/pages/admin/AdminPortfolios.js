@@ -244,21 +244,21 @@ export default function AdminPortfolios() {
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-1.5">Kac hisse silinsin?</label>
-                <Input type="number" min="1" max={deleteDialog.shares} placeholder={`1 - ${deleteDialog.shares}`} value={deleteShares} onChange={e => setDeleteShares(e.target.value)} className="h-11" data-testid="delete-shares-input" />
+                <Input type="number" min="1" max={deleteDialog.shares || 1} placeholder={`1 - ${deleteDialog.shares || 1}`} value={deleteShares} onChange={e => setDeleteShares(e.target.value)} className="h-11" data-testid="delete-shares-input" />
                 <div className="flex gap-2 mt-2">
-                  {[1, Math.ceil((deleteDialog.shares || 1) / 2), deleteDialog.shares].filter((v, i, a) => a.indexOf(v) === i && v > 0).map(n => (
+                  {[1, Math.ceil((deleteDialog.shares || 1) / 2), deleteDialog.shares || 1].filter((v, i, a) => a.indexOf(v) === i && v > 0).map(n => (
                     <Button key={n} size="sm" variant="outline" className="text-xs rounded-lg" onClick={() => setDeleteShares(String(n))} data-testid={`delete-quick-${n}`}>
-                      {n === deleteDialog.shares ? 'Tumu' : `${n} hisse`}
+                      {n === (deleteDialog.shares || 1) ? 'Tumu' : `${n} hisse`}
                     </Button>
                   ))}
                 </div>
               </div>
-              {parseInt(deleteShares) > 0 && parseInt(deleteShares) <= deleteDialog.shares && (
+              {parseInt(deleteShares) > 0 && parseInt(deleteShares) <= (deleteDialog.shares || 1) && (
                 <div className="p-3 rounded-xl bg-red-50 border border-red-200">
                   <p className="text-sm text-red-700">
-                    {parseInt(deleteShares) >= deleteDialog.shares
-                      ? <><strong>{deleteDialog.shares} hisse</strong> tamamen silinecek.</>
-                      : <><strong>{deleteShares} hisse</strong> silinecek, <strong>{deleteDialog.shares - parseInt(deleteShares)} hisse</strong> kalacak.</>
+                    {parseInt(deleteShares) >= (deleteDialog.shares || 1)
+                      ? <><strong>{deleteDialog.shares || 1} hisse</strong> tamamen silinecek.</>
+                      : <><strong>{deleteShares} hisse</strong> silinecek, <strong>{(deleteDialog.shares || 1) - parseInt(deleteShares)} hisse</strong> kalacak.</>
                     }
                   </p>
                 </div>
