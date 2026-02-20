@@ -96,15 +96,16 @@ class BankCreate(BaseModel):
 
 class TransactionRequest(BaseModel):
     amount: float
-    bank_id: str = ""
     type: str
 
 class WithdrawRequest(BaseModel):
     amount: float
-    bank_id: str = ""
-    bank_name: str = ""
-    iban: str = ""
-    account_holder: str = ""
+
+class TradeRequest(BaseModel):
+    project_id: str
+    shares: int
+    type: str  # "buy" or "sell"
+    portfolio_id: str = ""
 
 class BalanceUpdate(BaseModel):
     amount: float
