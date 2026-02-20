@@ -557,14 +557,16 @@ async def update_user_balance(user_id: str, data: BalanceUpdate, admin=Depends(g
         await db.transactions.insert_one({
             "transaction_id": str(uuid.uuid4()), "user_id": user_id,
             "user_name": target.get('name', ''), "type": "deposit",
-            "amount": data.amount, "bank_id": "", "status": "approved",
+            "amount": data.amount, "status": "approved",
             "created_at": datetime.now(timezone.utc).isoformat(), "approved_by": admin['user_id']
         })
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": user_id,
-            "title": "Para Yatırma Onaylandı", "message": f"Hesabınıza {data.amount:,.0f} TL yatırıldı.",
+            "title": "Para Yatirma Onaylandi", "message": f"Hesabiniza {data.amount:,.0f} TL yatirildi.",
             "type": "deposit_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
+        await send_email(target.get('email', ''), "Alarko Enerji - Para Yatirma Onaylandi",
+            f"<h2>Para Yatirma Onaylandi</h2><p>Sayin {target.get('name','')},</p><p>Hesabiniza <strong>{data.amount:,.0f} TL</strong> basariyla yatirilmistir.</p><p>Alarko Enerji Yatirim A.S.</p>")
     elif data.type == 'subtract':
         if target.get('balance', 0) < data.amount:
             raise HTTPException(status_code=400, detail="Yetersiz bakiye")
@@ -572,14 +574,16 @@ async def update_user_balance(user_id: str, data: BalanceUpdate, admin=Depends(g
         await db.transactions.insert_one({
             "transaction_id": str(uuid.uuid4()), "user_id": user_id,
             "user_name": target.get('name', ''), "type": "withdrawal",
-            "amount": data.amount, "bank_id": "", "status": "approved",
+            "amount": data.amount, "status": "approved",
             "created_at": datetime.now(timezone.utc).isoformat(), "approved_by": admin['user_id']
         })
         await db.notifications.insert_one({
             "notification_id": str(uuid.uuid4()), "user_id": user_id,
-            "title": "Para Çekme Gerçekleşti", "message": f"Hesabınızdan {data.amount:,.0f} TL çekildi.",
+            "title": "Para Cekme Gerceklesti", "message": f"Hesabinizdan {data.amount:,.0f} TL cekildi.",
             "type": "withdrawal", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
         })
+        await send_email(target.get('email', ''), "Alarko Enerji - Para Cekme Islemi",
+            f"<h2>Para Cekme Islemi</h2><p>Sayin {target.get('name','')},</p><p>Hesabinizdan <strong>{data.amount:,.0f} TL</strong> cekilmistir.</p><p>Alarko Enerji Yatirim A.S.</p>")
     updated = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
     return updated
 
