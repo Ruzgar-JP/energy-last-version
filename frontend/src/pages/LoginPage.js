@@ -1,24 +1,20 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Sun, User, Shield } from 'lucide-react';
+import { Sun } from 'lucide-react';
 import { toast } from 'sonner';
 import axios from 'axios';
 
 export default function LoginPage() {
   const { API } = useAuth();
-  const navigate = useNavigate();
-  const [tab, setTab] = useState('investor');
   const [tcKimlik, setTcKimlik] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleInvestorLogin = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!tcKimlik || !password) { toast.error('TC Kimlik No ve sifre girin'); return; }
     setLoading(true);
@@ -26,21 +22,6 @@ export default function LoginPage() {
       const res = await axios.post(`${API}/auth/login-investor`, { tc_kimlik: tcKimlik, password });
       localStorage.setItem('alarko_token', res.data.token);
       window.location.href = '/dashboard';
-    } catch (err) {
-      toast.error(err.response?.data?.detail || 'Giris basarisiz');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAdminLogin = async (e) => {
-    e.preventDefault();
-    if (!email || !password) { toast.error('E-posta ve sifre girin'); return; }
-    setLoading(true);
-    try {
-      const res = await axios.post(`${API}/auth/login`, { email, password });
-      localStorage.setItem('alarko_token', res.data.token);
-      window.location.href = '/admin';
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Giris basarisiz');
     } finally {
@@ -69,89 +50,26 @@ export default function LoginPage() {
             <span className="font-[Poppins] font-bold text-xl text-[#0F3935]">Alarko Enerji</span>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 font-[Poppins] text-center mb-2">Giris Yap</h2>
-          <p className="text-slate-500 text-center mb-8 text-sm">Hesabiniza giris yaparak islemlerinizi yonetin.</p>
+          <h2 className="text-2xl font-bold text-slate-900 font-[Poppins] text-center mb-2">Yatirimci Girisi</h2>
+          <p className="text-slate-500 text-center mb-8 text-sm">TC Kimlik No ve sifrenizle giris yapin.</p>
 
-          <Tabs value={tab} onValueChange={setTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="investor" className="gap-2" data-testid="tab-investor">
-                <User className="w-4 h-4" /> Yatirimci
-              </TabsTrigger>
-              <TabsTrigger value="admin" className="gap-2" data-testid="tab-admin">
-                <Shield className="w-4 h-4" /> Admin
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="investor">
-              <Card className="border-0 shadow-sm rounded-2xl">
-                <CardContent className="p-6">
-                  <form onSubmit={handleInvestorLogin} className="space-y-4">
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 block mb-1.5">TC Kimlik No</label>
-                      <Input
-                        type="text"
-                        placeholder="12345678901"
-                        value={tcKimlik}
-                        onChange={e => setTcKimlik(e.target.value.replace(/\D/g, '').slice(0, 11))}
-                        className="h-12"
-                        maxLength={11}
-                        data-testid="tc-kimlik-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 block mb-1.5">Sifre</label>
-                      <Input
-                        type="password"
-                        placeholder="Sifrenizi girin"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        className="h-12"
-                        data-testid="investor-password-input"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full h-12 bg-[#0F3935] hover:bg-[#0F3935]/90 text-white" disabled={loading} data-testid="investor-login-btn">
-                      {loading ? 'Giris yapiliyor...' : 'Giris Yap'}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="admin">
-              <Card className="border-0 shadow-sm rounded-2xl">
-                <CardContent className="p-6">
-                  <form onSubmit={handleAdminLogin} className="space-y-4">
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 block mb-1.5">E-posta</label>
-                      <Input
-                        type="email"
-                        placeholder="admin@alarkoenerji.com"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        className="h-12"
-                        data-testid="admin-email-input"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-slate-700 block mb-1.5">Sifre</label>
-                      <Input
-                        type="password"
-                        placeholder="Sifrenizi girin"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        className="h-12"
-                        data-testid="admin-password-input"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full h-12 bg-[#0F3935] hover:bg-[#0F3935]/90 text-white" disabled={loading} data-testid="admin-login-btn">
-                      {loading ? 'Giris yapiliyor...' : 'Admin Giris'}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
+          <Card className="border-0 shadow-sm rounded-2xl">
+            <CardContent className="p-6">
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-1.5">TC Kimlik No</label>
+                  <Input type="text" placeholder="12345678901" value={tcKimlik} onChange={e => setTcKimlik(e.target.value.replace(/\D/g, '').slice(0, 11))} className="h-12" maxLength={11} data-testid="tc-kimlik-input" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-1.5">Sifre</label>
+                  <Input type="password" placeholder="Sifrenizi girin" value={password} onChange={e => setPassword(e.target.value)} className="h-12" data-testid="investor-password-input" />
+                </div>
+                <Button type="submit" className="w-full h-12 bg-[#0F3935] hover:bg-[#0F3935]/90 text-white" disabled={loading} data-testid="investor-login-btn">
+                  {loading ? 'Giris yapiliyor...' : 'Giris Yap'}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
           <p className="text-center text-xs text-slate-400 mt-6">
             <Link to="/" className="hover:text-slate-600">Ana Sayfa</Link>
           </p>
