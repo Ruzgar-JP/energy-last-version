@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import AdminLayout from '@/components/AdminLayout';
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, Shield, Briefcase, ArrowLeftRight, TrendingUp, Landmark } from 'lucide-react';
+import { Users, Shield, Briefcase, ArrowLeftRight, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 
 export default function AdminDashboard() {
@@ -19,7 +19,6 @@ export default function AdminDashboard() {
     { icon: Shield, label: 'Bekleyen KYC', value: stats.pending_kyc, color: 'bg-amber-500/10 text-amber-600' },
     { icon: Briefcase, label: 'Aktif Proje', value: stats.total_projects, color: 'bg-emerald-500/10 text-emerald-600' },
     { icon: TrendingUp, label: 'Toplam Yatirim', value: `${(stats.total_invested / 1000000).toFixed(1)}M TL`, color: 'bg-violet-500/10 text-violet-600' },
-    { icon: Landmark, label: 'Toplam Bakiye', value: `${(stats.total_balance).toLocaleString('tr-TR')} TL`, color: 'bg-pink-500/10 text-pink-600' },
     { icon: ArrowLeftRight, label: 'Bekleyen Islem', value: stats.pending_transactions, color: 'bg-orange-500/10 text-orange-600' },
     { icon: ArrowLeftRight, label: 'Bekleyen Alim/Satim', value: stats.pending_trades || 0, color: 'bg-cyan-500/10 text-cyan-600' },
   ] : [];
