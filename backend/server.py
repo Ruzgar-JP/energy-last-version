@@ -648,6 +648,27 @@ async def get_admin_portfolios(user_id: str = None, user=Depends(get_admin_user)
             p['user_email'] = u.get('email', '')
     return portfolios
 
+@api_router.get("/admin/investor-overview")
+async def get_investor_overview(admin=Depends(get_admin_user)):
+    investors = await db.users.find({"role": "investor"}, {"_id": 0, "password_hash": 0}).to_list(1000)
+    result = []
+    for inv in investors:
+        uid = inv['user_id']
+        portfolios = await db.portfolios.find({"user_id": uid}, {"_id": 0}).to_list(100)
+        total_shares = sum(p.get('shares', 0) for p in portfolios)
+        total_invested = sum(p.get('amount', 0) for p in portfolios)
+        total_return = sum(p.get('monthly_return', 0) for p in portfolios)
+        result.append({
+            "user_id": uid, "name": inv.get('name', ''), "email": inv.get('email', ''),
+            "tc_kimlik": inv.get('tc_kimlik', ''), "phone": inv.get('phone', ''),
+            "balance": inv.get('balance', 0), "kyc_status": inv.get('kyc_status', ''),
+            "total_shares": total_shares, "total_invested": total_invested,
+            "total_monthly_return": total_return, "portfolio_count": len(portfolios),
+            "portfolios": portfolios
+        })
+    result.sort(key=lambda x: x['total_invested'] + x['balance'], reverse=True)
+    return result
+
 @api_router.post("/admin/portfolios/add")
 async def admin_add_portfolio(data: dict, admin=Depends(get_admin_user)):
     user_id = data.get('user_id')
