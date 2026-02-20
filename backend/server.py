@@ -429,13 +429,19 @@ async def delete_bank(bank_id: str, user=Depends(get_admin_user)):
 async def create_transaction(data: TransactionRequest, user=Depends(get_current_user)):
     if data.type == 'withdrawal' and user.get('balance', 0) < data.amount:
         raise HTTPException(status_code=400, detail="Yetersiz bakiye")
+    if data.amount <= 0:
+        raise HTTPException(status_code=400, detail="Gecerli bir tutar girin")
     txn = {
         "transaction_id": str(uuid.uuid4()), "user_id": user['user_id'],
         "user_name": user.get('name', ''), "type": data.type,
-        "amount": data.amount, "bank_id": data.bank_id,
-        "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
+        "amount": data.amount, "status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.transactions.insert_one(txn)
+    # Send email
+    action = "Para Yatirma Talebi" if data.type == 'deposit' else "Para Cekme Talebi"
+    await send_email(user.get('email', ''), f"Alarko Enerji - {action}",
+        f"<h2>{action}</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda {action.lower()} olusturulmustur. Admin onayi beklenmektedir.</p><p>Alarko Enerji Yatirim A.S.</p>")
     return {k: v for k, v in txn.items() if k != '_id'}
 
 @api_router.post("/transactions/withdraw")
@@ -444,29 +450,26 @@ async def create_withdrawal(data: WithdrawRequest, user=Depends(get_current_user
         raise HTTPException(status_code=400, detail="Gecerli bir tutar girin")
     if user.get('balance', 0) < data.amount:
         raise HTTPException(status_code=400, detail="Yetersiz bakiye")
-    withdrawal_details = {}
-    if data.bank_id:
-        bank = await db.banks.find_one({"bank_id": data.bank_id, "is_active": True}, {"_id": 0})
-        if not bank:
-            raise HTTPException(status_code=404, detail="Banka bulunamadi")
-        withdrawal_details = {"bank_name": bank['name'], "iban": bank['iban'], "account_holder": bank['account_holder'], "source": "system"}
-    elif data.iban and data.account_holder:
-        withdrawal_details = {"bank_name": data.bank_name or "Diger", "iban": data.iban, "account_holder": data.account_holder, "source": "manual"}
-    else:
-        raise HTTPException(status_code=400, detail="Banka secimi veya IBAN bilgisi gereklidir")
     txn = {
         "transaction_id": str(uuid.uuid4()), "user_id": user['user_id'],
         "user_name": user.get('name', ''), "type": "withdrawal",
-        "amount": data.amount, "bank_id": data.bank_id,
-        "withdrawal_details": withdrawal_details,
-        "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
+        "amount": data.amount, "status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat()
     }
     await db.transactions.insert_one(txn)
+    await send_email(user.get('email', ''), "Alarko Enerji - Para Cekme Talebi",
+        f"<h2>Para Cekme Talebi</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda para cekme talebiniz olusturulmustur. Admin onayi beklenmektedir.</p><p>Alarko Enerji Yatirim A.S.</p>")
     return {k: v for k, v in txn.items() if k != '_id'}
 
 @api_router.get("/transactions")
 async def get_transactions(user=Depends(get_current_user)):
     return await db.transactions.find({"user_id": user['user_id']}, {"_id": 0}).sort("created_at", -1).to_list(100)
+
+@api_router.get("/portfolio/withdrawal-check")
+async def withdrawal_check(user=Depends(get_current_user)):
+    one_month_ago = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+    recent_investments = await db.portfolios.find({"user_id": user['user_id'], "purchase_date": {"$gt": one_month_ago}}, {"_id": 0, "project_name": 1, "purchase_date": 1}).to_list(100)
+    return {"has_recent_investments": len(recent_investments) > 0, "recent_investments": recent_investments}
 
 # ===== KYC ROUTES =====
 @api_router.post("/kyc/upload")
