@@ -47,7 +47,7 @@ export default function Navbar({ transparent = false }) {
   ];
 
   const dashLinks = [
-    { href: '/dashboard', label: 'Panel', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'Islemlerim', icon: LayoutDashboard },
     { href: '/projects', label: 'Projeler', icon: Briefcase },
     { href: '/deposit', label: 'Para Yatir', icon: null },
     { href: '/withdraw', label: 'Para Cek', icon: null },
@@ -104,7 +104,7 @@ export default function Navbar({ transparent = false }) {
                     <UserCircle className="w-4 h-4 mr-2" /> Hesabim
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/dashboard')} data-testid="menu-dashboard">
-                    <LayoutDashboard className="w-4 h-4 mr-2" /> Panel
+                    <LayoutDashboard className="w-4 h-4 mr-2" /> Islemlerim
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/kyc')} data-testid="menu-kyc">
                     <Shield className="w-4 h-4 mr-2" /> Kimlik Dogrulama
