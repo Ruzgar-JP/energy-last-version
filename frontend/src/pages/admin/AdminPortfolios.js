@@ -49,11 +49,14 @@ export default function AdminPortfolios() {
     } catch (err) { toast.error(err.response?.data?.detail || 'Hata'); }
   };
 
-  const handleDelete = async (portfolioId) => {
-    if (!window.confirm('Bu hisseyi silmek istediginize emin misiniz?')) return;
+  const handleDelete = async () => {
+    const shares = parseInt(deleteShares);
+    if (!shares || shares <= 0) { toast.error('Gecerli bir adet girin'); return; }
+    if (shares > (deleteDialog.shares || 1)) { toast.error(`En fazla ${deleteDialog.shares} hisse silebilirsiniz`); return; }
     try {
-      await axios.delete(`${API}/admin/portfolios/${portfolioId}`, { headers });
-      toast.success('Hisse silindi');
+      await axios.delete(`${API}/admin/portfolios/${deleteDialog.portfolio_id}?shares=${shares}`, { headers });
+      toast.success(shares >= deleteDialog.shares ? 'Hisse tamamen silindi' : `${shares} hisse silindi`);
+      setDeleteDialog(null);
       fetchAll();
     } catch (err) { toast.error(err.response?.data?.detail || 'Hata'); }
   };
