@@ -55,10 +55,9 @@ export default function DashboardPage() {
     setSellLoading(true);
     try {
       await axios.post(`${API}/portfolio/sell`, { portfolio_id: sellDialog.portfolio_id, shares }, { headers });
-      toast.success(`${shares} hisse basariyla satildi`);
+      toast.success('Satim talebi olusturuldu. Admin onayi bekleniyor.');
       setSellDialog(null);
       fetchData();
-      refreshUser();
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Hata');
     } finally {
