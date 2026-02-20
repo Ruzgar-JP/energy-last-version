@@ -354,14 +354,29 @@ async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
     inv = await db.portfolios.find_one({"portfolio_id": data.portfolio_id, "user_id": user['user_id']}, {"_id": 0})
     if not inv:
         raise HTTPException(status_code=404, detail="Yatirim bulunamadi")
-    await db.users.update_one({"user_id": user['user_id']}, {"$inc": {"balance": inv['amount']}})
-    await db.portfolios.delete_one({"portfolio_id": data.portfolio_id})
+    total_shares = inv.get('shares', 1)
+    sell_shares = data.shares if data.shares > 0 else total_shares
+    if sell_shares > total_shares:
+        raise HTTPException(status_code=400, detail=f"En fazla {total_shares} hisse satabilirsiniz")
+    per_share_amount = inv['amount'] / total_shares
+    per_share_return = inv.get('monthly_return', 0) / total_shares
+    sell_amount = round(per_share_amount * sell_shares, 2)
+    if sell_shares == total_shares:
+        await db.portfolios.delete_one({"portfolio_id": data.portfolio_id})
+    else:
+        remaining_shares = total_shares - sell_shares
+        remaining_amount = round(per_share_amount * remaining_shares, 2)
+        remaining_return = round(per_share_return * remaining_shares, 2)
+        await db.portfolios.update_one({"portfolio_id": data.portfolio_id}, {"$set": {
+            "shares": remaining_shares, "amount": remaining_amount, "monthly_return": remaining_return
+        }})
+    await db.users.update_one({"user_id": user['user_id']}, {"$inc": {"balance": sell_amount}})
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatırım Satıldı", "message": f"{inv['amount']:,.0f} TL tutarındaki yatırımınız satıldı.",
+        "title": "Yatirim Satildi", "message": f"{sell_shares} hisse ({sell_amount:,.0f} TL) basariyla satildi.",
         "type": "sale", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
-    return {"message": "Yatirim basariyla satildi"}
+    return {"message": "Yatirim basariyla satildi", "sold_shares": sell_shares, "sold_amount": sell_amount}
 
 # ===== BANK ROUTES =====
 @api_router.get("/banks")
