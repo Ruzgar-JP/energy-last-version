@@ -40,13 +40,10 @@ export default function ProjectDetailPage() {
     setInvesting(true);
     try {
       await axios.post(`${API}/portfolio/invest`, { project_id: id, amount: investAmount }, { headers: { Authorization: `Bearer ${token}` } });
-      toast.success('Yatirim basarili!');
+      toast.success('Alim talebi olusturuldu. Admin onayi bekleniyor.');
       setDialogOpen(false);
-      refreshUser();
-      const r = await axios.get(`${API}/projects/${id}`);
-      setProject(r.data);
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Yatirim basarisiz');
+      toast.error(err.response?.data?.detail || 'Talep olusturulamadi');
     } finally {
       setInvesting(false);
     }
