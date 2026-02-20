@@ -648,6 +648,58 @@ async def get_admin_portfolios(user_id: str = None, user=Depends(get_admin_user)
             p['user_email'] = u.get('email', '')
     return portfolios
 
+@api_router.post("/admin/portfolios/add")
+async def admin_add_portfolio(data: dict, admin=Depends(get_admin_user)):
+    user_id = data.get('user_id')
+    project_id = data.get('project_id')
+    shares = data.get('shares', 1)
+    target = await db.users.find_one({"user_id": user_id}, {"_id": 0})
+    if not target:
+        raise HTTPException(status_code=404, detail="Kullanici bulunamadi")
+    project = await db.projects.find_one({"project_id": project_id}, {"_id": 0})
+    if not project:
+        raise HTTPException(status_code=404, detail="Proje bulunamadi")
+    amount = shares * SHARE_PRICE
+    usd_rate = get_usd_rate()
+    if shares >= 10: actual_rate, usd_based = 8.0, True
+    elif shares >= 5: actual_rate, usd_based = 7.0, True
+    else: actual_rate, usd_based = 7.0, False
+    if usd_based:
+        monthly_return = (amount / usd_rate) * (actual_rate / 100) * usd_rate
+    else:
+        monthly_return = amount * (actual_rate / 100)
+    entry = {
+        "portfolio_id": str(uuid.uuid4()), "user_id": user_id,
+        "project_id": project_id, "project_name": project['name'],
+        "project_type": project['type'], "amount": amount,
+        "shares": shares, "usd_based": usd_based,
+        "usd_rate_at_purchase": usd_rate if usd_based else None,
+        "monthly_return": round(monthly_return, 2), "return_rate": actual_rate,
+        "purchase_date": datetime.now(timezone.utc).isoformat(), "status": "active"
+    }
+    await db.portfolios.insert_one(entry)
+    return {k: v for k, v in entry.items() if k != '_id'}
+
+@api_router.delete("/admin/portfolios/{portfolio_id}")
+async def admin_delete_portfolio(portfolio_id: str, admin=Depends(get_admin_user)):
+    result = await db.portfolios.delete_one({"portfolio_id": portfolio_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Portfolyo bulunamadi")
+    return {"message": "Portfolyo silindi"}
+
+@api_router.post("/admin/kyc/approve-user/{user_id}")
+async def admin_approve_kyc_direct(user_id: str, admin=Depends(get_admin_user)):
+    target = await db.users.find_one({"user_id": user_id}, {"_id": 0})
+    if not target:
+        raise HTTPException(status_code=404, detail="Kullanici bulunamadi")
+    await db.users.update_one({"user_id": user_id}, {"$set": {"kyc_status": "approved"}})
+    await db.notifications.insert_one({
+        "notification_id": str(uuid.uuid4()), "user_id": user_id,
+        "title": "Kimlik Dogrulamasi Onaylandi", "message": "Kimlik dogrulamaniz admin tarafindan onaylandi. Artik yatirim yapabilirsiniz.",
+        "type": "kyc_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    return {"message": "KYC onaylandi"}
+
 # ===== PASSWORD CHANGE =====
 @api_router.post("/auth/change-password")
 async def change_password(data: PasswordChange, user=Depends(get_current_user)):
