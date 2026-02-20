@@ -164,6 +164,18 @@ async def get_admin_user(request: Request):
         raise HTTPException(status_code=403, detail="Admin yetkisi gerekli")
     return user
 
+# ===== EMAIL HELPER =====
+async def send_email(to_email: str, subject: str, html: str):
+    if not RESEND_API_KEY:
+        logger.info(f"E-posta gonderilmedi (API key yok): {to_email} - {subject}")
+        return
+    try:
+        params = {"from": SENDER_EMAIL, "to": [to_email], "subject": subject, "html": html}
+        await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"E-posta gonderildi: {to_email} - {subject}")
+    except Exception as e:
+        logger.error(f"E-posta gonderilemedi: {to_email} - {e}")
+
 # ===== AUTH ROUTES =====
 @api_router.post("/auth/register")
 async def register(data: UserRegister):
