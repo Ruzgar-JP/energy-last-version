@@ -10,6 +10,7 @@ const navItems = [
   { href: '/admin/banks', label: 'Bankalar', icon: Landmark },
   { href: '/admin/portfolios', label: 'Portfolyolar', icon: Briefcase },
   { href: '/admin/transactions', label: 'Islemler', icon: ArrowLeftRight },
+  { href: '/admin/trade-requests', label: 'Alim/Satim Talepleri', icon: ArrowLeftRight },
 ];
 
 export default function AdminLayout({ children }) {
