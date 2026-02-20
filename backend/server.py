@@ -177,39 +177,30 @@ async def send_email(to_email: str, subject: str, html: str):
         logger.error(f"E-posta gonderilemedi: {to_email} - {e}")
 
 # ===== AUTH ROUTES =====
-@api_router.post("/auth/register")
-async def register(data: UserRegister):
-    existing = await db.users.find_one({"email": data.email}, {"_id": 0})
-    if existing:
-        raise HTTPException(status_code=400, detail="Bu e-posta adresi zaten kayitli")
-    user_id = f"user_{uuid.uuid4().hex[:12]}"
-    user = {
-        "user_id": user_id, "email": data.email,
-        "password_hash": hash_password(data.password),
-        "name": data.name, "phone": data.phone,
-        "role": "investor", "kyc_status": "pending",
-        "balance": 0.0, "picture": "",
-        "created_at": datetime.now(timezone.utc).isoformat()
-    }
-    await db.users.insert_one(user)
-    token = create_token(user_id, "investor")
-    await db.notifications.insert_one({
-        "notification_id": str(uuid.uuid4()), "user_id": user_id,
-        "title": "Hoş Geldiniz!", "message": "Alarko Enerji platformuna hoş geldiniz. Yatırım yapmak için kimlik doğrulamanızı tamamlayın.",
-        "type": "welcome", "is_read": False,
-        "created_at": datetime.now(timezone.utc).isoformat()
-    })
-    return {"token": token, "user": {"user_id": user_id, "email": data.email, "name": data.name, "role": "investor", "kyc_status": "pending", "balance": 0.0, "phone": data.phone, "picture": ""}}
-
 @api_router.post("/auth/login")
 async def login(data: UserLogin):
     user = await db.users.find_one({"email": data.email}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=401, detail="E-posta veya sifre hatali")
+    if user.get('role') != 'admin':
+        raise HTTPException(status_code=401, detail="Bu giris yontemi sadece admin icin gecerlidir")
     if not user.get('password_hash'):
         raise HTTPException(status_code=401, detail="Bu hesap Google ile olusturulmus. Google ile giris yapin.")
     if not verify_password(data.password, user['password_hash']):
         raise HTTPException(status_code=401, detail="E-posta veya sifre hatali")
+    token = create_token(user['user_id'], user['role'])
+    user_data = {k: v for k, v in user.items() if k != 'password_hash'}
+    return {"token": token, "user": user_data}
+
+@api_router.post("/auth/login-investor")
+async def login_investor(data: InvestorLogin):
+    user = await db.users.find_one({"tc_kimlik": data.tc_kimlik}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="TC Kimlik No veya sifre hatali")
+    if not user.get('password_hash'):
+        raise HTTPException(status_code=401, detail="Sifre tanimlanmamis. Lutfen admin ile iletisime gecin.")
+    if not verify_password(data.password, user['password_hash']):
+        raise HTTPException(status_code=401, detail="TC Kimlik No veya sifre hatali")
     token = create_token(user['user_id'], user['role'])
     user_data = {k: v for k, v in user.items() if k != 'password_hash'}
     return {"token": token, "user": user_data}
