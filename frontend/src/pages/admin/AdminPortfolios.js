@@ -168,7 +168,7 @@ export default function AdminPortfolios() {
                               <p className="font-semibold text-sm">{p.amount.toLocaleString('tr-TR')} TL</p>
                               <p className="text-xs text-emerald-600">+{p.monthly_return.toLocaleString('tr-TR')} TL/ay</p>
                             </div>
-                            <Button size="sm" variant="ghost" className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0" onClick={() => handleDelete(p.portfolio_id)} data-testid={`delete-share-${p.portfolio_id}`}>
+                            <Button size="sm" variant="ghost" className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0" onClick={() => { setDeleteDialog(p); setDeleteShares(''); }} data-testid={`delete-share-${p.portfolio_id}`}>
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>
