@@ -702,11 +702,26 @@ async def admin_add_portfolio(data: dict, admin=Depends(get_admin_user)):
     return {k: v for k, v in entry.items() if k != '_id'}
 
 @api_router.delete("/admin/portfolios/{portfolio_id}")
-async def admin_delete_portfolio(portfolio_id: str, admin=Depends(get_admin_user)):
-    result = await db.portfolios.delete_one({"portfolio_id": portfolio_id})
-    if result.deleted_count == 0:
+async def admin_delete_portfolio(portfolio_id: str, shares: int = 0, admin=Depends(get_admin_user)):
+    inv = await db.portfolios.find_one({"portfolio_id": portfolio_id}, {"_id": 0})
+    if not inv:
         raise HTTPException(status_code=404, detail="Portfolyo bulunamadi")
-    return {"message": "Portfolyo silindi"}
+    total_shares = inv.get('shares', 1)
+    remove_shares = shares if shares > 0 else total_shares
+    if remove_shares > total_shares:
+        raise HTTPException(status_code=400, detail=f"En fazla {total_shares} hisse silebilirsiniz")
+    if remove_shares >= total_shares:
+        await db.portfolios.delete_one({"portfolio_id": portfolio_id})
+        return {"message": f"{total_shares} hisse tamamen silindi"}
+    per_share_amount = inv['amount'] / total_shares
+    per_share_return = inv.get('monthly_return', 0) / total_shares
+    remaining = total_shares - remove_shares
+    await db.portfolios.update_one({"portfolio_id": portfolio_id}, {"$set": {
+        "shares": remaining,
+        "amount": round(per_share_amount * remaining, 2),
+        "monthly_return": round(per_share_return * remaining, 2)
+    }})
+    return {"message": f"{remove_shares} hisse silindi, {remaining} hisse kaldi"}
 
 @api_router.post("/admin/kyc/approve-user/{user_id}")
 async def admin_approve_kyc_direct(user_id: str, admin=Depends(get_admin_user)):
