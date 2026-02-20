@@ -336,41 +336,20 @@ async def invest(data: InvestRequest, user=Depends(get_current_user)):
     if not project:
         raise HTTPException(status_code=404, detail="Proje bulunamadi")
     shares = int(data.amount / SHARE_PRICE)
-    usd_rate = get_usd_rate()
-    # Tiered return rates based on share count
-    if shares >= 10:
-        actual_rate = 8.0
-        usd_based = True
-    elif shares >= 5:
-        actual_rate = 7.0
-        usd_based = True
-    else:
-        actual_rate = 7.0
-        usd_based = False
-    if usd_based:
-        usd_amount = data.amount / usd_rate
-        monthly_return_usd = usd_amount * (actual_rate / 100)
-        monthly_return = monthly_return_usd * usd_rate
-    else:
-        monthly_return = data.amount * (actual_rate / 100)
-    entry = {
-        "portfolio_id": str(uuid.uuid4()), "user_id": user['user_id'],
+    req = {
+        "request_id": str(uuid.uuid4()), "user_id": user['user_id'],
+        "user_name": user.get('name', ''), "type": "buy",
         "project_id": data.project_id, "project_name": project['name'],
-        "project_type": project['type'], "amount": data.amount,
-        "shares": shares, "usd_based": usd_based,
-        "usd_rate_at_purchase": usd_rate if usd_based else None,
-        "monthly_return": round(monthly_return, 2), "return_rate": actual_rate,
-        "purchase_date": datetime.now(timezone.utc).isoformat(), "status": "active"
+        "project_type": project['type'], "shares": shares, "amount": data.amount,
+        "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
     }
-    await db.portfolios.insert_one(entry)
-    await db.users.update_one({"user_id": user['user_id']}, {"$inc": {"balance": -data.amount}})
-    await db.projects.update_one({"project_id": data.project_id}, {"$inc": {"funded_amount": data.amount, "investors_count": 1}})
+    await db.trade_requests.insert_one(req)
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatirim Basarili", "message": f"{project['name']} projesine {shares} hisse ({data.amount:,.0f} TL) yatirim yaptiniz.",
-        "type": "investment", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        "title": "Alim Talebi Olusturuldu", "message": f"{project['name']} projesine {shares} hisse ({data.amount:,.0f} TL) alim talebi olusturuldu. Admin onayi bekleniyor.",
+        "type": "trade_request", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
-    return {"message": "Yatirim basariyla gerceklestirildi", "portfolio": {k: v for k, v in entry.items() if k != '_id'}}
+    return {"message": "Alim talebi olusturuldu. Admin onayi bekleniyor.", "request": {k: v for k, v in req.items() if k != '_id'}}
 
 @api_router.post("/portfolio/sell")
 async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
@@ -382,24 +361,26 @@ async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
     if sell_shares > total_shares:
         raise HTTPException(status_code=400, detail=f"En fazla {total_shares} hisse satabilirsiniz")
     per_share_amount = inv['amount'] / total_shares
-    per_share_return = inv.get('monthly_return', 0) / total_shares
     sell_amount = round(per_share_amount * sell_shares, 2)
-    if sell_shares == total_shares:
-        await db.portfolios.delete_one({"portfolio_id": data.portfolio_id})
-    else:
-        remaining_shares = total_shares - sell_shares
-        remaining_amount = round(per_share_amount * remaining_shares, 2)
-        remaining_return = round(per_share_return * remaining_shares, 2)
-        await db.portfolios.update_one({"portfolio_id": data.portfolio_id}, {"$set": {
-            "shares": remaining_shares, "amount": remaining_amount, "monthly_return": remaining_return
-        }})
-    await db.users.update_one({"user_id": user['user_id']}, {"$inc": {"balance": sell_amount}})
+    req = {
+        "request_id": str(uuid.uuid4()), "user_id": user['user_id'],
+        "user_name": user.get('name', ''), "type": "sell",
+        "project_id": inv.get('project_id', ''), "project_name": inv.get('project_name', ''),
+        "project_type": inv.get('project_type', ''), "shares": sell_shares, "amount": sell_amount,
+        "portfolio_id": data.portfolio_id,
+        "status": "pending", "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.trade_requests.insert_one(req)
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Yatirim Satildi", "message": f"{sell_shares} hisse ({sell_amount:,.0f} TL) basariyla satildi.",
-        "type": "sale", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        "title": "Satim Talebi Olusturuldu", "message": f"{inv.get('project_name','')} projesinden {sell_shares} hisse ({sell_amount:,.0f} TL) satim talebi olusturuldu.",
+        "type": "trade_request", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
-    return {"message": "Yatirim basariyla satildi", "sold_shares": sell_shares, "sold_amount": sell_amount}
+    return {"message": "Satim talebi olusturuldu. Admin onayi bekleniyor.", "request": {k: v for k, v in req.items() if k != '_id'}}
+
+@api_router.get("/trade-requests")
+async def get_trade_requests(user=Depends(get_current_user)):
+    return await db.trade_requests.find({"user_id": user['user_id']}, {"_id": 0}).sort("created_at", -1).to_list(100)
 
 # ===== BANK ROUTES =====
 @api_router.get("/banks")
