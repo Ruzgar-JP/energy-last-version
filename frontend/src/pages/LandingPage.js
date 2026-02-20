@@ -336,10 +336,10 @@ export default function LandingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link to="/register">
+                  <Link to="/login">
                     <Button className={`w-full h-12 rounded-xl text-base ${plan.popular ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-[#0F3935] hover:bg-[#0F3935]/90 text-white'}`}
                       data-testid={`plan-btn-${plan.name.toLowerCase()}`}>
-                      Yatirima Basla <ArrowRight className="w-4 h-4 ml-2" />
+                      Giris Yap <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
