@@ -305,7 +305,7 @@ export default function DashboardPage() {
       <Dialog open={!!sellDialog} onOpenChange={(open) => !open && setSellDialog(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="font-[Poppins]">Hisse Sat</DialogTitle>
+            <DialogTitle className="font-[Poppins]">Satim Talebi</DialogTitle>
           </DialogHeader>
           {sellDialog && (
             <div className="space-y-4 pt-2">
