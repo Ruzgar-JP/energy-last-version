@@ -14,17 +14,16 @@ import WithdrawalPage from "@/pages/WithdrawalPage";
 import KYCPage from "@/pages/KYCPage";
 import NotificationsPage from "@/pages/NotificationsPage";
 import AccountPage from "@/pages/AccountPage";
+import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminUsers from "@/pages/admin/AdminUsers";
 import AdminKYC from "@/pages/admin/AdminKYC";
-import AdminBanks from "@/pages/admin/AdminBanks";
 import AdminPortfolios from "@/pages/admin/AdminPortfolios";
 import AdminTransactions from "@/pages/admin/AdminTransactions";
 import AdminTradeRequests from "@/pages/admin/AdminTradeRequests";
 
 function AppRouter() {
   const location = useLocation();
-  // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
   if (location.hash?.includes('session_id=')) {
     return <AuthCallback />;
   }
@@ -40,10 +39,10 @@ function AppRouter() {
       <Route path="/kyc" element={<ProtectedRoute><KYCPage /></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
       <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/admin" element={<ProtectedRoute admin><AdminDashboard /></ProtectedRoute>} />
       <Route path="/admin/users" element={<ProtectedRoute admin><AdminUsers /></ProtectedRoute>} />
       <Route path="/admin/kyc" element={<ProtectedRoute admin><AdminKYC /></ProtectedRoute>} />
-      <Route path="/admin/banks" element={<ProtectedRoute admin><AdminBanks /></ProtectedRoute>} />
       <Route path="/admin/portfolios" element={<ProtectedRoute admin><AdminPortfolios /></ProtectedRoute>} />
       <Route path="/admin/transactions" element={<ProtectedRoute admin><AdminTransactions /></ProtectedRoute>} />
       <Route path="/admin/trade-requests" element={<ProtectedRoute admin><AdminTradeRequests /></ProtectedRoute>} />
