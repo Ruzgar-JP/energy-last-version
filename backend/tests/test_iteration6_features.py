@@ -51,9 +51,8 @@ class TestAuthFlows:
         
         # Create a test investor
         test_email = f"test_investor_{uuid.uuid4().hex[:8]}@test.com"
-        test_tc = f"9{uuid.uuid4().hex[:10][:10]}"[:11]  # Generate 11-digit TC
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         create_res = requests.post(f"{BASE_URL}/api/admin/users/create", json={
             "name": "Test Investor",
@@ -85,9 +84,8 @@ class TestAuthFlows:
         headers = {"Authorization": f"Bearer {admin_token}"}
         
         # Create a test investor
-        test_tc = f"1{uuid.uuid4().hex[:10]}"[:11]
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         create_res = requests.post(f"{BASE_URL}/api/admin/users/create", json={
             "name": "TC Login Test",
@@ -134,9 +132,9 @@ class TestAdminUserCreation:
     def test_create_user_with_valid_tc_kimlik(self, admin_token):
         """POST /api/admin/users/create - creates user with valid 11-digit TC Kimlik"""
         headers = {"Authorization": f"Bearer {admin_token}"}
-        test_tc = f"2{uuid.uuid4().hex[:10]}"[:11]
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        # Generate a valid 11-digit TC (all digits)
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         response = requests.post(f"{BASE_URL}/api/admin/users/create", json={
             "name": "Valid TC User",
