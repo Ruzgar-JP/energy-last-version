@@ -67,6 +67,7 @@ class InvestRequest(BaseModel):
 
 class SellRequest(BaseModel):
     portfolio_id: str
+    shares: int = 0
 
 class BankCreate(BaseModel):
     name: str
