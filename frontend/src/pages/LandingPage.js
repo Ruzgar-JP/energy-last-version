@@ -475,9 +475,9 @@ export default function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
           <p className="text-emerald-100/60 mb-8 text-lg">Uzman danismanlarimiz sizinle iletisime gecerek en uygun yatirim planini belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/register">
-              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-10 h-13 rounded-xl text-base" data-testid="cta-register-btn">
-                Hemen Basvurun <ArrowRight className="w-5 h-5 ml-2" />
+            <Link to="/login">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-10 h-13 rounded-xl text-base" data-testid="cta-login-btn">
+                Giris Yap <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </div>
