@@ -168,9 +168,8 @@ class TestAdminUserCreation:
     def test_create_user_duplicate_tc_kimlik_rejects(self, admin_token):
         """POST /api/admin/users/create - rejects duplicate TC Kimlik"""
         headers = {"Authorization": f"Bearer {admin_token}"}
-        test_tc = f"3{uuid.uuid4().hex[:10]}"[:11]
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         # Create first user
         requests.post(f"{BASE_URL}/api/admin/users/create", json={
@@ -205,9 +204,8 @@ class TestSimplifiedTransactions:
         admin_token = admin_res.json()["token"]
         headers = {"Authorization": f"Bearer {admin_token}"}
         
-        test_tc = f"4{uuid.uuid4().hex[:10]}"[:11]
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         create_res = requests.post(f"{BASE_URL}/api/admin/users/create", json={
             "name": "Transaction Test User",
@@ -301,9 +299,8 @@ class TestTradeRequests:
         """Create investor with approved KYC and balance"""
         headers = {"Authorization": f"Bearer {admin_token}"}
         
-        test_tc = f"5{uuid.uuid4().hex[:10]}"[:11]
-        if len(test_tc) < 11:
-            test_tc = test_tc + "0" * (11 - len(test_tc))
+        import random
+        test_tc = "".join([str(random.randint(0, 9)) for _ in range(11)])
         
         create_res = requests.post(f"{BASE_URL}/api/admin/users/create", json={
             "name": "Trade Test User",
