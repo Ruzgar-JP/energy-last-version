@@ -20,6 +20,8 @@ export default function AdminPortfolios() {
   const [expanded, setExpanded] = useState(null);
   const [addDialog, setAddDialog] = useState(null);
   const [addForm, setAddForm] = useState({ project_id: '', shares: 1 });
+  const [deleteDialog, setDeleteDialog] = useState(null);
+  const [deleteShares, setDeleteShares] = useState('');
   const headers = { Authorization: `Bearer ${token}` };
 
   const fetchAll = () => {
