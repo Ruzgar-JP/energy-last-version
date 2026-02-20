@@ -10,6 +10,7 @@ RES ve GES projelerine yatirim platformu. Turkce, icerik dolu web sitesi.
 ## Investment System
 - 1 Hisse = 25.000 TL | Min: 1 hisse
 - 1-4 hisse: %7/ay TL | 5-9: %7/ay + USD | 10+: %8/ay + USD
+- Kismi satis destekleniyor (ornegin 3 hisseden 1 tanesini sat)
 
 ## Implemented Features (Feb 2026)
 - [x] Hero video carousel (4 video, 8s fade), Poppins font
@@ -18,20 +19,22 @@ RES ve GES projelerine yatirim platformu. Turkce, icerik dolu web sitesi.
 - [x] Auth: register, login (JWT + Google), password change
 - [x] KYC verification, notification system
 - [x] Dashboard with portfolio PieChart + BarChart
-- [x] Withdrawal with bank selection + custom IBAN ("Diger Bankalar") + admin approval
+- [x] Dashboard: USD bazli getiri gosterimi (aylik/yillik TL + USD)
+- [x] Dashboard: Kismi hisse satisi (adet sec, onizleme, onay/iptal)
+- [x] Withdrawal with bank selection + custom IBAN + admin approval
 - [x] Deposit with bank selection + admin approval
 - [x] Account page (profile + password change)
 - [x] Admin panel (users, KYC, banks, transactions, portfolios)
-- [x] Admin edit user info (name, email, phone, password), mobile responsive, full Turkish
-- [x] Admin transactions page shows withdrawal bank/IBAN details with "Manuel" badge
+- [x] Admin edit user info (name, email, phone, password)
+- [x] Admin transactions page shows withdrawal bank/IBAN details
+- [x] "Panel" -> "Islemlerim" yeniden adlandirma (tum alanlarda)
 
 ## Key API Endpoints
-- PUT /api/admin/users/{user_id}/info - Admin edit user name, email, phone, password
-- POST /api/transactions/withdraw - Withdrawal with bank_id OR manual iban/account_holder
-- GET /api/banks - List system banks
-- POST /api/transactions - Deposit flow
-- POST /api/portfolio/invest - Share-based investment
-- GET /api/usd-rate - Live USD/TRY rate
+- GET /api/portfolio - Includes usd_rate, total_monthly_return_usd, per-investment USD fields
+- POST /api/portfolio/sell - Accepts {portfolio_id, shares} for partial/full sell
+- PUT /api/admin/users/{user_id}/info - Admin edit name, email, phone, password
+- POST /api/transactions/withdraw - Withdrawal with bank selection or manual IBAN
+- GET /api/banks, POST /api/transactions, POST /api/portfolio/invest, GET /api/usd-rate
 
 ## Backlog
 P1: Self-edit profile, email notifications, PDF export, admin project CRUD
