@@ -540,8 +540,9 @@ async def get_admin_stats(user=Depends(get_admin_user)):
     portfolios = await db.portfolios.find({}, {"_id": 0, "amount": 1}).to_list(10000)
     total_invested = sum(p.get('amount', 0) for p in portfolios)
     pending_txns = await db.transactions.count_documents({"status": "pending"})
+    pending_trades = await db.trade_requests.count_documents({"status": "pending"})
     return {"total_users": total_users, "pending_kyc": pending_kyc, "total_projects": total_projects,
-            "total_balance": total_balance, "total_invested": total_invested, "pending_transactions": pending_txns}
+            "total_balance": total_balance, "total_invested": total_invested, "pending_transactions": pending_txns, "pending_trades": pending_trades}
 
 @api_router.get("/admin/users")
 async def get_admin_users(user=Depends(get_admin_user)):
