@@ -126,9 +126,6 @@ export default function Navbar({ transparent = false }) {
               <Link to="/login">
                 <Button variant="ghost" className={`${textClass} hover:bg-white/10`} data-testid="nav-login-btn">Giris Yap</Button>
               </Link>
-              <Link to="/register">
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white" data-testid="nav-register-btn">Yatirima Basla</Button>
-              </Link>
             </>
           )}
         </div>
