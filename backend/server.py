@@ -28,6 +28,12 @@ db = client[os.environ['DB_NAME']]
 JWT_SECRET = os.environ.get('JWT_SECRET', 'alarko-enerji-jwt-secret-2024-secure')
 JWT_ALGORITHM = 'HS256'
 
+# Resend Email
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
+
 UPLOAD_DIR = ROOT_DIR / 'uploads' / 'kyc'
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
