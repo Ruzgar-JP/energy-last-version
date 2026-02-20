@@ -290,9 +290,14 @@ async def get_usd_rate_endpoint():
 @api_router.get("/portfolio")
 async def get_portfolio(user=Depends(get_current_user)):
     investments = await db.portfolios.find({"user_id": user['user_id']}, {"_id": 0}).to_list(100)
+    usd_rate = get_usd_rate()
     total_invested = sum(i.get('amount', 0) for i in investments)
     total_monthly_return = sum(i.get('monthly_return', 0) for i in investments)
-    return {"investments": investments, "total_invested": total_invested, "total_monthly_return": total_monthly_return, "balance": user.get('balance', 0)}
+    for inv in investments:
+        inv['monthly_return_usd'] = round(inv.get('monthly_return', 0) / usd_rate, 2)
+        inv['amount_usd'] = round(inv.get('amount', 0) / usd_rate, 2)
+    total_monthly_return_usd = round(total_monthly_return / usd_rate, 2)
+    return {"investments": investments, "total_invested": total_invested, "total_monthly_return": total_monthly_return, "total_monthly_return_usd": total_monthly_return_usd, "usd_rate": usd_rate, "balance": user.get('balance', 0)}
 
 @api_router.post("/portfolio/invest")
 async def invest(data: InvestRequest, user=Depends(get_current_user)):
