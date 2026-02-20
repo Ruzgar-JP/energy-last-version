@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children, admin = false }) {
     );
   }
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to={admin ? "/admin/login" : "/login"} replace />;
   if (admin && user.role !== 'admin') return <Navigate to="/dashboard" replace />;
 
   return children;
