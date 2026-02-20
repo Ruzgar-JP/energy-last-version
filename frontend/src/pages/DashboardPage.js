@@ -5,7 +5,9 @@ import Navbar from '@/components/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Wallet, TrendingUp, Briefcase, ArrowUpRight, ArrowDownRight, Plus, Minus, Shield, Eye, ArrowRight, PieChart as PieIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Wallet, TrendingUp, Briefcase, ArrowUpRight, ArrowDownRight, Plus, Minus, Shield, Eye, PieChart as PieIcon, DollarSign, AlertTriangle } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -17,9 +19,12 @@ export default function DashboardPage() {
   const [portfolio, setPortfolio] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sellDialog, setSellDialog] = useState(null);
+  const [sellShares, setSellShares] = useState('');
+  const [sellLoading, setSellLoading] = useState(false);
   const headers = { Authorization: `Bearer ${token}` };
 
-  useEffect(() => {
+  const fetchData = () => {
     Promise.all([
       axios.get(`${API}/portfolio`, { headers }),
       axios.get(`${API}/transactions`, { headers })
@@ -28,25 +33,44 @@ export default function DashboardPage() {
       setTransactions(tRes.data.slice(0, 5));
     }).catch(() => toast.error('Veri yuklenemedi'))
       .finally(() => setLoading(false));
-  }, []);
+  };
 
-  const handleSell = async (portfolioId) => {
+  useEffect(() => { fetchData(); }, []);
+
+  const openSellDialog = (inv) => {
+    setSellDialog(inv);
+    setSellShares('');
+  };
+
+  const sellAmount = sellDialog ? (() => {
+    const shares = parseInt(sellShares) || 0;
+    if (shares <= 0 || shares > (sellDialog.shares || 1)) return 0;
+    return Math.round((sellDialog.amount / (sellDialog.shares || 1)) * shares);
+  })() : 0;
+
+  const handleSell = async () => {
+    const shares = parseInt(sellShares);
+    if (!shares || shares <= 0) { toast.error('Gecerli bir hisse adedi girin'); return; }
+    if (shares > (sellDialog.shares || 1)) { toast.error(`En fazla ${sellDialog.shares} hisse satabilirsiniz`); return; }
+    setSellLoading(true);
     try {
-      await axios.post(`${API}/portfolio/sell`, { portfolio_id: portfolioId }, { headers });
-      toast.success('Yatirim satildi');
-      const pRes = await axios.get(`${API}/portfolio`, { headers });
-      setPortfolio(pRes.data);
+      await axios.post(`${API}/portfolio/sell`, { portfolio_id: sellDialog.portfolio_id, shares }, { headers });
+      toast.success(`${shares} hisse basariyla satildi`);
+      setSellDialog(null);
+      fetchData();
       refreshUser();
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Hata');
+    } finally {
+      setSellLoading(false);
     }
   };
 
   if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>;
 
   const kycPending = user?.kyc_status !== 'approved';
+  const usdRate = portfolio?.usd_rate || 1;
 
-  // Chart data
   const pieData = portfolio?.investments?.reduce((acc, inv) => {
     const existing = acc.find(a => a.name === inv.project_name);
     if (existing) { existing.value += inv.amount; }
@@ -95,8 +119,8 @@ export default function DashboardPage() {
           {[
             { icon: Wallet, label: 'Bakiye', value: `₺${(user?.balance || 0).toLocaleString('tr-TR')}`, color: 'bg-emerald-500/10 text-emerald-600', sub: 'Kullanilabilir' },
             { icon: Briefcase, label: 'Toplam Yatirim', value: `₺${(portfolio?.total_invested || 0).toLocaleString('tr-TR')}`, color: 'bg-sky-500/10 text-sky-600', sub: `${portfolio?.investments?.length || 0} proje` },
-            { icon: TrendingUp, label: 'Aylik Getiri', value: `₺${(portfolio?.total_monthly_return || 0).toLocaleString('tr-TR')}`, color: 'bg-violet-500/10 text-violet-600', sub: 'Tahmini' },
-            { icon: PieIcon, label: 'Yillik Getiri', value: `₺${((portfolio?.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}`, color: 'bg-amber-500/10 text-amber-600', sub: '12 aylik projeksiyon' },
+            { icon: TrendingUp, label: 'Aylik Getiri', value: `₺${(portfolio?.total_monthly_return || 0).toLocaleString('tr-TR')}`, color: 'bg-violet-500/10 text-violet-600', sub: `$${(portfolio?.total_monthly_return_usd || 0).toLocaleString('en-US')} USD` },
+            { icon: DollarSign, label: 'Yillik Getiri', value: `₺${((portfolio?.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}`, color: 'bg-amber-500/10 text-amber-600', sub: `$${(((portfolio?.total_monthly_return_usd || 0)) * 12).toLocaleString('en-US')} USD` },
           ].map((s, i) => (
             <Card key={i} className="border-0 shadow-sm rounded-2xl" data-testid={`stat-card-${i}`}>
               <CardContent className="p-5 flex items-center gap-4">
@@ -111,6 +135,14 @@ export default function DashboardPage() {
           ))}
         </div>
 
+        {/* USD Rate Banner */}
+        {portfolio?.investments?.length > 0 && (
+          <div className="mb-6 p-3 rounded-xl bg-sky-50 border border-sky-200 flex items-center gap-3" data-testid="usd-rate-banner">
+            <DollarSign className="w-5 h-5 text-sky-600" />
+            <p className="text-sm text-sky-800">Guncel USD/TRY Kuru: <span className="font-bold">{usdRate.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+          </div>
+        )}
+
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3 mb-8">
           <Link to="/deposit"><Button className="bg-emerald-500 hover:bg-emerald-600 text-white gap-2 rounded-xl" data-testid="deposit-btn"><Plus className="w-4 h-4" /> Para Yatir</Button></Link>
@@ -121,7 +153,6 @@ export default function DashboardPage() {
         {/* Charts Section */}
         {portfolio?.investments?.length > 0 && (
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
-            {/* Portfolio Distribution */}
             <Card className="border-0 shadow-sm rounded-2xl">
               <CardHeader><CardTitle className="font-[Poppins] text-lg">Portfolyo Dagilimi</CardTitle></CardHeader>
               <CardContent>
@@ -137,7 +168,6 @@ export default function DashboardPage() {
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                {/* Type distribution */}
                 <div className="flex justify-center gap-6 mt-2">
                   {typeData.map((t, i) => (
                     <div key={i} className="flex items-center gap-2">
@@ -149,7 +179,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            {/* Monthly Return Chart */}
             <Card className="border-0 shadow-sm rounded-2xl">
               <CardHeader><CardTitle className="font-[Poppins] text-lg">Maliyet & Aylik Getiri</CardTitle></CardHeader>
               <CardContent>
@@ -180,33 +209,49 @@ export default function DashboardPage() {
                 {portfolio?.investments?.length > 0 ? (
                   <div className="space-y-3">
                     {portfolio.investments.map(inv => (
-                      <div key={inv.portfolio_id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border hover:shadow-sm transition-shadow" data-testid={`investment-${inv.portfolio_id}`}>
-                        <div className="flex items-center gap-3">
-                          <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${inv.project_type === 'GES' ? 'bg-amber-500/10' : 'bg-sky-500/10'}`}>
-                            {inv.project_type === 'GES' ? <span className="text-amber-600 text-xs font-bold">GES</span> : <span className="text-sky-600 text-xs font-bold">RES</span>}
+                      <div key={inv.portfolio_id} className="p-4 rounded-xl bg-slate-50 border hover:shadow-sm transition-shadow" data-testid={`investment-${inv.portfolio_id}`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${inv.project_type === 'GES' ? 'bg-amber-500/10' : 'bg-sky-500/10'}`}>
+                              {inv.project_type === 'GES' ? <span className="text-amber-600 text-xs font-bold">GES</span> : <span className="text-sky-600 text-xs font-bold">RES</span>}
+                            </div>
+                            <div>
+                              <p className="font-medium text-sm text-slate-900">{inv.project_name}</p>
+                              <p className="text-xs text-slate-500">{inv.shares} hisse | %{inv.return_rate} aylik</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="font-medium text-sm text-slate-900">{inv.project_name}</p>
-                            <p className="text-xs text-slate-500">%{inv.return_rate} aylik getiri</p>
+                          <div className="text-right flex items-center gap-4">
+                            <div>
+                              <p className="font-semibold text-slate-900">₺{inv.amount.toLocaleString('tr-TR')}</p>
+                              <p className="text-xs text-emerald-600 font-medium">+₺{inv.monthly_return.toLocaleString('tr-TR')}/ay</p>
+                              <p className="text-[10px] text-sky-600 font-medium">+${(inv.monthly_return_usd || 0).toLocaleString('en-US')}/ay</p>
+                            </div>
+                            <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 rounded-lg" onClick={() => openSellDialog(inv)} data-testid={`sell-btn-${inv.portfolio_id}`}>
+                              Sat
+                            </Button>
                           </div>
-                        </div>
-                        <div className="text-right flex items-center gap-4">
-                          <div>
-                            <p className="font-semibold text-slate-900">₺{inv.amount.toLocaleString('tr-TR')}</p>
-                            <p className="text-xs text-emerald-600 font-medium">+₺{inv.monthly_return.toLocaleString('tr-TR')}/ay</p>
-                          </div>
-                          <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 rounded-lg" onClick={() => handleSell(inv.portfolio_id)} data-testid={`sell-btn-${inv.portfolio_id}`}>
-                            Sat
-                          </Button>
                         </div>
                       </div>
                     ))}
                     {/* Summary */}
                     <div className="mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100">
-                      <div className="grid grid-cols-3 gap-4 text-center">
-                        <div><p className="text-xs text-emerald-600">Toplam Maliyet</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_invested || 0).toLocaleString('tr-TR')}</p></div>
-                        <div><p className="text-xs text-emerald-600">Aylik Getiri</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_monthly_return || 0).toLocaleString('tr-TR')}</p></div>
-                        <div><p className="text-xs text-emerald-600">Yillik Getiri</p><p className="font-bold text-emerald-800 font-[Poppins]">₺{((portfolio.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}</p></div>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div>
+                          <p className="text-xs text-emerald-600">Toplam Maliyet</p>
+                          <p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_invested || 0).toLocaleString('tr-TR')}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-emerald-600">Aylik Getiri (TL)</p>
+                          <p className="font-bold text-emerald-800 font-[Poppins]">₺{(portfolio.total_monthly_return || 0).toLocaleString('tr-TR')}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-sky-600">Aylik Getiri (USD)</p>
+                          <p className="font-bold text-sky-800 font-[Poppins]">${(portfolio.total_monthly_return_usd || 0).toLocaleString('en-US')}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-emerald-600">Yillik Getiri</p>
+                          <p className="font-bold text-emerald-800 font-[Poppins]">₺{((portfolio.total_monthly_return || 0) * 12).toLocaleString('tr-TR')}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -256,6 +301,90 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Sell Confirmation Dialog */}
+      <Dialog open={!!sellDialog} onOpenChange={(open) => !open && setSellDialog(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-[Poppins]">Hisse Sat</DialogTitle>
+          </DialogHeader>
+          {sellDialog && (
+            <div className="space-y-4 pt-2">
+              <div className="p-4 rounded-xl bg-slate-50 border">
+                <p className="font-medium text-slate-900">{sellDialog.project_name}</p>
+                <div className="mt-2 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p className="text-xs text-slate-400">Toplam Hisse</p>
+                    <p className="font-semibold">{sellDialog.shares} hisse</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Toplam Deger</p>
+                    <p className="font-semibold">₺{sellDialog.amount.toLocaleString('tr-TR')}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Hisse Basi</p>
+                    <p className="font-semibold">₺{Math.round(sellDialog.amount / (sellDialog.shares || 1)).toLocaleString('tr-TR')}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400">Aylik Getiri</p>
+                    <p className="font-semibold text-emerald-600">₺{sellDialog.monthly_return.toLocaleString('tr-TR')}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-1.5">Kac hisse satmak istiyorsunuz?</label>
+                <Input
+                  type="number"
+                  min="1"
+                  max={sellDialog.shares}
+                  placeholder={`1 - ${sellDialog.shares}`}
+                  value={sellShares}
+                  onChange={e => setSellShares(e.target.value)}
+                  className="h-11"
+                  data-testid="sell-shares-input"
+                />
+                <div className="flex gap-2 mt-2">
+                  {[1, Math.ceil((sellDialog.shares || 1) / 2), sellDialog.shares].filter((v, i, arr) => arr.indexOf(v) === i).map(n => (
+                    <Button key={n} size="sm" variant="outline" className="text-xs rounded-lg" onClick={() => setSellShares(String(n))} data-testid={`sell-quick-${n}`}>
+                      {n} hisse
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {sellAmount > 0 && (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200" data-testid="sell-preview">
+                  <p className="text-sm text-emerald-700 mb-1">Bakiyenize aktarilacak tutar:</p>
+                  <p className="text-2xl font-bold text-emerald-800 font-[Poppins]">₺{sellAmount.toLocaleString('tr-TR')}</p>
+                  <p className="text-xs text-sky-600 mt-1">${(sellAmount / usdRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD</p>
+                </div>
+              )}
+
+              {parseInt(sellShares) > 0 && parseInt(sellShares) > (sellDialog.shares || 1) && (
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-red-50 border border-red-200">
+                  <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+                  <p className="text-xs text-red-700">En fazla {sellDialog.shares} hisse satabilirsiniz.</p>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={() => setSellDialog(null)} data-testid="sell-cancel-btn">
+                  Iptal
+                </Button>
+                <Button
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white"
+                  onClick={handleSell}
+                  disabled={sellLoading || sellAmount <= 0}
+                  data-testid="sell-confirm-btn"
+                >
+                  {sellLoading ? 'Satiliyor...' : 'Onayla ve Sat'}
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
