@@ -681,6 +681,114 @@ async def update_user_info(user_id: str, data: UserInfoUpdate, admin=Depends(get
     updated = await db.users.find_one({"user_id": user_id}, {"_id": 0, "password_hash": 0})
     return updated
 
+# ===== ADMIN CREATE USER =====
+@api_router.post("/admin/users/create")
+async def admin_create_user(data: AdminUserCreate, admin=Depends(get_admin_user)):
+    if len(data.tc_kimlik) != 11 or not data.tc_kimlik.isdigit():
+        raise HTTPException(status_code=400, detail="TC Kimlik No 11 haneli olmalidir")
+    existing_tc = await db.users.find_one({"tc_kimlik": data.tc_kimlik}, {"_id": 0})
+    if existing_tc:
+        raise HTTPException(status_code=400, detail="Bu TC Kimlik No ile kayitli bir kullanici var")
+    existing_email = await db.users.find_one({"email": data.email}, {"_id": 0})
+    if existing_email:
+        raise HTTPException(status_code=400, detail="Bu e-posta adresi zaten kayitli")
+    if len(data.password) < 6:
+        raise HTTPException(status_code=400, detail="Sifre en az 6 karakter olmali")
+    user_id = f"user_{uuid.uuid4().hex[:12]}"
+    user = {
+        "user_id": user_id, "email": data.email,
+        "password_hash": hash_password(data.password),
+        "name": data.name, "phone": data.phone, "tc_kimlik": data.tc_kimlik,
+        "role": "investor", "kyc_status": "pending",
+        "balance": 0.0, "picture": "",
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.users.insert_one(user)
+    await db.notifications.insert_one({
+        "notification_id": str(uuid.uuid4()), "user_id": user_id,
+        "title": "Hos Geldiniz!", "message": "Alarko Enerji platformuna hos geldiniz.",
+        "type": "welcome", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    await send_email(data.email, "Alarko Enerji - Hesabiniz Olusturuldu",
+        f"<h2>Hosgeldiniz!</h2><p>Sayin {data.name},</p><p>Alarko Enerji platformunda hesabiniz olusturulmustur.</p><p><strong>TC Kimlik No:</strong> {data.tc_kimlik}</p><p><strong>Sifreniz:</strong> {data.password}</p><p>Platformumuza giris yaparak yatirimlarinizi takip edebilirsiniz.</p><p>Alarko Enerji Yatirim A.S.</p>")
+    return {k: v for k, v in user.items() if k not in ('_id', 'password_hash')}
+
+# ===== ADMIN TRADE REQUESTS =====
+@api_router.get("/admin/trade-requests")
+async def get_admin_trade_requests(user=Depends(get_admin_user)):
+    return await db.trade_requests.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+
+@api_router.put("/admin/trade-requests/{request_id}")
+async def update_trade_request(request_id: str, data: TransactionStatusUpdate, admin=Depends(get_admin_user)):
+    req = await db.trade_requests.find_one({"request_id": request_id}, {"_id": 0})
+    if not req:
+        raise HTTPException(status_code=404, detail="Talep bulunamadi")
+    if req.get('status') != 'pending':
+        raise HTTPException(status_code=400, detail="Bu talep zaten islendi")
+    await db.trade_requests.update_one({"request_id": request_id}, {"$set": {"status": data.status, "processed_at": datetime.now(timezone.utc).isoformat()}})
+    user = await db.users.find_one({"user_id": req['user_id']}, {"_id": 0})
+    if data.status == 'approved' and req['type'] == 'buy':
+        if not user or user.get('balance', 0) < req['amount']:
+            await db.trade_requests.update_one({"request_id": request_id}, {"$set": {"status": "rejected"}})
+            raise HTTPException(status_code=400, detail="Kullanicinin bakiyesi yetersiz")
+        shares = req['shares']
+        usd_rate = get_usd_rate()
+        if shares >= 10: actual_rate, usd_based = 8.0, True
+        elif shares >= 5: actual_rate, usd_based = 7.0, True
+        else: actual_rate, usd_based = 7.0, False
+        if usd_based:
+            monthly_return = (req['amount'] / usd_rate) * (actual_rate / 100) * usd_rate
+        else:
+            monthly_return = req['amount'] * (actual_rate / 100)
+        entry = {
+            "portfolio_id": str(uuid.uuid4()), "user_id": req['user_id'],
+            "project_id": req['project_id'], "project_name": req['project_name'],
+            "project_type": req.get('project_type', ''), "amount": req['amount'],
+            "shares": shares, "usd_based": usd_based,
+            "usd_rate_at_purchase": usd_rate if usd_based else None,
+            "monthly_return": round(monthly_return, 2), "return_rate": actual_rate,
+            "purchase_date": datetime.now(timezone.utc).isoformat(), "status": "active"
+        }
+        await db.portfolios.insert_one(entry)
+        await db.users.update_one({"user_id": req['user_id']}, {"$inc": {"balance": -req['amount']}})
+        await db.projects.update_one({"project_id": req['project_id']}, {"$inc": {"funded_amount": req['amount'], "investors_count": 1}})
+        await db.notifications.insert_one({
+            "notification_id": str(uuid.uuid4()), "user_id": req['user_id'],
+            "title": "Alim Talebi Onaylandi", "message": f"{req['project_name']} projesine {shares} hisse yatiriminiz onaylandi.",
+            "type": "trade_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        })
+    elif data.status == 'approved' and req['type'] == 'sell':
+        inv = await db.portfolios.find_one({"portfolio_id": req.get('portfolio_id', ''), "user_id": req['user_id']}, {"_id": 0})
+        if not inv:
+            await db.trade_requests.update_one({"request_id": request_id}, {"$set": {"status": "rejected"}})
+            raise HTTPException(status_code=400, detail="Yatirim bulunamadi")
+        total_shares = inv.get('shares', 1)
+        sell_shares = req['shares']
+        per_share_amount = inv['amount'] / total_shares
+        per_share_return = inv.get('monthly_return', 0) / total_shares
+        sell_amount = round(per_share_amount * sell_shares, 2)
+        if sell_shares >= total_shares:
+            await db.portfolios.delete_one({"portfolio_id": req['portfolio_id']})
+        else:
+            remaining = total_shares - sell_shares
+            await db.portfolios.update_one({"portfolio_id": req['portfolio_id']}, {"$set": {
+                "shares": remaining, "amount": round(per_share_amount * remaining, 2), "monthly_return": round(per_share_return * remaining, 2)
+            }})
+        await db.users.update_one({"user_id": req['user_id']}, {"$inc": {"balance": sell_amount}})
+        await db.notifications.insert_one({
+            "notification_id": str(uuid.uuid4()), "user_id": req['user_id'],
+            "title": "Satim Talebi Onaylandi", "message": f"{sell_shares} hisse ({sell_amount:,.0f} TL) satim talebiniz onaylandi.",
+            "type": "trade_approved", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        })
+    elif data.status == 'rejected':
+        await db.notifications.insert_one({
+            "notification_id": str(uuid.uuid4()), "user_id": req['user_id'],
+            "title": f"{'Alim' if req['type']=='buy' else 'Satim'} Talebi Reddedildi",
+            "message": f"{req.get('project_name','')} projesine ait talebiniz reddedildi.",
+            "type": "trade_rejected", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
+        })
+    return {"message": "Talep guncellendi"}
+
 # ===== SEED DATA =====
 @app.on_event("startup")
 async def seed_data():
