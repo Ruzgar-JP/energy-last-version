@@ -797,7 +797,7 @@ async def seed_data():
         await db.users.insert_one({
             "user_id": f"admin_{uuid.uuid4().hex[:12]}", "email": "admin@alarkoenerji.com",
             "password_hash": hash_password("admin123"), "name": "Admin",
-            "phone": "+90 555 000 0000", "role": "admin", "kyc_status": "approved",
+            "phone": "+90 555 000 0000", "tc_kimlik": "", "role": "admin", "kyc_status": "approved",
             "balance": 0.0, "picture": "", "created_at": datetime.now(timezone.utc).isoformat()
         })
         logger.info("Admin kullanicisi olusturuldu")
