@@ -82,9 +82,9 @@ export default function LandingPage() {
                 Turkiye'nin oncu yenilenebilir enerji projelerine yatirim yapin. Profesyonel yatirim danismanligi ve seffaf portfolyo yonetimiyle geleceginizi guvence altina alin.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <Link to="/register">
-                  <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-13 text-base rounded-xl shadow-lg shadow-emerald-500/25" data-testid="hero-cta-register">
-                    Yatirima Basla <ArrowRight className="w-5 h-5 ml-2" />
+                <Link to="/login">
+                  <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-13 text-base rounded-xl shadow-lg shadow-emerald-500/25" data-testid="hero-cta-login">
+                    Giris Yap <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
                 <Link to="/projects">
