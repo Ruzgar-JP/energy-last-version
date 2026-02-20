@@ -21,6 +21,7 @@ export default function AdminDashboard() {
     { icon: TrendingUp, label: 'Toplam Yatirim', value: `${(stats.total_invested / 1000000).toFixed(1)}M TL`, color: 'bg-violet-500/10 text-violet-600' },
     { icon: Landmark, label: 'Toplam Bakiye', value: `${(stats.total_balance).toLocaleString('tr-TR')} TL`, color: 'bg-pink-500/10 text-pink-600' },
     { icon: ArrowLeftRight, label: 'Bekleyen Islem', value: stats.pending_transactions, color: 'bg-orange-500/10 text-orange-600' },
+    { icon: ArrowLeftRight, label: 'Bekleyen Alim/Satim', value: stats.pending_trades || 0, color: 'bg-cyan-500/10 text-cyan-600' },
   ] : [];
 
   return (
