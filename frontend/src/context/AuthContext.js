@@ -34,14 +34,6 @@ export function AuthProvider({ children }) {
     return res.data.user;
   };
 
-  const register = async (data) => {
-    const res = await axios.post(`${API}/auth/register`, data);
-    localStorage.setItem('alarko_token', res.data.token);
-    setToken(res.data.token);
-    setUser(res.data.user);
-    return res.data.user;
-  };
-
   const googleCallback = async (sessionId) => {
     const res = await axios.post(`${API}/auth/google-callback`, { session_id: sessionId });
     localStorage.setItem('alarko_token', res.data.token);
