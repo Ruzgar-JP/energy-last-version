@@ -49,7 +49,7 @@ export default function NotificationsPage() {
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <Link to="/dashboard" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Panele Don
+          <ArrowLeft className="w-4 h-4" /> Islemlerime Don
         </Link>
         <div className="flex justify-between items-center mb-8">
           <div>

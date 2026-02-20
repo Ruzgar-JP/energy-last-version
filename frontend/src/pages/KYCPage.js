@@ -53,7 +53,7 @@ export default function KYCPage() {
       <Navbar />
       <div className="max-w-2xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <Link to="/dashboard" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Panele Don
+          <ArrowLeft className="w-4 h-4" /> Islemlerime Don
         </Link>
         <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora] mb-2">Kimlik Dogrulama</h1>
         <p className="text-slate-500 mb-8">Yatirim yapabilmek icin kimlik belgenizi dogrulayin.</p>
