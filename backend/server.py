@@ -49,13 +49,25 @@ class UserRegister(BaseModel):
     password: str
     name: str
     phone: str = ""
+    tc_kimlik: str = ""
 
 class UserLogin(BaseModel):
     email: str
     password: str
 
+class InvestorLogin(BaseModel):
+    tc_kimlik: str
+    password: str
+
 class GoogleAuthCallback(BaseModel):
     session_id: str
+
+class AdminUserCreate(BaseModel):
+    name: str
+    email: str
+    phone: str = ""
+    tc_kimlik: str
+    password: str
 
 class ProjectCreate(BaseModel):
     name: str
