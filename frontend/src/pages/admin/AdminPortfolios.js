@@ -229,6 +229,48 @@ export default function AdminPortfolios() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Delete Share Dialog */}
+      <Dialog open={!!deleteDialog} onOpenChange={(o) => !o && setDeleteDialog(null)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-[Poppins] text-red-700">Hisse Sil</DialogTitle>
+          </DialogHeader>
+          {deleteDialog && (
+            <div className="space-y-4 pt-2">
+              <div className="p-4 rounded-xl bg-slate-50 border">
+                <p className="font-medium text-slate-900">{deleteDialog.project_name}</p>
+                <p className="text-sm text-slate-500 mt-1">Mevcut: <strong>{deleteDialog.shares} hisse</strong> ({deleteDialog.amount?.toLocaleString('tr-TR')} TL)</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-1.5">Kac hisse silinsin?</label>
+                <Input type="number" min="1" max={deleteDialog.shares} placeholder={`1 - ${deleteDialog.shares}`} value={deleteShares} onChange={e => setDeleteShares(e.target.value)} className="h-11" data-testid="delete-shares-input" />
+                <div className="flex gap-2 mt-2">
+                  {[1, Math.ceil((deleteDialog.shares || 1) / 2), deleteDialog.shares].filter((v, i, a) => a.indexOf(v) === i && v > 0).map(n => (
+                    <Button key={n} size="sm" variant="outline" className="text-xs rounded-lg" onClick={() => setDeleteShares(String(n))} data-testid={`delete-quick-${n}`}>
+                      {n === deleteDialog.shares ? 'Tumu' : `${n} hisse`}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              {parseInt(deleteShares) > 0 && parseInt(deleteShares) <= deleteDialog.shares && (
+                <div className="p-3 rounded-xl bg-red-50 border border-red-200">
+                  <p className="text-sm text-red-700">
+                    {parseInt(deleteShares) >= deleteDialog.shares
+                      ? <><strong>{deleteDialog.shares} hisse</strong> tamamen silinecek.</>
+                      : <><strong>{deleteShares} hisse</strong> silinecek, <strong>{deleteDialog.shares - parseInt(deleteShares)} hisse</strong> kalacak.</>
+                    }
+                  </p>
+                </div>
+              )}
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={() => setDeleteDialog(null)} data-testid="delete-cancel-btn">Iptal</Button>
+                <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white" onClick={handleDelete} disabled={!parseInt(deleteShares) || parseInt(deleteShares) <= 0} data-testid="delete-confirm-btn">Sil</Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 }
