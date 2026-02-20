@@ -161,9 +161,6 @@ export default function Navbar({ transparent = false }) {
               ) : (
                 <>
                   <Link to="/login" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10">Giris Yap</Link>
-                  <Link to="/register" onClick={() => setMobileOpen(false)}>
-                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 mt-2">Yatirima Basla</Button>
-                  </Link>
                 </>
               )}
             </div>
