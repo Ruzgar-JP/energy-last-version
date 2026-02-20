@@ -377,7 +377,7 @@ export default function DashboardPage() {
                   disabled={sellLoading || sellAmount <= 0}
                   data-testid="sell-confirm-btn"
                 >
-                  {sellLoading ? 'Satiliyor...' : 'Onayla ve Sat'}
+                  {sellLoading ? 'Talep olusturuluyor...' : 'Satim Talebi Olustur'}
                 </Button>
               </div>
             </div>
