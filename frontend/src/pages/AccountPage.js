@@ -22,28 +22,28 @@ export default function AccountPage() {
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (pwForm.newPw !== pwForm.confirm) { toast.error('Yeni sifreler eslesmiyor'); return; }
-    if (pwForm.newPw.length < 6) { toast.error('Yeni sifre en az 6 karakter olmali'); return; }
+    if (pwForm.newPw !== pwForm.confirm) { toast.error('Yeni şifreler eşleşmiyor'); return; }
+    if (pwForm.newPw.length < 6) { toast.error('Yeni şifre en az 6 karakter olmalı'); return; }
     setPwLoading(true);
     try {
       await axios.post(`${API}/auth/change-password`, {
         current_password: pwForm.current,
         new_password: pwForm.newPw
       }, { headers });
-      toast.success('Sifre basariyla degistirildi');
+      toast.success('Şifre başarıyla değiştirildi');
       setPwForm({ current: '', newPw: '', confirm: '' });
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Sifre degistirilemedi');
+      toast.error(err.response?.data?.detail || 'Şifre değiştirilemedi');
     } finally {
       setPwLoading(false);
     }
   };
 
   const kycMap = {
-    approved: { label: 'Onaylandi', color: 'bg-emerald-100 text-emerald-700' },
-    submitted: { label: 'Inceleniyor', color: 'bg-amber-100 text-amber-700' },
+    approved: { label: 'Onaylandı', color: 'bg-emerald-100 text-emerald-700' },
+    submitted: { label: 'İnceleniyor', color: 'bg-amber-100 text-amber-700' },
     rejected: { label: 'Reddedildi', color: 'bg-red-100 text-red-700' },
-    pending: { label: 'Belge Yukleyin', color: 'bg-slate-100 text-slate-600' }
+    pending: { label: 'Belge Yükleyin', color: 'bg-slate-100 text-slate-600' }
   };
   const kyc = kycMap[user?.kyc_status] || kycMap.pending;
   const isGoogleUser = !user?.password_hash && user?.picture;
@@ -53,8 +53,8 @@ export default function AccountPage() {
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins]" data-testid="account-title">Hesabim</h1>
-          <p className="text-slate-500 mt-1">Hesap bilgilerinizi ve guvenlik ayarlarinizi yonetin.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins]" data-testid="account-title">Hesabım</h1>
+          <p className="text-slate-500 mt-1">Hesap bilgilerinizi ve güvenlik ayarlarınızı yönetin.</p>
         </div>
 
         {/* Profile Info */}
@@ -73,7 +73,7 @@ export default function AccountPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-lg text-slate-900" data-testid="profile-name">{user?.name}</h3>
-                <p className="text-sm text-slate-500">{user?.role === 'admin' ? 'Yonetici' : 'Yatirimci'}</p>
+                <p className="text-sm text-slate-500">{user?.role === 'admin' ? 'Yönetici' : 'Yatırımcı'}</p>
               </div>
             </div>
             <Separator />
@@ -89,20 +89,20 @@ export default function AccountPage() {
                 <Phone className="w-5 h-5 text-slate-400" />
                 <div>
                   <p className="text-xs text-slate-400">Telefon</p>
-                  <p className="text-sm font-medium text-slate-900" data-testid="profile-phone">{user?.phone || 'Belirtilmemis'}</p>
+                  <p className="text-sm font-medium text-slate-900" data-testid="profile-phone">{user?.phone || 'Belirtilmemiş'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 py-2">
                 <Shield className="w-5 h-5 text-slate-400" />
                 <div>
-                  <p className="text-xs text-slate-400">Kimlik Dogrulama (KYC)</p>
+                  <p className="text-xs text-slate-400">Kimlik Doğrulama (KYC)</p>
                   <Badge className={kyc.color} data-testid="profile-kyc-status">{kyc.label}</Badge>
                 </div>
               </div>
               <div className="flex items-center gap-3 py-2">
                 <User className="w-5 h-5 text-slate-400" />
                 <div>
-                  <p className="text-xs text-slate-400">Kayit Tarihi</p>
+                  <p className="text-xs text-slate-400">Kayıt Tarihi</p>
                   <p className="text-sm font-medium text-slate-900">{user?.created_at ? new Date(user.created_at).toLocaleDateString('tr-TR') : '-'}</p>
                 </div>
               </div>
@@ -114,24 +114,24 @@ export default function AccountPage() {
         <Card className="border-0 shadow-sm rounded-2xl" data-testid="password-card">
           <CardHeader>
             <CardTitle className="font-[Poppins] text-lg flex items-center gap-2">
-              <Lock className="w-5 h-5" /> Sifre Degistir
+              <Lock className="w-5 h-5" /> Şifre Değiştir
             </CardTitle>
           </CardHeader>
           <CardContent>
             {isGoogleUser ? (
               <div className="bg-slate-50 rounded-xl p-4 text-center">
-                <p className="text-sm text-slate-500">Bu hesap Google ile olusturulmustur. Sifre degistirme islemi yapilamaz.</p>
+                <p className="text-sm text-slate-500">Bu hesap Google ile oluşturulmuştur. Şifre değiştirme işlemi yapılamaz.</p>
               </div>
             ) : (
               <form onSubmit={handlePasswordChange} className="space-y-4">
                 <div>
-                  <Label className="text-sm text-slate-700">Mevcut Sifre</Label>
+                  <Label className="text-sm text-slate-700">Mevcut Şifre</Label>
                   <div className="relative mt-1">
                     <Input
                       type={showCurrent ? 'text' : 'password'}
                       value={pwForm.current}
                       onChange={e => setPwForm(p => ({ ...p, current: e.target.value }))}
-                      placeholder="Mevcut sifreniz"
+                      placeholder="Mevcut şifreniz"
                       className="h-11 pr-10"
                       required
                       data-testid="current-password-input"
@@ -142,7 +142,7 @@ export default function AccountPage() {
                   </div>
                 </div>
                 <div>
-                  <Label className="text-sm text-slate-700">Yeni Sifre</Label>
+                  <Label className="text-sm text-slate-700">Yeni Şifre</Label>
                   <div className="relative mt-1">
                     <Input
                       type={showNew ? 'text' : 'password'}
@@ -159,13 +159,13 @@ export default function AccountPage() {
                   </div>
                 </div>
                 <div>
-                  <Label className="text-sm text-slate-700">Yeni Sifre (Tekrar)</Label>
+                  <Label className="text-sm text-slate-700">Yeni Şifre (Tekrar)</Label>
                   <div className="relative mt-1">
                     <Input
                       type={showConfirm ? 'text' : 'password'}
                       value={pwForm.confirm}
                       onChange={e => setPwForm(p => ({ ...p, confirm: e.target.value }))}
-                      placeholder="Yeni sifrenizi tekrarlayin"
+                      placeholder="Yeni şifrenizi tekrarlayın"
                       className="h-11 pr-10"
                       required
                       data-testid="confirm-password-input"
@@ -176,7 +176,7 @@ export default function AccountPage() {
                   </div>
                 </div>
                 <Button type="submit" className="bg-[#0F3935] hover:bg-[#0F3935]/90 text-white h-11" disabled={pwLoading} data-testid="change-password-btn">
-                  {pwLoading ? 'Degistiriliyor...' : 'Sifreyi Degistir'}
+                  {pwLoading ? 'Değiştiriliyor...' : 'Şifreyi Değiştir'}
                 </Button>
               </form>
             )}
