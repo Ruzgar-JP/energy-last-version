@@ -3,12 +3,12 @@ import { useAuth } from '@/context/AuthContext';
 import { LayoutDashboard, Users, Shield, Briefcase, ArrowLeftRight, LogOut, ChevronLeft } from 'lucide-react';
 
 const menuItems = [
-  { href: '/admin', label: 'Genel Bakis', icon: LayoutDashboard },
-  { href: '/admin/users', label: 'Kullanicilar', icon: Users },
-  { href: '/admin/kyc', label: 'Kimlik Dogrulama', icon: Shield },
-  { href: '/admin/portfolios', label: 'Hisse Yonetimi', icon: Briefcase },
-  { href: '/admin/transactions', label: 'Islemler', icon: ArrowLeftRight },
-  { href: '/admin/trade-requests', label: 'Alim/Satim Talepleri', icon: ArrowLeftRight },
+  { href: '/admin', label: 'Genel Bakış', icon: LayoutDashboard },
+  { href: '/admin/users', label: 'Kullanıcılar', icon: Users },
+  { href: '/admin/kyc', label: 'Kimlik Doğrulama', icon: Shield },
+  { href: '/admin/portfolios', label: 'Hisse Yönetimi', icon: Briefcase },
+  { href: '/admin/transactions', label: 'İşlemler', icon: ArrowLeftRight },
+  { href: '/admin/trade-requests', label: 'Alım/Satım Talepleri', icon: ArrowLeftRight },
 ];
 
 export default function AdminLayout({ children }) {
@@ -34,10 +34,10 @@ export default function AdminLayout({ children }) {
         </nav>
         <div className="p-4 border-t border-white/10 space-y-2">
           <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 text-sm text-white/40 hover:text-white w-full px-4 py-2">
-            <ChevronLeft className="w-4 h-4" /> Islemlerim
+            <ChevronLeft className="w-4 h-4" /> İşlemlerim
           </button>
           <button onClick={() => { logout(); navigate('/admin/login'); }} className="flex items-center gap-2 text-sm text-red-400/70 hover:text-red-400 w-full px-4 py-2">
-            <LogOut className="w-4 h-4" /> Cikis Yap
+            <LogOut className="w-4 h-4" /> Çıkış Yap
           </button>
         </div>
       </aside>
