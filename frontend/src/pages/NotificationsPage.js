@@ -28,7 +28,7 @@ export default function NotificationsPage() {
 
   const markAllRead = async () => {
     await axios.post(`${API}/notifications/read-all`, {}, { headers });
-    toast.success('Tum bildirimler okundu');
+    toast.success('Tüm bildirimler okundu');
     fetchNotifs();
   };
 
@@ -49,16 +49,16 @@ export default function NotificationsPage() {
       <Navbar />
       <div className="max-w-3xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <Link to="/dashboard" className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 text-sm mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Islemlerime Don
+          <ArrowLeft className="w-4 h-4" /> İşlemlerime Dön
         </Link>
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Sora]">Bildirimler</h1>
-            <p className="text-slate-500 text-sm mt-1">{data.unread_count} okunmamis bildirim</p>
+            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 font-[Poppins]">Bildirimler</h1>
+            <p className="text-slate-500 text-sm mt-1">{data.unread_count} okunmamış bildirim</p>
           </div>
           {data.unread_count > 0 && (
             <Button variant="outline" size="sm" onClick={markAllRead} data-testid="mark-all-read-btn">
-              <CheckCircle2 className="w-4 h-4 mr-1" /> Tumunu Oku
+              <CheckCircle2 className="w-4 h-4 mr-1" /> Tümünü Oku
             </Button>
           )}
         </div>

@@ -29,12 +29,12 @@ export default function ProjectsPage() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-12">
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Enerji Projeleri</h1>
-          <p className="text-slate-500 mt-2">Turkiye genelinde aktif yenilenebilir enerji projelerini inceleyin ve yatirim yapin.</p>
+          <p className="text-slate-500 mt-2">Türkiye genelinde aktif yenilenebilir enerji projelerini inceleyin ve yatırım yapın.</p>
         </div>
 
         <Tabs value={tab} onValueChange={setTab} className="mb-8">
           <TabsList className="bg-white border">
-            <TabsTrigger value="all" data-testid="projects-tab-all">Tumu ({projects.length})</TabsTrigger>
+            <TabsTrigger value="all" data-testid="projects-tab-all">Tümü ({projects.length})</TabsTrigger>
             <TabsTrigger value="ges" data-testid="projects-tab-ges"><Sun className="w-4 h-4 mr-1" /> GES</TabsTrigger>
             <TabsTrigger value="res" data-testid="projects-tab-res"><Wind className="w-4 h-4 mr-1" /> RES</TabsTrigger>
           </TabsList>
@@ -64,7 +64,7 @@ export default function ProjectsPage() {
                     <div className="grid grid-cols-3 gap-2 mb-4 text-center">
                       <div className="bg-slate-50 rounded-lg p-2"><div className="text-xs text-slate-400">Kapasite</div><div className="font-semibold text-sm">{p.capacity}</div></div>
                       <div className="bg-slate-50 rounded-lg p-2"><div className="text-xs text-slate-400">Getiri</div><div className="font-semibold text-sm text-emerald-600">%{p.return_rate}</div></div>
-                      <div className="bg-slate-50 rounded-lg p-2"><div className="text-xs text-slate-400">Yatirimci</div><div className="font-semibold text-sm">{p.investors_count}</div></div>
+                      <div className="bg-slate-50 rounded-lg p-2"><div className="text-xs text-slate-400">Yatırımcı</div><div className="font-semibold text-sm">{p.investors_count}</div></div>
                     </div>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs text-slate-500 mb-1"><span>{(p.funded_amount / 1000000).toFixed(1)}M TL</span><span>{progress}%</span></div>
