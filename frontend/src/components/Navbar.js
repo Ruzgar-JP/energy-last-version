@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Bell, Menu, User, LogOut, LayoutDashboard, Briefcase, ChevronDown, Shield, Sun, Wind, UserCircle } from 'lucide-react';
+import { Bell, Menu, User, LogOut, LayoutDashboard, Briefcase, ChevronDown, Shield, UserCircle } from 'lucide-react';
 import axios from 'axios';
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -41,16 +41,16 @@ export default function Navbar({ transparent = false }) {
 
   const landingLinks = [
     { href: '#projects', label: 'Projeler' },
-    { href: '#plans', label: 'Yatirim Planlari' },
+    { href: '#plans', label: 'Yatırım Planları' },
     { href: '#benefits', label: 'Avantajlar' },
     { href: '#faq', label: 'SSS' },
   ];
 
   const dashLinks = [
-    { href: '/dashboard', label: 'Islemlerim', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'İşlemlerim', icon: LayoutDashboard },
     { href: '/projects', label: 'Projeler', icon: Briefcase },
-    { href: '/deposit', label: 'Para Yatir', icon: null },
-    { href: '/withdraw', label: 'Para Cek', icon: null },
+    { href: '/deposit', label: 'Para Yatır', icon: null },
+    { href: '/withdraw', label: 'Para Çek', icon: null },
   ];
 
   const links = user && !isLanding ? dashLinks : landingLinks;
@@ -59,9 +59,7 @@ export default function Navbar({ transparent = false }) {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${bgClass}`} data-testid="navbar">
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
         <Link to="/" className={`flex items-center gap-2 font-bold text-xl ${textClass}`} data-testid="navbar-logo">
-          <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center">
-            <Sun className="w-5 h-5 text-white" />
-          </div>
+          <img src="/alarko-logo.png" alt="Alarko Enerji" className="h-9 w-auto object-contain" />
           <span className="font-[Poppins] tracking-tight">Alarko Enerji</span>
         </Link>
 
@@ -101,13 +99,13 @@ export default function Navbar({ transparent = false }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem onClick={() => navigate('/account')} data-testid="menu-account">
-                    <UserCircle className="w-4 h-4 mr-2" /> Hesabim
+                    <UserCircle className="w-4 h-4 mr-2" /> Hesabım
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/dashboard')} data-testid="menu-dashboard">
-                    <LayoutDashboard className="w-4 h-4 mr-2" /> Islemlerim
+                    <LayoutDashboard className="w-4 h-4 mr-2" /> İşlemlerim
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/kyc')} data-testid="menu-kyc">
-                    <Shield className="w-4 h-4 mr-2" /> Kimlik Dogrulama
+                    <Shield className="w-4 h-4 mr-2" /> Kimlik Doğrulama
                   </DropdownMenuItem>
                   {user.role === 'admin' && (
                     <DropdownMenuItem onClick={() => navigate('/admin')} data-testid="menu-admin">
@@ -116,7 +114,7 @@ export default function Navbar({ transparent = false }) {
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} data-testid="menu-logout">
-                    <LogOut className="w-4 h-4 mr-2" /> Cikis Yap
+                    <LogOut className="w-4 h-4 mr-2" /> Çıkış Yap
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -124,7 +122,7 @@ export default function Navbar({ transparent = false }) {
           ) : (
             <>
               <Link to="/login">
-                <Button variant="ghost" className={`${textClass} hover:bg-white/10`} data-testid="nav-login-btn">Giris Yap</Button>
+                <Button variant="ghost" className={`${textClass} hover:bg-white/10`} data-testid="nav-login-btn">Giriş Yap</Button>
               </Link>
             </>
           )}
@@ -151,16 +149,16 @@ export default function Navbar({ transparent = false }) {
                     <Bell className="w-5 h-5" /> Bildirimler {unreadCount > 0 && <Badge className="bg-red-500">{unreadCount}</Badge>}
                   </Link>
                   <Link to="/account" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10 flex items-center gap-2">
-                    <UserCircle className="w-5 h-5" /> Hesabim
+                    <UserCircle className="w-5 h-5" /> Hesabım
                   </Link>
                   <Link to="/kyc" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10 flex items-center gap-2">
-                    <Shield className="w-5 h-5" /> Kimlik Dogrulama
+                    <Shield className="w-5 h-5" /> Kimlik Doğrulama
                   </Link>
-                  <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="text-lg font-medium py-2 text-left text-red-400">Cikis Yap</button>
+                  <button onClick={() => { handleLogout(); setMobileOpen(false); }} className="text-lg font-medium py-2 text-left text-red-400">Çıkış Yap</button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10">Giris Yap</Link>
+                  <Link to="/login" onClick={() => setMobileOpen(false)} className="text-lg font-medium py-2 border-b border-white/10">Giriş Yap</Link>
                 </>
               )}
             </div>
