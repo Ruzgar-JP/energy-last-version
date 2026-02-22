@@ -448,7 +448,7 @@ export default function LandingPage() {
           <Accordion type="single" collapsible className="space-y-3">
             {[
               { q: 'Minimum yatırım tutarı nedir?', a: 'Minimum yatırım tutarı 25.000 TL (1 hisse) olarak belirlenmiştir. Her hisse 25.000 TL değerindedir ve katları şeklinde yatırım yapabilirsiniz.' },
-              { q: 'Getiri oranlari nasil belirleniyor?', a: '1-4 hisse icin aylik %7, 5-9 hisse icin aylik %7 + dolar kuru avantaji, 10 ve uzeri hisse icin aylik %8 + dolar kuru avantaji uygulanir.' },
+              { q: 'Getiri oranları nasıl belirleniyor?', a: '1-4 hisse için aylık %7, 5-9 hisse için aylık %7 + dolar kuru avantajı, 10 ve üzeri hisse için aylık %8 + dolar kuru avantajı uygulanır.' },
               { q: 'Dolar kuru avantajı ne anlama gelir?', a: '5 ve üzeri hisse alımlarında yatırımınız dolar kuru üzerinden hesaplanır. Dolar yükseldikçe TL bazında getiriniz de artar, böylece yatırımınız kur riskine karşı korunmuş olur.' },
               { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet, yatırımlarınızı istediğiniz zaman satabilir ve bakiyenizi çekim talebinde bulunabilirsiniz. Çekim talepleri admin onayı sonrası bakiyenizden düşülür ve 1-3 iş günü içerisinde hesabınıza aktarılır.' },
               { q: 'Kimlik doğrulaması zorunlu mu?', a: 'Evet, SPK düzenlemeleri gereği kimlik doğrulaması zorunludur. Kimlik belgenizi yükledikten sonra en geç 24 saat içerisinde onay verilmektedir.' },
