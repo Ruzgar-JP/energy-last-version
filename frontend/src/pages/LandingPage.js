@@ -172,11 +172,11 @@ export default function LandingPage() {
           <div className="text-center mb-12">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">AKTIF PROJELER</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Aktif Enerji Projeleri</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Turkiye genelinde yatirima acik yenilenebilir enerji projelerini kesfet.</p>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Türkiye genelinde yatırıma açık yenilenebilir enerji projelerini keşfet.</p>
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
             <TabsList className="bg-white border mx-auto w-fit">
-              <TabsTrigger value="all" data-testid="tab-all">Tumu</TabsTrigger>
+              <TabsTrigger value="all" data-testid="tab-all">Tümü</TabsTrigger>
               <TabsTrigger value="ges" data-testid="tab-ges"><Sun className="w-4 h-4 mr-1" /> GES</TabsTrigger>
               <TabsTrigger value="res" data-testid="tab-res"><Wind className="w-4 h-4 mr-1" /> RES</TabsTrigger>
             </TabsList>
@@ -219,7 +219,7 @@ export default function LandingPage() {
             })}
           </div>
           <div className="text-center mt-10">
-            <Link to="/projects"><Button variant="outline" size="lg" className="rounded-xl" data-testid="view-all-projects">Tum Projeleri Gor <ArrowRight className="w-4 h-4 ml-2" /></Button></Link>
+            <Link to="/projects"><Button variant="outline" size="lg" className="rounded-xl" data-testid="view-all-projects">Tüm Projeleri Gör <ArrowRight className="w-4 h-4 ml-2" /></Button></Link>
           </div>
         </div>
       </section>
