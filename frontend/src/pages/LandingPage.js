@@ -22,8 +22,9 @@ export default function LandingPage() {
   const [videoIndex, setVideoIndex] = useState(0);
 
   useEffect(() => {
-    axios.get(`${API}/projects`).then(r => setProjects(r.data)).catch(() => {});
-    axios.get(`${API}/usd-rate`).then(r => setUsdRate(r.data.rate)).catch(() => {});
+   axios.get(`${API}/projects`)
+  .then(r => setProjects(Array.isArray(r.data) ? r.data : r.data.projects || []))
+  .catch(() => setProjects([]));
   }, []);
 
   // Auto-rotate videos every 8 seconds
