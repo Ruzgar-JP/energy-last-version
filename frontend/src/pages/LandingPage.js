@@ -483,7 +483,7 @@ export default function LandingPage() {
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm text-emerald-200/40">
             <span>Ücretsiz kayıt</span>
-            <span>Hizli onay sureci</span>
+            <span>Hızlı onay süreci</span>
             <span>7/24 destek</span>
           </div>
         </div>
