@@ -14,6 +14,7 @@ import WithdrawalPage from "@/pages/WithdrawalPage";
 import KYCPage from "@/pages/KYCPage";
 import NotificationsPage from "@/pages/NotificationsPage";
 import AccountPage from "@/pages/AccountPage";
+import StaticPage from "@/pages/StaticPage";
 import AdminLoginPage from "@/pages/admin/AdminLoginPage";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminUsers from "@/pages/admin/AdminUsers";
@@ -39,6 +40,13 @@ function AppRouter() {
       <Route path="/kyc" element={<ProtectedRoute><KYCPage /></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
       <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+      <Route path="/hakkimizda" element={<StaticPage pageKey="hakkimizda" />} />
+      <Route path="/ekibimiz" element={<StaticPage pageKey="ekibimiz" />} />
+      <Route path="/kariyer" element={<StaticPage pageKey="kariyer" />} />
+      <Route path="/basinda" element={<StaticPage pageKey="basinda" />} />
+      <Route path="/risk-bilgilendirme" element={<StaticPage pageKey="risk-bilgilendirme" />} />
+      <Route path="/kullanim-sartlari" element={<StaticPage pageKey="kullanim-sartlari" />} />
+      <Route path="/kvkk" element={<StaticPage pageKey="kvkk" />} />
       <Route path="/admin/login" element={<AdminLoginPage />} />
       <Route path="/admin" element={<ProtectedRoute admin><AdminDashboard /></ProtectedRoute>} />
       <Route path="/admin/users" element={<ProtectedRoute admin><AdminUsers /></ProtectedRoute>} />
