@@ -473,16 +473,16 @@ export default function LandingPage() {
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
-          <p className="text-emerald-100/60 mb-8 text-lg">Uzman danismanlarimiz sizinle iletisime gecerek en uygun yatirim planini belirlesin.</p>
+          <p className="text-emerald-100/60 mb-8 text-lg">Uzman danışmanlarımız sizinle iletişime geçerek en uygun yatırım planını belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/login">
               <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-10 h-13 rounded-xl text-base" data-testid="cta-login-btn">
-                Giris Yap <ArrowRight className="w-5 h-5 ml-2" />
+                Giriş Yap <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-8 text-sm text-emerald-200/40">
-            <span>Ucretsiz kayit</span>
+            <span>Ücretsiz kayıt</span>
             <span>Hizli onay sureci</span>
             <span>7/24 destek</span>
           </div>
