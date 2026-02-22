@@ -73,39 +73,39 @@ export default function LandingPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-32 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 mb-6 px-4 py-1.5 text-sm backdrop-blur-sm">Yenilenebilir Enerji Yatirim Platformu</Badge>
+              <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30 mb-6 px-4 py-1.5 text-sm backdrop-blur-sm">Yenilenebilir Enerji Yatırım Platformu</Badge>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-fade-in-up font-[Poppins] drop-shadow-lg">
-                Gelecege Guc Veren <span className="text-emerald-400">Yatirimlar</span>
+                Geleceğe Güç Veren <span className="text-emerald-400">Yatırımlar</span>
               </h1>
-              <p className="text-lg md:text-xl text-emerald-100/90 mb-3 font-semibold drop-shadow-md">RES & GES Projelerinde Aylik %8'e Varan Getiri</p>
+              <p className="text-lg md:text-xl text-emerald-100/90 mb-3 font-semibold drop-shadow-md">RES & GES Projelerinde Aylık %8'e Varan Getiri</p>
               <p className="text-base md:text-lg text-slate-200/70 mb-8 leading-relaxed max-w-lg drop-shadow-sm">
-                Turkiye'nin oncu yenilenebilir enerji projelerine yatirim yapin. Profesyonel yatirim danismanligi ve seffaf portfolyo yonetimiyle geleceginizi guvence altina alin.
+                Türkiye'nin öncü yenilenebilir enerji projelerine yatırım yapın. Profesyonel yatırım danışmanlığı ve şeffaf portföy yönetimiyle geleceğinizi güvence altına alın.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
                 <Link to="/login">
                   <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 h-13 text-base rounded-xl shadow-lg shadow-emerald-500/25" data-testid="hero-cta-login">
-                    Giris Yap <ArrowRight className="w-5 h-5 ml-2" />
+                    Giriş Yap <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
                 <Link to="/projects">
                   <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/15 px-8 h-13 text-base rounded-xl backdrop-blur-sm" data-testid="hero-cta-projects">
-                    <Eye className="w-5 h-5 mr-2" /> Projeleri Incele
+                    <Eye className="w-5 h-5 mr-2" /> Projeleri İncele
                   </Button>
                 </Link>
               </div>
               <div className="flex items-center gap-6 text-sm text-emerald-200/60">
-                <span className="flex items-center gap-1"><ShieldCheck className="w-4 h-4" /> SPK Lisansli</span>
+                <span className="flex items-center gap-1"><ShieldCheck className="w-4 h-4" /> SPK Lisanslı</span>
                 <span className="flex items-center gap-1"><Award className="w-4 h-4" /> YEKDEM Garantili</span>
-                <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Uluslararasi Standart</span>
+                <span className="flex items-center gap-1"><Globe className="w-4 h-4" /> Uluslararası Standart</span>
               </div>
             </div>
             <div className="hidden lg:block">
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Wallet, value: '₺2.8B+', label: 'Toplam Yatirim Hacmi', color: 'from-emerald-500/20 to-teal-500/20' },
+                  { icon: Wallet, value: '₺2.8B+', label: 'Toplam Yatırım Hacmi', color: 'from-emerald-500/20 to-teal-500/20' },
                   { icon: Zap, value: '47+', label: 'Aktif Enerji Projesi', color: 'from-sky-500/20 to-blue-500/20' },
-                  { icon: Users, value: '1,200+', label: 'Kurumsal Yatirimci', color: 'from-violet-500/20 to-purple-500/20' },
-                  { icon: TrendingUp, value: '%8', label: 'Maks. Aylik Getiri', color: 'from-amber-500/20 to-orange-500/20' },
+                  { icon: Users, value: '1,200+', label: 'Kurumsal Yatırımcı', color: 'from-violet-500/20 to-purple-500/20' },
+                  { icon: TrendingUp, value: '%8', label: 'Maks. Aylık Getiri', color: 'from-amber-500/20 to-orange-500/20' },
                 ].map((stat, i) => (
                   <div key={i} className={`bg-gradient-to-br ${stat.color} backdrop-blur-md rounded-2xl p-6 border border-white/15 animate-fade-in-up stagger-${i + 1}`}>
                     <stat.icon className="w-6 h-6 text-emerald-400 mb-3" />
