@@ -339,7 +339,7 @@ export default function LandingPage() {
                   <Link to="/login">
                     <Button className={`w-full h-12 rounded-xl text-base ${plan.popular ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-[#0F3935] hover:bg-[#0F3935]/90 text-white'}`}
                       data-testid={`plan-btn-${plan.name.toLowerCase()}`}>
-                      Giris Yap <ArrowRight className="w-4 h-4 ml-2" />
+                      Giriş Yap <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
@@ -354,15 +354,15 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">NEDEN BIZ</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Alarko Enerji Avantajlari</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Yenilenebilir enerji yatirimlarinizda neden bizi tercih etmelisiniz?</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Alarko Enerji Avantajları</h2>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Yenilenebilir enerji yatırımlarınızda neden bizi tercih etmelisiniz?</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: ShieldCheck, title: 'Garantili Getiri', desc: 'Aylik %8\'e varan garantili getiri oranlari ile yatiriminizi guvence altina alin. YEKDEM devlet garantisi altinda projeler.' },
-              { icon: Eye, title: 'Seffaf Yonetim', desc: 'Tum yatirim sureclerinizi gercek zamanli takip edin. Detayli raporlama, analiz ve portfolyo performans grafikleri.' },
+              { icon: ShieldCheck, title: 'Garantili Getiri', desc: 'Aylık %8\'e varan garantili getiri oranları ile yatırımınızı güvence altına alın. YEKDEM devlet garantisi altında projeler.' },
+              { icon: Eye, title: 'Şeffaf Yönetim', desc: 'Tüm yatırım süreçlerinizi gerçek zamanlı takip edin. Detaylı raporlama, analiz ve portföy performans grafikleri.' },
               { icon: BarChart3, title: 'Cesitlendirilmis Portfolyo', desc: 'RES ve GES projelerinden olusan cesitlendirilmis portfolyo ile riskinizi minimize edin.' },
-              { icon: Users, title: 'Uzman Kadro', desc: 'Alaninda 10+ yillik deneyime sahip enerji muhendisleri ve yatirim danismanlari ile profesyonel rehberlik.' },
+              { icon: Users, title: 'Uzman Kadro', desc: 'Alanında 10+ yıllık deneyime sahip enerji mühendisleri ve yatırım danışmanları ile profesyonel rehberlik.' },
               { icon: FileText, title: 'Devlet Tesvikleri', desc: 'YEKDEM garantisi ve devlet tesviklerinden faydalanan projelerle guvenceli ve duzenli getiri elde edin.' },
               { icon: Leaf, title: 'Surdurulebilir Gelecek', desc: 'Yatiriminizla hem kazanc elde edin hem de surdurulebilir bir gelecek ve temiz enerji uretimine katki saglayin.' },
             ].map((b, i) => (
