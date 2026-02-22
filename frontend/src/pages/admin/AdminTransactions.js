@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { CheckCircle2, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -24,7 +24,7 @@ export default function AdminTransactions() {
   const handleStatus = async (txnId, status) => {
     try {
       await axios.put(`${API}/admin/transactions/${txnId}`, { status }, { headers });
-      toast.success('Islem guncellendi');
+      toast.success('İşlem güncellendi');
       fetchTxns();
     } catch (err) {
       toast.error('Hata');
@@ -33,7 +33,7 @@ export default function AdminTransactions() {
 
   const statusBadge = (s) => {
     const m = { pending: 'bg-amber-100 text-amber-700', approved: 'bg-emerald-100 text-emerald-700', rejected: 'bg-red-100 text-red-700' };
-    const l = { pending: 'Bekliyor', approved: 'Onaylandi', rejected: 'Reddedildi' };
+    const l = { pending: 'Bekliyor', approved: 'Onaylandı', rejected: 'Reddedildi' };
     return <Badge className={m[s]}>{l[s]}</Badge>;
   };
 
@@ -42,15 +42,15 @@ export default function AdminTransactions() {
       <div data-testid="admin-transactions">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 font-[Poppins]">Islemler</h1>
-            <p className="text-slate-500 text-sm">Para yatirma ve cekme taleplerini yonetin.</p>
+            <h1 className="text-2xl font-bold text-slate-900 font-[Poppins]">İşlemler</h1>
+            <p className="text-slate-500 text-sm">Para yatırma ve çekme taleplerini yönetin.</p>
           </div>
           <Select value={filter} onValueChange={setFilter}>
             <SelectTrigger className="w-40" data-testid="txn-filter">
               <SelectValue placeholder="Filtrele" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Tumu</SelectItem>
+              <SelectItem value="all">Tümü</SelectItem>
               <SelectItem value="pending">Bekleyen</SelectItem>
               <SelectItem value="approved">Onaylanan</SelectItem>
               <SelectItem value="rejected">Reddedilen</SelectItem>
@@ -62,13 +62,13 @@ export default function AdminTransactions() {
           <Table>
             <TableHeader>
               <TableRow className="bg-slate-50">
-                <TableHead>Kullanici</TableHead>
+                <TableHead>Kullanıcı</TableHead>
                 <TableHead>Tip</TableHead>
                 <TableHead>Tutar</TableHead>
                 <TableHead>Banka / IBAN</TableHead>
                 <TableHead>Durum</TableHead>
                 <TableHead>Tarih</TableHead>
-                <TableHead>Islem</TableHead>
+                <TableHead>İşlem</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -77,7 +77,7 @@ export default function AdminTransactions() {
                   <TableCell className="font-medium text-sm">{t.user_name || '-'}</TableCell>
                   <TableCell>
                     <Badge className={t.type === 'deposit' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}>
-                      {t.type === 'deposit' ? 'Yatirma' : 'Cekme'}
+                      {t.type === 'deposit' ? 'Yatırma' : 'Çekme'}
                     </Badge>
                   </TableCell>
                   <TableCell className="font-semibold">{(t.amount || 0).toLocaleString('tr-TR')} TL</TableCell>
@@ -108,7 +108,7 @@ export default function AdminTransactions() {
                 </TableRow>
               ))}
               {filtered.length === 0 && (
-                <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-400">Islem yok</TableCell></TableRow>
+                <TableRow><TableCell colSpan={7} className="text-center py-8 text-slate-400">İşlem yok</TableCell></TableRow>
               )}
             </TableBody>
           </Table>

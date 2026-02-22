@@ -24,13 +24,13 @@ export default function AdminTradeRequests() {
   const handleStatus = async (id, status) => {
     try {
       await axios.put(`${API}/admin/trade-requests/${id}`, { status }, { headers });
-      toast.success(status === 'approved' ? 'Talep onaylandi' : 'Talep reddedildi');
+      toast.success(status === 'approved' ? 'Talep onaylandı' : 'Talep reddedildi');
       fetchRequests();
     } catch (err) { toast.error(err.response?.data?.detail || 'Hata'); }
   };
 
   const statusBadge = (s) => {
-    if (s === 'approved') return <Badge className="bg-emerald-100 text-emerald-700">Onaylandi</Badge>;
+    if (s === 'approved') return <Badge className="bg-emerald-100 text-emerald-700">Onaylandı</Badge>;
     if (s === 'rejected') return <Badge className="bg-red-100 text-red-700">Reddedildi</Badge>;
     return <Badge className="bg-amber-100 text-amber-700">Bekliyor</Badge>;
   };
@@ -40,35 +40,35 @@ export default function AdminTradeRequests() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white font-[Poppins]">Alim/Satim Talepleri</h1>
-            <p className="text-slate-400 text-sm">{filtered.length} talep</p>
+            <h1 className="text-2xl font-bold text-slate-900 font-[Poppins]">Alım/Satım Talepleri</h1>
+            <p className="text-slate-500 text-sm">{filtered.length} talep</p>
           </div>
           <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-48 bg-white/5 border-white/10 text-white" data-testid="trade-filter">
+            <SelectTrigger className="w-48" data-testid="trade-filter">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="pending">Bekleyenler</SelectItem>
               <SelectItem value="approved">Onaylananlar</SelectItem>
               <SelectItem value="rejected">Reddedilenler</SelectItem>
-              <SelectItem value="all">Tumu</SelectItem>
+              <SelectItem value="all">Tümü</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <Card className="bg-white/5 border-white/10">
+        <Card className="border-0 shadow-sm rounded-2xl overflow-hidden">
           <CardContent className="p-0">
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50">
-                  <TableHead>Kullanici</TableHead>
+                  <TableHead>Kullanıcı</TableHead>
                   <TableHead>Tip</TableHead>
                   <TableHead>Proje</TableHead>
                   <TableHead>Hisse</TableHead>
                   <TableHead>Tutar</TableHead>
                   <TableHead>Durum</TableHead>
                   <TableHead>Tarih</TableHead>
-                  <TableHead>Islem</TableHead>
+                  <TableHead>İşlem</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -77,7 +77,7 @@ export default function AdminTradeRequests() {
                     <TableCell className="font-medium text-sm">{r.user_name || '-'}</TableCell>
                     <TableCell>
                       <Badge className={r.type === 'buy' ? 'bg-sky-100 text-sky-700' : 'bg-orange-100 text-orange-700'}>
-                        {r.type === 'buy' ? 'Alim' : 'Satim'}
+                        {r.type === 'buy' ? 'Alım' : 'Satım'}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-sm">{r.project_name}</TableCell>
