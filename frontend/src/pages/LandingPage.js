@@ -261,7 +261,7 @@ export default function LandingPage() {
                     <DollarSign className="w-5 h-5 text-sky-600 mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-sky-800">Dolar Kuru Avantajı</p>
-                      <p className="text-xs text-sky-600 mt-1">Yatiriminiz dolar kuru uzerinden hesaplanir. Guncel kur: 1$ = {usdRate.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL</p>
+                      <p className="text-xs text-sky-600 mt-1">Yatırımınız dolar kuru üzerinden hesaplanır. Güncel kur: 1$ = {usdRate.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL</p>
                     </div>
                   </div>
                 )}
@@ -271,7 +271,7 @@ export default function LandingPage() {
               <h3 className="text-xl font-bold text-slate-900 font-[Poppins] mb-6">Kademeli Getiri Sistemi</h3>
               {[
                 { shares: '1 - 4 Hisse', amount: '25.000 - 100.000', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Başlangıç seviyesi yatırımcılar için ideal. TL bazlı aylık %7 getiri oranı.', usd: false },
-                { shares: '5 - 9 Hisse', amount: '125.000 - 225.000', rate: '%7 + $', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Dolar kuru avantaji ile aylik %7 getiri. Yatiriminiz USD bazinda korunur.', usd: true },
+                { shares: '5 - 9 Hisse', amount: '125.000 - 225.000', rate: '%7 + $', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Dolar kuru avantajı ile aylık %7 getiri. Yatırımınız USD bazında korunur.', usd: true },
                 { shares: '10+ Hisse', amount: '250.000+', rate: '%8 + $', color: 'border-l-violet-500 bg-violet-50/50', desc: 'En yüksek getiri oranı + dolar kuru avantajı. VIP danışmanlık dahil.', usd: true },
               ].map((tier, i) => (
                 <Card key={i} className={`border-0 shadow-sm rounded-xl border-l-4 ${tier.color}`}>
@@ -361,10 +361,10 @@ export default function LandingPage() {
             {[
               { icon: ShieldCheck, title: 'Garantili Getiri', desc: 'Aylık %8\'e varan garantili getiri oranları ile yatırımınızı güvence altına alın. YEKDEM devlet garantisi altında projeler.' },
               { icon: Eye, title: 'Şeffaf Yönetim', desc: 'Tüm yatırım süreçlerinizi gerçek zamanlı takip edin. Detaylı raporlama, analiz ve portföy performans grafikleri.' },
-              { icon: BarChart3, title: 'Cesitlendirilmis Portfolyo', desc: 'RES ve GES projelerinden olusan cesitlendirilmis portfolyo ile riskinizi minimize edin.' },
+              { icon: BarChart3, title: 'Çeşitlendirilmiş Portföy', desc: 'RES ve GES projelerinden oluşan çeşitlendirilmiş portföy ile riskinizi minimize edin.' },
               { icon: Users, title: 'Uzman Kadro', desc: 'Alanında 10+ yıllık deneyime sahip enerji mühendisleri ve yatırım danışmanları ile profesyonel rehberlik.' },
-              { icon: FileText, title: 'Devlet Tesvikleri', desc: 'YEKDEM garantisi ve devlet tesviklerinden faydalanan projelerle guvenceli ve duzenli getiri elde edin.' },
-              { icon: Leaf, title: 'Surdurulebilir Gelecek', desc: 'Yatiriminizla hem kazanc elde edin hem de surdurulebilir bir gelecek ve temiz enerji uretimine katki saglayin.' },
+              { icon: FileText, title: 'Devlet Teşvikleri', desc: 'YEKDEM garantisi ve devlet teşviklerinden faydalanan projelerle güvenceli ve düzenli getiri elde edin.' },
+              { icon: Leaf, title: 'Sürdürülebilir Gelecek', desc: 'Yatırımınızla hem kazanç elde edin hem de sürdürülebilir bir gelecek ve temiz enerji üretimine katkı sağlayın.' },
             ].map((b, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg transition-all duration-300 rounded-2xl bg-slate-50 group overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
@@ -386,8 +386,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { value: '₺2.8 Milyar', label: 'Toplam Yatirim Hacmi' },
-              { value: '15.000+', label: 'Aktif Yatirimci' },
+              { value: '₺2.8 Milyar', label: 'Toplam Yatırım Hacmi' },
+              { value: '15.000+', label: 'Aktif Yatırımcı' },
               { value: '₺500M+', label: 'Odenen Toplam Getiri' },
               { value: '350 MW', label: 'Toplam Kurulu Guc' },
             ].map((s, i) => (
@@ -405,13 +405,13 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">REFERANSLAR</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Yatirimcilarimiz Ne Diyor?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Yatırımcılarımız Ne Diyor?</h2>
             <p className="text-base md:text-lg text-slate-500 mt-3">Binlerce memnun yatırımcımızın deneyimlerinden bazıları.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { name: 'Ahmet Yılmaz', role: 'Kurumsal Yatırımcı', text: 'Alarko Enerji ile 2 yıldır yatırım yapıyorum. Aylık getiriler düzenli ve şeffaf bir şekilde hesabıma yatırılıyor. Portföy yönetim paneli harika, tüm yatırımlarımı anlık takip edebiliyorum.', stars: 5, investment: '500.000 TL' },
-              { name: 'Elif Demir', role: 'Profesyonel Yatirimci', text: 'Yenilenebilir enerji sektorune giris icin mukemmel bir platform. Uzman kadro ve detayli raporlama ile kendimi guvende hissediyorum. Musteri hizmetleri de son derece ilgili.', stars: 5, investment: '200.000 TL' },
+              { name: 'Elif Demir', role: 'Profesyonel Yatırımcı', text: 'Yenilenebilir enerji sektörüne giriş için mükemmel bir platform. Uzman kadro ve detaylı raporlama ile kendimi güvende hissediyorum. Müşteri hizmetleri de son derece ilgili.', stars: 5, investment: '200.000 TL' },
               { name: 'Mehmet Kaya', role: 'Bireysel Yatırımcı', text: 'Başlangıç planı ile 25.000 TL yatırarak başladım, şimdi profesyonel plana geçtim. Getiri oranları söz verilenden bile yüksek. Hem kazanıyorum hem de temiz enerjiye katkı sağlıyorum.', stars: 5, investment: '125.000 TL' },
             ].map((t, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg rounded-2xl transition-all duration-300 bg-white">
@@ -443,7 +443,7 @@ export default function LandingPage() {
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">SSS</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Sikca Sorulan Sorular</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Yatirim sureciniz hakkinda merak ettiginiz her sey.</p>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Yatırım süreciniz hakkında merak ettiğiniz her şey.</p>
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {[
@@ -451,7 +451,7 @@ export default function LandingPage() {
               { q: 'Getiri oranlari nasil belirleniyor?', a: '1-4 hisse icin aylik %7, 5-9 hisse icin aylik %7 + dolar kuru avantaji, 10 ve uzeri hisse icin aylik %8 + dolar kuru avantaji uygulanir.' },
               { q: 'Dolar kuru avantajı ne anlama gelir?', a: '5 ve üzeri hisse alımlarında yatırımınız dolar kuru üzerinden hesaplanır. Dolar yükseldikçe TL bazında getiriniz de artar, böylece yatırımınız kur riskine karşı korunmuş olur.' },
               { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet, yatırımlarınızı istediğiniz zaman satabilir ve bakiyenizi çekim talebinde bulunabilirsiniz. Çekim talepleri admin onayı sonrası bakiyenizden düşülür ve 1-3 iş günü içerisinde hesabınıza aktarılır.' },
-              { q: 'Kimlik dogrulamasi zorunlu mu?', a: 'Evet, SPK duzenlemeleri geregi kimlik dogrulamasi zorunludur. Kimlik belgenizi yukledikten sonra en gec 24 saat icerisinde onay verilmektedir.' },
+              { q: 'Kimlik doğrulaması zorunlu mu?', a: 'Evet, SPK düzenlemeleri gereği kimlik doğrulaması zorunludur. Kimlik belgenizi yükledikten sonra en geç 24 saat içerisinde onay verilmektedir.' },
               { q: 'Para nasil yatirilir?', a: 'Havale veya EFT yontemiyle para yatirabilirsiniz. "Para Yatir" bolumunden banka secimi yaparak IBAN bilgilerini goruntuleyebilirsiniz. Yatirma talebiniz admin onayi sonrasi bakiyenize eklenir.' },
               { q: 'Hangi tür projeler görüntüleyebilirim?', a: 'Platformumuzda Güneş Enerjisi Santralleri (GES) ve Rüzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detaylı bilgileri, konum, kapasite ve fonlanma durumu görüntülenir.' },
               { q: 'Yatırımlarım güvende mi?', a: 'Tüm projelerimiz YEKDEM devlet garantisi altındadır. Ayrıca SPK denetiminde faaliyet gösteriyor, ISO 27001 bilgi güvenliği sertifikasına sahibiz ve yatırımcı koruma fonu kapsamındayız.' },
@@ -472,7 +472,7 @@ export default function LandingPage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-emerald-500 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatirima Baslamaya Hazir Misiniz?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-[Poppins] mb-4">Yatırıma Başlamaya Hazır Mısınız?</h2>
           <p className="text-emerald-100/60 mb-8 text-lg">Uzman danışmanlarımız sizinle iletişime geçerek en uygun yatırım planını belirlesin.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/login">
