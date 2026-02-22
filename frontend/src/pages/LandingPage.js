@@ -202,7 +202,7 @@ export default function LandingPage() {
                     <div className="grid grid-cols-3 gap-3 mb-4 text-center">
                       <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Kapasite</div><div className="font-semibold text-sm mt-0.5">{p.capacity}</div></div>
                       <div className="bg-emerald-50 rounded-xl p-3"><div className="text-xs text-emerald-600">Getiri</div><div className="font-bold text-sm text-emerald-700 mt-0.5">%{p.return_rate}</div></div>
-                      <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Yatirimci</div><div className="font-semibold text-sm mt-0.5">{p.investors_count}</div></div>
+                      <div className="bg-slate-50 rounded-xl p-3"><div className="text-xs text-slate-400">Yatırımcı</div><div className="font-semibold text-sm mt-0.5">{p.investors_count}</div></div>
                     </div>
                     <div className="mb-4">
                       <div className="flex justify-between text-xs text-slate-500 mb-1.5"><span>{(p.funded_amount / 1000000).toFixed(1)}M ₺</span><span className="font-semibold">{progress}%</span></div>
@@ -229,7 +229,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETiRi HESAPLAMA</Badge>
+              <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETİRİ HESAPLAMA</Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins] mb-4">Yatırımınızın Getirisini Hesaplayın</h2>
               <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">Hisse adetinize gore aylik ve yillik getiri oranlarinizi gorun. 5 ve uzeri hisselerde dolar kuru avantaji!</p>
               <div className="space-y-6">
