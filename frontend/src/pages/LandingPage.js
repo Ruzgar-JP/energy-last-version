@@ -230,7 +230,7 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">GETiRi HESAPLAMA</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins] mb-4">Yatiriminizin Getirisini Hesaplayin</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins] mb-4">Yatırımınızın Getirisini Hesaplayın</h2>
               <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed">Hisse adetinize gore aylik ve yillik getiri oranlarinizi gorun. 5 ve uzeri hisselerde dolar kuru avantaji!</p>
               <div className="space-y-6">
                 <div className="bg-slate-50 rounded-2xl p-6 border">
@@ -260,7 +260,7 @@ export default function LandingPage() {
                   <div className="bg-sky-50 rounded-xl p-4 border border-sky-100 flex items-start gap-3">
                     <DollarSign className="w-5 h-5 text-sky-600 mt-0.5 shrink-0" />
                     <div>
-                      <p className="text-sm font-medium text-sky-800">Dolar Kuru Avantaji</p>
+                      <p className="text-sm font-medium text-sky-800">Dolar Kuru Avantajı</p>
                       <p className="text-xs text-sky-600 mt-1">Yatiriminiz dolar kuru uzerinden hesaplanir. Guncel kur: 1$ = {usdRate.toLocaleString('tr-TR', {minimumFractionDigits: 2})} TL</p>
                     </div>
                   </div>
@@ -270,9 +270,9 @@ export default function LandingPage() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-slate-900 font-[Poppins] mb-6">Kademeli Getiri Sistemi</h3>
               {[
-                { shares: '1 - 4 Hisse', amount: '25.000 - 100.000', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Baslangic seviyesi yatirimcilar icin ideal. TL bazli aylik %7 getiri orani.', usd: false },
+                { shares: '1 - 4 Hisse', amount: '25.000 - 100.000', rate: '%7', color: 'border-l-emerald-400 bg-emerald-50/50', desc: 'Başlangıç seviyesi yatırımcılar için ideal. TL bazlı aylık %7 getiri oranı.', usd: false },
                 { shares: '5 - 9 Hisse', amount: '125.000 - 225.000', rate: '%7 + $', color: 'border-l-sky-500 bg-sky-50/50', desc: 'Dolar kuru avantaji ile aylik %7 getiri. Yatiriminiz USD bazinda korunur.', usd: true },
-                { shares: '10+ Hisse', amount: '250.000+', rate: '%8 + $', color: 'border-l-violet-500 bg-violet-50/50', desc: 'En yuksek getiri orani + dolar kuru avantaji. VIP danismanlik dahil.', usd: true },
+                { shares: '10+ Hisse', amount: '250.000+', rate: '%8 + $', color: 'border-l-violet-500 bg-violet-50/50', desc: 'En yüksek getiri oranı + dolar kuru avantajı. VIP danışmanlık dahil.', usd: true },
               ].map((tier, i) => (
                 <Card key={i} className={`border-0 shadow-sm rounded-xl border-l-4 ${tier.color}`}>
                   <CardContent className="p-5">
