@@ -7,7 +7,7 @@ import requests
 import os
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://res-ges-portal.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://res-ges-hub.preview.emergentagent.com')
 
 # Test credentials
 ADMIN_EMAIL = "admin@alarkoenerji.com"
