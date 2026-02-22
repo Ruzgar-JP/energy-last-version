@@ -1,0 +1,73 @@
+import "@/App.css";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "@/components/ui/sonner";
+import AuthCallback from "@/components/AuthCallback";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import LandingPage from "@/pages/LandingPage";
+import LoginPage from "@/pages/LoginPage";
+import DashboardPage from "@/pages/DashboardPage";
+import ProjectsPage from "@/pages/ProjectsPage";
+import ProjectDetailPage from "@/pages/ProjectDetailPage";
+import DepositPage from "@/pages/DepositPage";
+import WithdrawalPage from "@/pages/WithdrawalPage";
+import KYCPage from "@/pages/KYCPage";
+import NotificationsPage from "@/pages/NotificationsPage";
+import AccountPage from "@/pages/AccountPage";
+import StaticPage from "@/pages/StaticPage";
+import AdminLoginPage from "@/pages/admin/AdminLoginPage";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminUsers from "@/pages/admin/AdminUsers";
+import AdminKYC from "@/pages/admin/AdminKYC";
+import AdminPortfolios from "@/pages/admin/AdminPortfolios";
+import AdminTransactions from "@/pages/admin/AdminTransactions";
+import AdminTradeRequests from "@/pages/admin/AdminTradeRequests";
+
+function AppRouter() {
+  const location = useLocation();
+  if (location.hash?.includes('session_id=')) {
+    return <AuthCallback />;
+  }
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/projects" element={<ProjectsPage />} />
+      <Route path="/projects/:id" element={<ProjectDetailPage />} />
+      <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+      <Route path="/deposit" element={<ProtectedRoute><DepositPage /></ProtectedRoute>} />
+      <Route path="/withdraw" element={<ProtectedRoute><WithdrawalPage /></ProtectedRoute>} />
+      <Route path="/kyc" element={<ProtectedRoute><KYCPage /></ProtectedRoute>} />
+      <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
+      <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+      <Route path="/hakkimizda" element={<StaticPage pageKey="hakkimizda" />} />
+      <Route path="/ekibimiz" element={<StaticPage pageKey="ekibimiz" />} />
+      <Route path="/kariyer" element={<StaticPage pageKey="kariyer" />} />
+      <Route path="/basinda" element={<StaticPage pageKey="basinda" />} />
+      <Route path="/risk-bilgilendirme" element={<StaticPage pageKey="risk-bilgilendirme" />} />
+      <Route path="/kullanim-sartlari" element={<StaticPage pageKey="kullanim-sartlari" />} />
+      <Route path="/kvkk" element={<StaticPage pageKey="kvkk" />} />
+      <Route path="/admin/login" element={<AdminLoginPage />} />
+      <Route path="/admin" element={<ProtectedRoute admin><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/users" element={<ProtectedRoute admin><AdminUsers /></ProtectedRoute>} />
+      <Route path="/admin/kyc" element={<ProtectedRoute admin><AdminKYC /></ProtectedRoute>} />
+      <Route path="/admin/portfolios" element={<ProtectedRoute admin><AdminPortfolios /></ProtectedRoute>} />
+      <Route path="/admin/transactions" element={<ProtectedRoute admin><AdminTransactions /></ProtectedRoute>} />
+      <Route path="/admin/trade-requests" element={<ProtectedRoute admin><AdminTradeRequests /></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRouter />
+        <Toaster richColors position="top-right" />
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+
+export default App;

@@ -1,0 +1,187 @@
+<analysis>**original_problem_statement:**
+The user wants to build a web platform named Alarko Enerji for investing in renewable (RES) and solar (GES) energy projects. The platform is intended for investors to manage their portfolios and for admins to manage the entire system.
+
+**PRODUCT REQUIREMENTS:**
+
+1.  **Investor Features:**
+    *   Login using a national ID number (TC Kimlik No) and password.
+    *   View projects and request to invest (buy shares).
+    *   View their portfolio, including USD-based return estimates.
+    *   Request to sell a portion of their shares.
+    *   Request deposits and withdrawals (withdrawal requests have a 1-month holding period warning).
+    *   A dashboard to track portfolio performance.
+    *   An Account page to manage their profile.
+    *   Receive email notifications for account creation and balance changes.
+
+2.  **Admin Panel Features:**
+    *   A separate, dedicated login page at .
+    *   Login using email and password.
+    *   Manage users: Create new investors (and send them their credentials via email), edit details, and manually adjust their balance.
+    *   Manage investor portfolios directly: View all investors, their balances, and their shares. Add or remove shares from an investor's portfolio with TL equivalent shown.
+    *   Manage trade requests: Approve or reject investor buy/sell requests.
+    *   Manage KYC: Review and approve/reject KYC submissions.
+    *   The  section should be completely removed from the admin panel.
+
+3.  **General & UI/UX Requirements:**
+    *   The entire website must be in Turkish, including special characters.
+    *   Replace the existing logo with the new one provided.
+    *   Footer links (Hakkımızda, Projeler, etc.) should lead to new, clickable pages with placeholder content.
+    *   The Gizlilik Politikası link should open a content pop-up.
+    *   The Portföy Yönetimi page in the admin panel needs a UI/UX overhaul to be more intuitive, showing TL equivalents for share transactions in a pop-up.
+    *   The React version and its dependencies must be downgraded to , , , .
+
+**User's preferred language**: Turkish
+
+**what currently exists?**
+A comprehensive full-stack application with a FastAPI/MongoDB backend and a React/TailwindCSS frontend. The application has been significantly refactored to support distinct roles (investor and admin) with separate login mechanisms. Public registration has been removed, and all investment/divestment actions are now request-based, pending admin approval. An email notification system using Resend has been integrated for key events. The admin panel is feature-rich, allowing for user creation, portfolio management, and KYC/trade request approvals. The last action taken was an attempt to downgrade React versions in .
+
+**Last working item**:
+*   **Last item agent was working:** The agent was in the initial phase of implementing a large, multi-part user request that involves branding changes, dependency downgrades, new static pages, and significant UI/UX improvements to the admin portfolio management page. The agent has downloaded the new logo and just modified  to downgrade React and related libraries.
+*   **Status:** IN PROGRESS
+*   **Agent Testing Done:** N
+*   **Which testing method agent to use?** both (This is a major change affecting dependencies, frontend UI, and backend logic. A full test run is required after implementation.)
+*   **User Testing Done:** N
+
+**All Pending/In progress Issue list**:
+There are no known bugs. The entire focus is on the large, multi-part task currently in progress.
+
+**In progress Task List**:
+*   **Task 1: Implement multi-part UI, UX, and functionality overhaul (Priority: P0)**
+    *   **Where to resume:** The agent has modified  to downgrade React versions. The immediate next step is to run yarn install v1.22.22
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+Done in 0.20s. in the  directory and then restart the frontend service (frontend: ERROR (not running)
+frontend: started) to see if the downgrade was successful. If it fails, the agent must diagnose the dependency issues or inform the user.
+    *   **What will be achieved with this?** The application will be updated to meet all of the user's latest requirements, including new branding, corrected dependencies, improved navigation, and a more powerful and user-friendly admin portfolio management interface.
+    *   **Status:** IN PROGRESS
+    *   **Should Test frontend/backend/both after fix?** Both
+    *   **Blocked on something:** The success of the entire task is initially blocked on the successful downgrade of the React dependencies.
+
+**Upcoming and Future Tasks**
+*   **Future Tasks:**
+    *   **P1:** Implement the investor dashboard graphs (portfolio distribution, cost, end-of-month return) in  using the  library. This was part of the original plan but has been consistently deprioritized.
+
+**Completed work in this session**
+- **Auth & Login Overhaul:**
+    - Removed public registration entirely.
+    - Implemented a separate admin login page at .
+    - Modified the main login page to be for investors only, using TC Kimlik No and password.
+- **Admin Functionality Enhancements:**
+    - Added functionality for admins to create new investor users.
+    - Completely redesigned the Portföy Yönetimi page to be a user-centric dashboard, listing all users with their balance/share details and allowing direct share management (add/remove).
+    - Implemented a quantity selector dialog for removing a specific number of shares from a user's portfolio.
+    - Removed the Banks section from the admin panel.
+    - Added direct KYC approval functionality within the admin panel.
+- **Request-Based System:**
+    - Converted invest and sell actions into requests that admins must approve/reject via the Hisse Talepleri page.
+    - Simplified deposit and withdrawal pages to be request forms.
+- **Email Notifications:**
+    - Integrated the **Resend** API to send emails for new user account creation and for admin-driven balance changes.
+- **Documentation:**
+    - Created detailed  and  files.
+
+**Earlier issues found/mentioned but not fixed**
+- None.
+
+**Known issue recurrence from previous fork**
+- N/A
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Backend:** FastAPI, MongoDB (with ), Pydantic, JWT authentication.
+-   **Frontend:** React, React Router, TailwindCSS, shadcn/ui.
+-   **Integrations:** Resend (for transactional emails), Emergent-managed Google Auth (currently unused for login but configured).
+-   **Architecture:** SPA with a RESTful API. Role-based access control (RBAC) with separate login flows for investors and admins.
+
+**key DB schema**
+-   **users:** 
+-   **projects:** 
+-   **investments:** 
+-   **trade_requests:** 
+-   **transactions:** 
+-   **kyc_documents:** 
+
+**changes in tech stack**
+-   **resend** library was added and integrated for email notifications.
+-   The React version in  was just modified in an attempt to downgrade it, but the process is not complete.
+
+**All files of reference**
+-   **/app/backend/server.py**: Heavily modified for new auth logic, admin portfolio management, and email sending.
+-   **/app/frontend/package.json**: **Critically modified** for dependency downgrade. Needs verification.
+-   **/app/frontend/src/pages/AdminPortfolios.jsx**: Completely rewritten to be a user-centric dashboard. Needs further UI/UX enhancements as per the latest request.
+-   **/app/frontend/src/pages/LoginPage.jsx**: Rewritten to be investor-only (TC Kimlik login).
+-   **/app/frontend/src/pages/AdminLoginPage.jsx**: New file created for admin-specific login.
+-   **/app/frontend/src/pages/AdminTradeRequests.jsx**: New file for managing buy/sell requests.
+-   **/app/frontend/src/context/AuthContext.js**: Updated to handle new auth flows and remove the public  function.
+-   **/app/frontend/src/App.js**: Routes updated for the new admin login and removal of banks.
+-   **/app/frontend/src/components/layout/AdminLayout.jsx**: Sidebar updated.
+-   **/app/frontend/public/logo.png**: New logo file added.
+-   **/app/DEPLOYMENT_GUIDE.md** & **/app/TECHNICAL_DOCUMENTATION.md**: New documentation files created.
+
+**Areas that need refactoring**:
+-   The backend file  is now extremely large and complex. It urgently needs to be refactored into a proper project structure (e.g., , , ) to ensure maintainability before the project is considered ready for production.
+
+**key api endpoints**
+-    (New)
+-    (New)
+-    (New)
+-    (New)
+-    (POST, DELETE) (New)
+-    (GET, PUT) (New)
+-    (Modified)
+-    (Modified)
+
+**Critical Info for New Agent**
+1.  **Resume Immediately:** Your first action must be to verify the React dependency downgrade. Run yarn install v1.22.22
+[1/4] Resolving packages...
+success Already up-to-date.
+Done in 0.04s. in , restart the frontend service, and check the logs (==> /var/log/supervisor/frontend.err.log <==
+
+==> /var/log/supervisor/frontend.out.log <==
+yarn run v1.22.22
+$ craco start) for errors. This step is critical.
+2.  **Follow the Plan:** Once the environment is stable, systematically implement all 6 points from the user's latest request (Chat Message 287).
+3.  **Refactoring is Key:** Keep in mind that the  monolith is a significant technical debt. While not part of the immediate user request, any opportunity to structure it better should be considered, and you should be prepared to suggest this to the user upon completion of the current tasks.
+4.  **Language:** All communication and UI text must be in **Turkish**.
+
+**documents and test reports created in this job**
+-   
+-   
+
+**Last 10 User Messages and any pending HUMAN messages**
+1.  **User (Latest):** Provided a large list of 6 requirements including a logo change, creating new static pages from footer links, a privacy policy pop-up, downgrading React versions, enhancing the admin portfolio page UI/UX, and fixing all Turkish character issues. (Status: **IN PROGRESS**)
+2.  **User:** Requested a detailed deployment guide and a list of all APIs used. (Status: **COMPLETED**)
+3.  **User:** Requested that the admin share deletion process include a prompt asking for the quantity to be deleted. (Status: **COMPLETED**)
+4.  **User:** Described the desired functionality for the Hisse yönetimi page: list all users (with or without shares), show their balance, and allow admins to click a user to add/remove shares. (Status: **COMPLETED**)
+5.  **User:** Confirmed the choice of Resend for email integration, prioritizing the free and easy-to-use option. (Status: **COMPLETED**)
+6.  **User:** Provided a large set of requirements including removing public registration, adding TC Kimlik login, separating admin/investor logins, converting investments to a request-based system, and adding email notifications. (Status: **COMPLETED**)
+7.  **User:** Requested several changes: rename Panel to İşlemlerim, add USD-based returns, and implement partial share selling. (Status: **COMPLETED**)
+8.  **User:** Asked the admin to be able to see and change the password, email, and phone number for investors. (Status: **COMPLETED**)
+
+**Project Health Check:**
+-   **Broken:** The frontend is in a potentially broken state due to the recent modification of . This must be verified and fixed immediately.
+-   **Mocked:** Deposit and Withdrawal functionalities are not connected to a real payment gateway; they function as a request system for manual processing by the admin.
+
+**3rd Party Integrations**
+-   **Resend:** Used for sending transactional emails (e.g., new account credentials).
+-   **Emergent-managed Google Auth:** Configured but not currently used for login.
+-   **recharts:** Installed but not yet used for dashboard graphs.
+-   **requests:** Used in the backend to call external APIs (previously for currency rates).
+
+**Testing status**
+-   **Testing agent used after significant changes:** YES, extensively in previous steps.
+-   **Troubleshoot agent used after agent stuck in loop:** NO.
+-   **Test files created:** None.
+-   **Known regressions:** None from previous work, but the current dependency downgrade is a high risk for new regressions.
+
+**Credentials to test flow:**
+-   **Admin User:**  / 
+-   **Regular User:** Must be created by the admin via the admin panel.
+
+**What agent forgot to execute**
+The agent was actively working on a large set of user requests. It has not forgotten anything but was interrupted mid-task. The next agent needs to see this task through to completion, starting with verifying the dependency downgrade.</analysis>
