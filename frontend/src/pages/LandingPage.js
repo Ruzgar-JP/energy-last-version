@@ -447,14 +447,14 @@ export default function LandingPage() {
           </div>
           <Accordion type="single" collapsible className="space-y-3">
             {[
-              { q: 'Minimum yatirim tutari nedir?', a: 'Minimum yatirim tutari 25.000 TL (1 hisse) olarak belirlenmistir. Her hisse 25.000 TL degerindedir ve katlari seklinde yatirim yapabilirsiniz.' },
+              { q: 'Minimum yatırım tutarı nedir?', a: 'Minimum yatırım tutarı 25.000 TL (1 hisse) olarak belirlenmiştir. Her hisse 25.000 TL değerindedir ve katları şeklinde yatırım yapabilirsiniz.' },
               { q: 'Getiri oranlari nasil belirleniyor?', a: '1-4 hisse icin aylik %7, 5-9 hisse icin aylik %7 + dolar kuru avantaji, 10 ve uzeri hisse icin aylik %8 + dolar kuru avantaji uygulanir.' },
-              { q: 'Dolar kuru avantaji ne anlama gelir?', a: '5 ve uzeri hisse alimlarinda yatiriminiz dolar kuru uzerinden hesaplanir. Dolar yukseldikce TL bazinda getiriniz de artar, boylece yatiriminiz kur riskine karsi korunmus olur.' },
-              { q: 'Yatirimlarimi geri cekebilir miyim?', a: 'Evet, yatirimlarinizi istediginiz zaman satabilir ve bakiyenizi cekim talebinde bulunabilirsiniz. Cekim talepleri admin onayi sonrasi bakiyenizden dusulur ve 1-3 is gunu icerisinde hesabiniza aktarilir.' },
+              { q: 'Dolar kuru avantajı ne anlama gelir?', a: '5 ve üzeri hisse alımlarında yatırımınız dolar kuru üzerinden hesaplanır. Dolar yükseldikçe TL bazında getiriniz de artar, böylece yatırımınız kur riskine karşı korunmuş olur.' },
+              { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet, yatırımlarınızı istediğiniz zaman satabilir ve bakiyenizi çekim talebinde bulunabilirsiniz. Çekim talepleri admin onayı sonrası bakiyenizden düşülür ve 1-3 iş günü içerisinde hesabınıza aktarılır.' },
               { q: 'Kimlik dogrulamasi zorunlu mu?', a: 'Evet, SPK duzenlemeleri geregi kimlik dogrulamasi zorunludur. Kimlik belgenizi yukledikten sonra en gec 24 saat icerisinde onay verilmektedir.' },
               { q: 'Para nasil yatirilir?', a: 'Havale veya EFT yontemiyle para yatirabilirsiniz. "Para Yatir" bolumunden banka secimi yaparak IBAN bilgilerini goruntuleyebilirsiniz. Yatirma talebiniz admin onayi sonrasi bakiyenize eklenir.' },
-              { q: 'Hangi tur projeler goruntuleyebilirim?', a: 'Platformumuzda Gunes Enerjisi Santralleri (GES) ve Ruzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detayli bilgileri, konum, kapasite ve fonlanma durumu goruntulenir.' },
-              { q: 'Yatirimlarim guvende mi?', a: 'Tum projelerimiz YEKDEM devlet garantisi altindadir. Ayrica SPK denetiminde faaliyet gosteriyor, ISO 27001 bilgi guvenligi sertifikasina sahibiz ve yatirimci koruma fonu kapsamindayiz.' },
+              { q: 'Hangi tür projeler görüntüleyebilirim?', a: 'Platformumuzda Güneş Enerjisi Santralleri (GES) ve Rüzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detaylı bilgileri, konum, kapasite ve fonlanma durumu görüntülenir.' },
+              { q: 'Yatırımlarım güvende mi?', a: 'Tüm projelerimiz YEKDEM devlet garantisi altındadır. Ayrıca SPK denetiminde faaliyet gösteriyor, ISO 27001 bilgi güvenliği sertifikasına sahibiz ve yatırımcı koruma fonu kapsamındayız.' },
             ].map((item, i) => (
               <AccordionItem key={i} value={`item-${i}`} className="bg-slate-50 rounded-xl border px-6" data-testid={`faq-item-${i}`}>
                 <AccordionTrigger className="text-left font-medium text-slate-900 hover:no-underline py-5">{item.q}</AccordionTrigger>
