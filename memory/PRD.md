@@ -1,62 +1,74 @@
-# Alarko Enerji - Yenilenebilir Enerji Yatirim Platformu PRD
+# Alarko Enerji - Yenilenebilir Enerji Yatırım Platformu
 
-## Problem Statement
-RES ve GES projelerine yatirim platformu. Turkce, profesyonel, kurumsal web uygulamasi.
+## Proje Tanımı
+RES ve GES projelerine yatırım yapma platformu. Yatırımcılar ve admin için ayrı paneller.
 
-## Architecture
-- Backend: FastAPI + MongoDB (Motor) + Resend (email)
-- Frontend: React + TailwindCSS + shadcn/ui + recharts
-- Auth: JWT | Investors: TC Kimlik + Sifre | Admin: E-posta + Sifre
-- External API: open.er-api.com (USD/TRY)
+## Teknoloji
+- **Frontend:** React 18.2, TailwindCSS, shadcn/ui, recharts
+- **Backend:** FastAPI, MongoDB (motor), JWT Auth
+- **Entegrasyonlar:** Resend (e-posta), Emergent Google Auth (yapılandırılmış)
 
-## Investment System
-- 1 Hisse = 25.000 TL | Min: 1 hisse
-- 1-4 hisse: %7/ay TL | 5-9: %7/ay + USD | 10+: %8/ay + USD
-- Alim/Satim talep bazli (admin onayi gerekli)
+## Tamamlanan Özellikler
 
-## Auth & User Management
-- Yatirimci: TC Kimlik + Sifre ile giris (/login)
-- Admin: E-posta + Sifre ile giris (/admin/login)
-- Kayit: Sadece admin olusturabilir (admin panel)
-- Hesap olusturma e-postasi: Giris bilgileri ile
+### Auth & Giriş
+- [x] Yatırımcı girişi (TC Kimlik + şifre) - `/login`
+- [x] Admin girişi (e-posta + şifre) - `/admin/login`
+- [x] Kayıt kaldırıldı (admin oluşturur)
+- [x] JWT tabanlı kimlik doğrulama
 
-## Implemented Features (Feb 2026)
-- [x] Ayri giris sayfalari (yatirimci: /login, admin: /admin/login)
-- [x] TC Kimlik bazli giris sistemi
-- [x] Admin kullanici olusturma (TC Kimlik zorunlu)
-- [x] Admin KYC dogrudan onaylama (belge gerekmez)
-- [x] Admin portfolyo yonetimi (hisse ekleme/cikarma)
-- [x] Talep bazli alim/satim sistemi (admin onayi)
-- [x] Basitlestirilmis para yatirma/cekme (bankalarsiz)
-- [x] 1 aylik yatirim cekme uyarisi
-- [x] USD bazli getiri gosterimi (dashboard)
-- [x] E-posta bildirimleri (hesap acilisi, para islemleri)
-- [x] Portfolyo grafikleri (PieChart + BarChart)
-- [x] Mobil uyumlu, tam Turkce lokalizasyon
-- [x] Hero video carousel, Poppins font, modern UI
+### Yatırımcı Paneli
+- [x] Dashboard - portföy özeti, grafikler (recharts), USD getiri
+- [x] Proje listesi ve detay sayfaları
+- [x] Talep bazlı alım/satım sistemi (kısmi hisse satışı dahil)
+- [x] Para yatırma/çekme talep sistemi
+- [x] KYC belge yükleme
+- [x] Bildirimler sayfası
+- [x] Hesap/Profil yönetimi, şifre değiştirme
 
-## Admin Panel
-- Kullanicilar (olusturma, duzenleme, bakiye, TC Kimlik)
-- Kimlik Dogrulama (belge inceleme + dogrudan onay)
-- Hisse Yonetimi (portfolyo ekleme/silme)
-- Islemler (para yatirma/cekme onay/ret)
-- Alim/Satim Talepleri (yatirim talepleri onay/ret)
+### Admin Paneli
+- [x] Genel Bakış (istatistikler)
+- [x] Kullanıcı yönetimi (oluşturma, düzenleme, bakiye)
+- [x] Hisse Yönetimi - TL karşılıklı pop-up'larla hisse ekleme/silme
+- [x] Alım/Satım talep onaylama
+- [x] KYC belge inceleme ve onaylama
+- [x] İşlem (para yatırma/çekme) onaylama
+- [x] E-posta bildirimleri (Resend)
 
-## Key API Endpoints
-- POST /api/auth/login-investor (TC Kimlik + sifre)
-- POST /api/auth/login (admin email + sifre)
-- POST /api/admin/users/create (TC Kimlik ile kullanici olustur)
-- POST /api/admin/kyc/approve-user/{user_id}
-- POST /api/admin/portfolios/add | DELETE /api/admin/portfolios/{id}
-- POST /api/portfolio/invest | POST /api/portfolio/sell (talep olusturur)
-- PUT /api/admin/trade-requests/{id} (onayla/reddet)
-- GET /api/portfolio/withdrawal-check (1 ay kontrolu)
+### UI/UX & Türkçe
+- [x] Logo değişikliği (alarko-logo.png) - Navbar + Footer
+- [x] Tüm sitede Türkçe özel karakter düzeltmeleri (ı, İ, ş, Ş, ç, Ç, ğ, Ğ, ö, Ö, ü, Ü)
+- [x] Footer'dan statik sayfalar: Hakkımızda, Ekibimiz, Kariyer, Basında Biz, Risk Bilgilendirme, Kullanım Şartları, KVKK
+- [x] Gizlilik Politikası pop-up (Footer'dan açılır)
+- [x] Admin Portföy Yönetimi UI/UX iyileştirmesi (TL karşılıkları gösterilir)
+- [x] React 18.2 downgrade
 
-## Backlog
-- P1: Resend API key konfigurasyonu (kurumsal domain)
-- P2: 2FA, PDF export, detayli raporlama
-- P2: Backend refactoring (server.py bolme)
+### Dokümantasyon
+- [x] TECHNICAL_DOCUMENTATION.md
+- [x] DEPLOYMENT_GUIDE.md
 
-## Credentials
-- Admin: admin@alarkoenerji.com / admin123
-- Test Yatirimci: TC 12345678901 / sifre123
+## Bekleyen Görevler
+
+### P1 - Yatırımcı Dashboard Grafikleri
+- Portföy dağılımı pie chart (tamamlandı)
+- Maliyet & getiri bar chart (tamamlandı)
+
+### P2 - Backend Refactoring
+- server.py dosyasını routes, models, services olarak böl
+
+## Test Bilgileri
+- **Admin:** admin@alarkoenerji.com / admin123
+- **Yatırımcı:** TC 12345678901 / sifre123
+
+## API Endpoints
+- `/api/auth/login-investor` - Yatırımcı girişi
+- `/api/auth/login` - Admin girişi
+- `/api/admin/create-user` - Kullanıcı oluştur
+- `/api/admin/investor-overview` - Yatırımcı portföy özeti
+- `/api/admin/portfolios/add` - Hisse ekle
+- `/api/admin/portfolios/{id}` - Hisse sil
+- `/api/admin/trade-requests` - Alım/satım talepleri
+- `/api/portfolio` - Portföy bilgisi
+- `/api/portfolio/invest` - Yatırım talebi
+- `/api/portfolio/sell` - Satım talebi
+- `/api/transactions` - İşlem listesi
+- `/api/projects` - Proje listesi
