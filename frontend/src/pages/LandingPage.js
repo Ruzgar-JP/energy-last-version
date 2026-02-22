@@ -305,13 +305,13 @@ export default function LandingPage() {
           <div className="text-center mb-14">
             <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 mb-4">YATIRIM PLANLARI</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-[Poppins]">Size Uygun Plani Secin</h2>
-            <p className="text-base md:text-lg text-slate-500 mt-3">Her biri yatirimci profiline uygun cesitlendirilmis yatirim planlariyla getiri elde edin.</p>
+            <p className="text-base md:text-lg text-slate-500 mt-3">Her biri yatırımcı profiline uygun çeşitlendirilmiş yatırım planlarıyla getiri elde edin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {[
-              { name: 'Baslangic', rate: '7', min: '25.000 TL (1 Hisse)', shares: '1-4 Hisse', features: ['Temel proje erisimi', 'Aylik getiri raporu', 'E-posta destegi', 'Portfolyo takip paneli', 'Yatirim bildirimleri'], popular: false, icon: Target, usdTag: '' },
-              { name: 'Profesyonel', rate: '7', min: '125.000 TL (5 Hisse)', shares: '5-9 Hisse', features: ['Tum projelere erisim', 'Haftalik detayli rapor', 'Oncelikli destek hatti', 'Dolar kuru avantaji', 'Ozel yatirim danismani', 'Portfolyo cesitlendirme onerileri'], popular: true, icon: Award, usdTag: '+ Dolar Kuru' },
-              { name: 'Kurumsal', rate: '8', min: '250.000 TL (10 Hisse)', shares: '10+ Hisse', features: ['Premium proje erisimi', 'Gunluk performans raporu', '7/24 VIP destek', 'Dolar kuru avantaji', 'Ozel portfolyo yonetimi', 'Vergi danismanligi', 'Yatirim komitesi uyeligi'], popular: false, icon: Building2, usdTag: '+ Dolar Kuru' },
+              { name: 'Başlangıç', rate: '7', min: '25.000 TL (1 Hisse)', shares: '1-4 Hisse', features: ['Temel proje erişimi', 'Aylık getiri raporu', 'E-posta desteği', 'Portföy takip paneli', 'Yatırım bildirimleri'], popular: false, icon: Target, usdTag: '' },
+              { name: 'Profesyonel', rate: '7', min: '125.000 TL (5 Hisse)', shares: '5-9 Hisse', features: ['Tüm projelere erişim', 'Haftalık detaylı rapor', 'Öncelikli destek hattı', 'Dolar kuru avantajı', 'Özel yatırım danışmanı', 'Portföy çeşitlendirme önerileri'], popular: true, icon: Award, usdTag: '+ Dolar Kuru' },
+              { name: 'Kurumsal', rate: '8', min: '250.000 TL (10 Hisse)', shares: '10+ Hisse', features: ['Premium proje erişimi', 'Günlük performans raporu', '7/24 VIP destek', 'Dolar kuru avantajı', 'Özel portföy yönetimi', 'Vergi danışmanlığı', 'Yatırım komitesi üyeliği'], popular: false, icon: Building2, usdTag: '+ Dolar Kuru' },
             ].map((plan, i) => (
               <Card key={i} className={`relative rounded-2xl transition-all duration-300 hover:shadow-xl ${plan.popular ? 'border-2 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.03]' : 'border shadow-sm hover:shadow-md'}`}>
                 {plan.popular && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><Badge className="bg-emerald-500 text-white border-0 px-4 py-1">En Popular</Badge></div>}
@@ -322,13 +322,13 @@ export default function LandingPage() {
                     </div>
                     <h3 className="font-bold text-xl font-[Poppins] text-slate-900">{plan.name}</h3>
                   </div>
-                  <p className="text-sm text-slate-500 mb-2">Aylik getiri orani</p>
+                  <p className="text-sm text-slate-500 mb-2">Aylık getiri oranı</p>
                   <div className="mb-2 flex items-baseline gap-2">
                     <span className="text-5xl font-bold text-[#0F3935] font-[Poppins]">%{plan.rate}</span>
                     {plan.usdTag && <span className="text-sm font-medium text-sky-600">{plan.usdTag}</span>}
                   </div>
                   <p className="text-sm text-slate-500 mb-1">{plan.shares}</p>
-                  <p className="text-sm text-slate-500 mb-6">Min. yatirim: <span className="font-bold text-slate-800">{plan.min}</span></p>
+                  <p className="text-sm text-slate-500 mb-6">Min. yatırım: <span className="font-bold text-slate-800">{plan.min}</span></p>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((f, j) => (
                       <li key={j} className="flex items-center gap-2.5 text-sm text-slate-600">
