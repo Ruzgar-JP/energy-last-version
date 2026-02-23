@@ -18,7 +18,7 @@ export default function AdminDashboard() {
     { icon: Users, label: 'Toplam Yatırımcı', value: stats.total_users, color: 'bg-sky-500/10 text-sky-600' },
     { icon: Shield, label: 'Bekleyen KYC', value: stats.pending_kyc, color: 'bg-amber-500/10 text-amber-600' },
     { icon: Briefcase, label: 'Aktif Proje', value: stats.total_projects, color: 'bg-emerald-500/10 text-emerald-600' },
-    { icon: TrendingUp, label: 'Toplam Yatırım', value: `${(stats.total_invested ).toFixed(1)} TL`, color: 'bg-violet-500/10 text-violet-600' },
+    { icon: TrendingUp, label: 'Toplam Yatırım', value: `${stats.total_invested.toLocaleString('tr-TR')} TL`, color: 'bg-violet-500/10 text-violet-600' },
     { icon: ArrowLeftRight, label: 'Bekleyen İşlem', value: stats.pending_transactions, color: 'bg-orange-500/10 text-orange-600' },
     { icon: ArrowLeftRight, label: 'Bekleyen Alım/Satım', value: stats.pending_trades || 0, color: 'bg-cyan-500/10 text-cyan-600' },
   ] : [];
