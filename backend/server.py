@@ -537,14 +537,33 @@ async def get_admin_stats(user=Depends(get_admin_user)):
     total_users = await db.users.count_documents({"role": "investor"})
     pending_kyc = await db.kyc_documents.count_documents({"status": "pending"})
     total_projects = await db.projects.count_documents({})
-    users_list = await db.users.find({"role": "investor"}, {"_id": 0, "balance": 1}).to_list(10000)
+
+    users_list = await db.users.find(
+        {"role": "investor"},
+        {"_id": 0, "balance": 1}
+    ).to_list(10000)
     total_balance = sum(u.get('balance', 0) for u in users_list)
-    portfolios = await db.portfolios.find({}, {"_id": 0, "amount": 1}).to_list(10000)
-    total_invested = sum(p.get('amount', 0) for p in portfolios)
+
+    # ✅ GERÇEK YATIRIM TOPLAMI
+    investments = await db.transactions.find(
+        {"type": "investment", "status": "approved"},
+        {"_id": 0, "amount": 1}
+    ).to_list(10000)
+
+    total_invested = sum(i.get("amount", 0) for i in investments)
+
     pending_txns = await db.transactions.count_documents({"status": "pending"})
     pending_trades = await db.trade_requests.count_documents({"status": "pending"})
-    return {"total_users": total_users, "pending_kyc": pending_kyc, "total_projects": total_projects,
-            "total_balance": total_balance, "total_invested": total_invested, "pending_transactions": pending_txns, "pending_trades": pending_trades}
+
+    return {
+        "total_users": total_users,
+        "pending_kyc": pending_kyc,
+        "total_projects": total_projects,
+        "total_balance": total_balance,
+        "total_invested": total_invested,
+        "pending_transactions": pending_txns,
+        "pending_trades": pending_trades
+    }
 
 @api_router.get("/admin/users")
 async def get_admin_users(user=Depends(get_admin_user)):
