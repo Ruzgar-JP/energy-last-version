@@ -96,8 +96,8 @@ export default function AdminLayout({ children }) {
         </aside>
 
         {/* Content */}
-<main className="flex-1 p-8 lg:ml-64 flex justify-center bg-slate-50">
-  <div className="w-full max-w-7xl">
+<main className="flex-1 p-10 bg-slate-50">
+  <div className="max-w-7xl mx-auto w-full">
     {children}
   </div>
 </main>
