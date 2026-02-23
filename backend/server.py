@@ -32,7 +32,7 @@ JWT_ALGORITHM = 'HS256'
 
 # Resend Email
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
-SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'bilgi@alarkoenerji.com')
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
 
