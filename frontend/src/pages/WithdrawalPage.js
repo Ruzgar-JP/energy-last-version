@@ -90,7 +90,7 @@ export default function WithdrawalPage() {
               </div>
               <div className="bg-amber-50 rounded-lg p-3 flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
-                <p className="text-xs text-amber-700">Para çekme talebiniz oluşturulduğunda admin tarafından incelenecek ve onaylanacaktır.</p>
+                <p className="text-xs text-amber-700">Para çekme talebiniz oluşturulduğunda gereken incelemesinin ardından onaylanacaktır.</p>
               </div>
               <Button className="w-full h-12 bg-[#0F3935] hover:bg-[#0F3935]/90 text-white" onClick={handleWithdraw} disabled={loading} data-testid="withdraw-submit-btn">
                 {loading ? 'İşlem yapılıyor...' : 'Çekme Talebi Oluştur'}

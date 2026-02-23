@@ -82,9 +82,9 @@ export default function AdminUsers() {
           </div>
         </div>
 
-        <Card className="border-0 shadow-sm rounded-2xl overflow-hidden">
-          <CardContent className="p-0">
-            <Table>
+        <Card className="border-0 shadow-sm rounded-2xl">
+          <CardContent className="p-0 overflow-x-auto">
+      <Table className="min-w-[900px]">
               <TableHeader>
                 <TableRow className="bg-slate-50">
                   <TableHead>Kullanıcı</TableHead>

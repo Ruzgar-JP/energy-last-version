@@ -58,8 +58,9 @@ export default function AdminTransactions() {
           </Select>
         </div>
 
-        <Card className="border-0 shadow-sm rounded-2xl overflow-hidden">
-          <Table>
+<Card className="border-0 shadow-sm rounded-2xl">
+  <div className="overflow-x-auto">
+    <Table className="min-w-[1100px]">
             <TableHeader>
               <TableRow className="bg-slate-50">
                 <TableHead>Kullanıcı</TableHead>
@@ -112,6 +113,7 @@ export default function AdminTransactions() {
               )}
             </TableBody>
           </Table>
+          </div>
         </Card>
       </div>
     </AdminLayout>
