@@ -45,7 +45,7 @@ export default function AdminLayout({ children }) {
             fixed inset-y-0 left-0 z-50 w-64 bg-[#0F3935] text-white flex flex-col
             transform transition-transform duration-300
             ${open ? "translate-x-0" : "-translate-x-full"}
-            lg:translate-x-0 lg:static
+            lg:relative lg:translate-x-0
           `}
         >
           {/* Mobil kapatma */}
