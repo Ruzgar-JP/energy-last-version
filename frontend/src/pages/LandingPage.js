@@ -18,20 +18,7 @@ export default function LandingPage() {
   const [projects, setProjects] = useState([]);
   const [activeTab, setActiveTab] = useState('all');
   const [calcShares, setCalcShares] = useState([4]);
-  const [usdRate, setUsdRate] = useState(38); // fallback değer
-
-useEffect(() => {
-  fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json')
-    .then(res => res.json())
-    .then(data => {
-      const rate = data.usd?.try;
-      if (rate) setUsdRate(parseFloat(rate.toFixed(2)));
-    })
-    .catch(() => {
-      // Hata durumunda 38 TL fallback olarak kalır
-      console.warn('Döviz kuru alınamadı, varsayılan değer kullanılıyor.');
-    });
-}, []);
+  const [usdRate, setUsdRate] = useState(38);
   const [videoIndex, setVideoIndex] = useState(0);
 
   useEffect(() => {
@@ -45,6 +32,12 @@ useEffect(() => {
     const timer = setInterval(() => setVideoIndex(prev => (prev + 1) % 4), 8000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+  axios.get(`${API}/usd-rate`)
+    .then(r => setUsdRate(r.data.rate))
+    .catch(() => {});
+}, []);
 
   const filtered = activeTab === 'all' ? projects : projects.filter(p => p.type === activeTab.toUpperCase());
 
