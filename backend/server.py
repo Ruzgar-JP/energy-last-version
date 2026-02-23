@@ -544,13 +544,14 @@ async def get_admin_stats(user=Depends(get_admin_user)):
     ).to_list(10000)
     total_balance = sum(u.get('balance', 0) for u in users_list)
 
-    # ✅ GERÇEK YATIRIM TOPLAMI
-    investments = await db.transactions.find(
-        {"type": "investment", "status": "approved"},
-        {"_id": 0, "amount": 1}
-    ).to_list(10000)
+    # ✅ ONAYLI DEPOSITLERİ TOPLA
+    pipeline = [
+        {"$match": {"type": "deposit", "status": "approved"}},
+        {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
+    ]
 
-    total_invested = sum(i.get("amount", 0) for i in investments)
+    result = await db.transactions.aggregate(pipeline).to_list(1)
+    total_invested = result[0]["total"] if result else 0
 
     pending_txns = await db.transactions.count_documents({"status": "pending"})
     pending_trades = await db.trade_requests.count_documents({"status": "pending"})
