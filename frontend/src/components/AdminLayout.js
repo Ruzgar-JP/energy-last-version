@@ -42,10 +42,11 @@ export default function AdminLayout({ children }) {
         {/* Sidebar */}
         <aside
           className={`
-            fixed inset-y-0 left-0 z-50 w-64 bg-[#0F3935] text-white flex flex-col
-            transform transition-transform duration-300
-            ${open ? "translate-x-0" : "-translate-x-full"}
-            lg:relative lg:translate-x-0
+    bg-[#0F3935] text-white flex flex-col w-64
+    fixed inset-y-0 left-0 z-50
+    transform transition-transform duration-300
+    ${open ? "translate-x-0" : "-translate-x-full"}
+    lg:relative lg:translate-x-0 lg:min-h-screen
           `}
         >
           {/* Mobil kapatma */}
