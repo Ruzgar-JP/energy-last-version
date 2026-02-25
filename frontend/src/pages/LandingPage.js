@@ -316,9 +316,9 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             {[
-              { name: 'Başlangıç', rate: '7', min: '25.000 TL (1 Hisse)', shares: '1-4 Hisse', features: ['Temel proje erişimi', 'Aylık getiri raporu', 'E-posta desteği', 'Portföy takip paneli', 'Yatırım bildirimleri'], popular: false, icon: Target, usdTag: '' },
-              { name: 'Profesyonel', rate: '7', min: '125.000 TL (5 Hisse)', shares: '5-9 Hisse', features: ['Tüm projelere erişim', 'Haftalık detaylı rapor', 'Öncelikli destek hattı', 'Dolar kuru avantajı', 'Özel yatırım danışmanı', 'Portföy çeşitlendirme önerileri'], popular: true, icon: Award, usdTag: '+ Dolar Kuru' },
-              { name: 'Kurumsal', rate: '8', min: '250.000 TL (10 Hisse)', shares: '10+ Hisse', features: ['Premium proje erişimi', 'Günlük performans raporu', '7/24 VIP destek', 'Dolar kuru avantajı', 'Özel portföy yönetimi', 'Vergi danışmanlığı', 'Yatırım komitesi üyeliği'], popular: false, icon: Building2, usdTag: '+ Dolar Kuru' },
+              { name: 'Platin', rate: '7', min: '25.000 TL (1 Hisse)', shares: '1-4 Hisse', features: ['Temel proje erişimi', 'Aylık getiri raporu', 'E-posta desteği', 'Portföy takip paneli', 'Yatırım bildirimleri'], popular: false, icon: Target, usdTag: '' },
+              { name: 'Gold', rate: '7', min: '125.000 TL (5 Hisse)', shares: '5-9 Hisse', features: ['Tüm projelere erişim', 'Haftalık detaylı rapor', 'Öncelikli destek hattı', 'Dolar kuru avantajı', 'Özel yatırım danışmanı', 'Portföy çeşitlendirme önerileri'], popular: true, icon: Award, usdTag: '+ Dolar Kuru' },
+              { name: 'Premium', rate: '8', min: '250.000 TL (10 Hisse)', shares: '10+ Hisse', features: ['Premium proje erişimi', 'Günlük performans raporu', '7/24 VIP destek', 'Dolar kuru avantajı', 'Özel portföy yönetimi', 'Vergi danışmanlığı', 'Yatırım komitesi üyeliği'], popular: false, icon: Building2, usdTag: '+ Dolar Kuru' },
             ].map((plan, i) => (
               <Card key={i} className={`relative rounded-2xl transition-all duration-300 hover:shadow-xl ${plan.popular ? 'border-2 border-emerald-500 shadow-xl shadow-emerald-500/10 scale-[1.03]' : 'border shadow-sm hover:shadow-md'}`}>
                 {plan.popular && <div className="absolute -top-3 left-1/2 -translate-x-1/2"><Badge className="bg-emerald-500 text-white border-0 px-4 py-1">En Popular</Badge></div>}
@@ -418,7 +418,7 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { name: 'Ahmet Yılmaz', role: 'Kurumsal Yatırımcı', text: 'Alarko Enerji ile 2 yıldır yatırım yapıyorum. Aylık getiriler düzenli ve şeffaf bir şekilde hesabıma yatırılıyor. Portföy yönetim paneli harika, tüm yatırımlarımı anlık takip edebiliyorum.', stars: 5, investment: '500.000 TL' },
-              { name: 'Elif Demir', role: 'Profesyonel Yatırımcı', text: 'Yenilenebilir enerji sektörüne giriş için mükemmel bir platform. Uzman kadro ve detaylı raporlama ile kendimi güvende hissediyorum. Müşteri hizmetleri de son derece ilgili.', stars: 5, investment: '200.000 TL' },
+              { name: 'Elif Demir', role: 'Profesyonel Yatırımcı', text: 'Yenilenebilir enerji sektörüne giriş için mükemmel bir platform. Uzman kadro ve detaylı raporlama ile kendimi güvende hissediyorum. Müşteri hizmetleri de son derece ilgili.', stars: 5, investment: '50.000 TL' },
               { name: 'Mehmet Kaya', role: 'Bireysel Yatırımcı', text: 'Başlangıç planı ile 25.000 TL yatırarak başladım, şimdi profesyonel plana geçtim. Getiri oranları söz verilenden bile yüksek. Hem kazanıyorum hem de temiz enerjiye katkı sağlıyorum.', stars: 5, investment: '125.000 TL' },
             ].map((t, i) => (
               <Card key={i} className="border-0 shadow-sm hover:shadow-lg rounded-2xl transition-all duration-300 bg-white">
@@ -457,9 +457,9 @@ export default function LandingPage() {
               { q: 'Minimum yatırım tutarı nedir?', a: 'Minimum yatırım tutarı 25.000 TL (1 hisse) olarak belirlenmiştir. Her hisse 25.000 TL değerindedir ve katları şeklinde yatırım yapabilirsiniz.' },
               { q: 'Getiri oranları nasıl belirleniyor?', a: '1-4 hisse için aylık %7, 5-9 hisse için aylık %7 + dolar kuru avantajı, 10 ve üzeri hisse için aylık %8 + dolar kuru avantajı uygulanır.' },
               { q: 'Dolar kuru avantajı ne anlama gelir?', a: '5 ve üzeri hisse alımlarında yatırımınız dolar kuru üzerinden hesaplanır. Dolar yükseldikçe TL bazında getiriniz de artar, böylece yatırımınız kur riskine karşı korunmuş olur.' },
-              { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet, yatırımlarınızı istediğiniz zaman satabilir ve bakiyenizi çekim talebinde bulunabilirsiniz. Çekim talepleri admin onayı sonrası bakiyenizden düşülür ve 1-3 iş günü içerisinde hesabınıza aktarılır.' },
+              { q: 'Yatırımlarımı geri çekebilir miyim?', a: 'Evet dilediğiniz zaman hisselerinizin devrini sağlayabilirsiniz , devredecek biriniz bulamadığınız takdirde hissedarlar arasında alıcılı piyasada devrini sağlayabilir ya da şirket bünyesine devredip kazancınızı alabilirisiniz olarak güncelleyelim.' },
               { q: 'Kimlik doğrulaması zorunlu mu?', a: 'Evet, SPK düzenlemeleri gereği kimlik doğrulaması zorunludur. Kimlik belgenizi yükledikten sonra en geç 24 saat içerisinde onay verilmektedir.' },
-              { q: 'Para nasil yatirilir?', a: 'Havale veya EFT yontemiyle para yatirabilirsiniz. "Para Yatir" bolumunden banka secimi yaparak IBAN bilgilerini goruntuleyebilirsiniz. Yatirma talebiniz admin onayi sonrasi bakiyenize eklenir.' },
+              { q: 'Para nasil yatirilir?', a: 'Havale veya EFT yontemiyle para yatirabilirsiniz. Dilediğiniz zaman talep oluşturabilirsiniz danışmanlarımız kısa zamanda tarafınıza dönüş sağlayıp yardımcı olacaktır. ' },
               { q: 'Hangi tür projeler görüntüleyebilirim?', a: 'Platformumuzda Güneş Enerjisi Santralleri (GES) ve Rüzgar Enerjisi Santralleri (RES) projelerini inceleyebilirsiniz. Her projenin detaylı bilgileri, konum, kapasite ve fonlanma durumu görüntülenir.' },
               { q: 'Yatırımlarım güvende mi?', a: 'Tüm projelerimiz YEKDEM devlet garantisi altındadır. Ayrıca SPK denetiminde faaliyet gösteriyor, ISO 27001 bilgi güvenliği sertifikasına sahibiz ve yatırımcı koruma fonu kapsamındayız.' },
             ].map((item, i) => (

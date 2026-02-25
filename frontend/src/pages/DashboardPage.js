@@ -55,7 +55,7 @@ export default function DashboardPage() {
     setSellLoading(true);
     try {
       await axios.post(`${API}/portfolio/sell`, { portfolio_id: sellDialog.portfolio_id, shares }, { headers });
-      toast.success('Satım talebi oluşturuldu. Admin onayı bekleniyor.');
+      toast.success('Satım talebi oluşturuldu.');
       setSellDialog(null);
       fetchData();
     } catch (err) {

@@ -57,7 +57,7 @@ export default function DepositPage() {
             <CardContent className="p-8 text-center">
               <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
               <h3 className="text-xl font-bold text-slate-900 font-[Poppins] mb-2">Talep Oluşturuldu</h3>
-              <p className="text-slate-500 mb-6">Para yatırma talebiniz oluşturuldu. Admin onayı beklenmektedir.</p>
+              <p className="text-slate-500 mb-6">Para yatırma talebiniz oluşturuldu..</p>
               <div className="flex gap-3 justify-center">
                 <Button onClick={() => { setSuccess(false); setAmount(''); }} variant="outline" className="rounded-xl">Yeni Talep</Button>
                 <Link to="/dashboard"><Button className="bg-[#0F3935] hover:bg-[#0F3935]/90 text-white rounded-xl">İşlemlerime Dön</Button></Link>
