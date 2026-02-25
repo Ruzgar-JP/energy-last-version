@@ -111,12 +111,10 @@ Bu kullanım şartları, Alarko Enerji platformunu ("Platform") kullanan tüm ku
 - TC Kimlik numarası doğrulaması zorunludur.
 
 3. Yatırım İşlemleri
-- Tüm yatırım işlemleri admin onayına tabidir.
 - Minimum yatırım tutarı 25.000 TL (1 hisse) olarak belirlenmiştir.
 - Getiri oranları piyasa koşullarına göre değişkenlik gösterebilir.
 
 4. Para Yatırma ve Çekme
-- Para yatırma talepleri admin onayı ile gerçekleşir.
 - Para çekme işlemleri 1-3 iş günü içinde tamamlanır.
 - 1 aylık yatırım süresi dolmamış tutarlar için uyarı verilir.
 

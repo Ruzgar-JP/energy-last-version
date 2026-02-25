@@ -40,7 +40,7 @@ export default function ProjectDetailPage() {
     setInvesting(true);
     try {
       await axios.post(`${API}/portfolio/invest`, { project_id: id, amount: investAmount }, { headers: { Authorization: `Bearer ${token}` } });
-      toast.success('Alım talebi oluşturuldu. Admin onayı bekleniyor.');
+      toast.success('Alım talebi oluşturuldu.');
       setDialogOpen(false);
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Talep oluşturulamadı');
