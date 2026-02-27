@@ -348,10 +348,10 @@ async def invest(data: InvestRequest, user=Depends(get_current_user)):
     await db.trade_requests.insert_one(req)
     await db.notifications.insert_one({
         "notification_id": str(uuid.uuid4()), "user_id": user['user_id'],
-        "title": "Alim Talebi Olusturuldu", "message": f"{project['name']} projesine {shares} hisse ({data.amount:,.0f} TL) alim talebi olusturuldu. Admin onayi bekleniyor.",
+        "title": "Alim Talebi Olusturuldu", "message": f"{project['name']} projesine {shares} hisse ({data.amount:,.0f} TL) alim talebi olusturuldu.",
         "type": "trade_request", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
-    return {"message": "Alim talebi olusturuldu. Admin onayi bekleniyor.", "request": {k: v for k, v in req.items() if k != '_id'}}
+    return {"message": "Alim talebi olusturuldu.", "request": {k: v for k, v in req.items() if k != '_id'}}
 
 @api_router.post("/portfolio/sell")
 async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
@@ -378,7 +378,7 @@ async def sell_investment(data: SellRequest, user=Depends(get_current_user)):
         "title": "Satim Talebi Olusturuldu", "message": f"{inv.get('project_name','')} projesinden {sell_shares} hisse ({sell_amount:,.0f} TL) satim talebi olusturuldu.",
         "type": "trade_request", "is_read": False, "created_at": datetime.now(timezone.utc).isoformat()
     })
-    return {"message": "Satim talebi olusturuldu. Admin onayi bekleniyor.", "request": {k: v for k, v in req.items() if k != '_id'}}
+    return {"message": "Satim talebi olusturuldu. ", "request": {k: v for k, v in req.items() if k != '_id'}}
 
 @api_router.get("/trade-requests")
 async def get_trade_requests(user=Depends(get_current_user)):
@@ -424,7 +424,7 @@ async def create_transaction(data: TransactionRequest, user=Depends(get_current_
     # Send email
     action = "Para Yatirma Talebi" if data.type == 'deposit' else "Para Cekme Talebi"
     await send_email(user.get('email', ''), f"Alarko Enerji - {action}",
-        f"<h2>{action}</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda {action.lower()} olusturulmustur. Admin onayi beklenmektedir.</p><p>Alarko Enerji Yatirim A.S.</p>")
+        f"<h2>{action}</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda {action.lower()} olusturulmustur.</p><p>Alarko Enerji Yatirim A.S.</p>")
     return {k: v for k, v in txn.items() if k != '_id'}
 
 @api_router.post("/transactions/withdraw")
@@ -441,7 +441,7 @@ async def create_withdrawal(data: WithdrawRequest, user=Depends(get_current_user
     }
     await db.transactions.insert_one(txn)
     await send_email(user.get('email', ''), "Alarko Enerji - Para Cekme Talebi",
-        f"<h2>Para Cekme Talebi</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda para cekme talebiniz olusturulmustur. Admin onayi beklenmektedir.</p><p>Alarko Enerji Yatirim A.S.</p>")
+        f"<h2>Para Cekme Talebi</h2><p>Sayin {user.get('name','')},</p><p><strong>{data.amount:,.0f} TL</strong> tutarinda para cekme talebiniz olusturulmustur. </p><p>Alarko Enerji Yatirim A.S.</p>")
     return {k: v for k, v in txn.items() if k != '_id'}
 
 @api_router.get("/transactions")
@@ -940,6 +940,38 @@ async def seed_data():
              "image_url": "https://images.unsplash.com/photo-1631096667365-00844efc3a92?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
              "details": "Marmara bölgesinin güçlü rüzgar koridorlarında konumlanan bu santral, son teknoloji Vestas türbinleri ile donatılmıştır.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()},
+             {
+    "project_id": str(uuid.uuid4()),
+    "name": "Konya Güneş Enerjisi Santrali",
+    "type": "GES",
+    "description": "Konya Karapınar bölgesinde 300 dönüm arazi üzerine kurulu yüksek kapasiteli güneş enerjisi santrali. Türkiye'nin en yüksek güneşlenme süresine sahip bölgelerinden birinde yer almaktadır.",
+    "location": "Konya, Karapınar",
+    "capacity": "30 MW",
+    "return_rate": 7.8,
+    "total_target": 10000000,
+    "funded_amount": 6400000,
+    "investors_count": 689,
+    "image_url": "https://images.unsplash.com/photo-1509391366360-2e959784a276?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
+    "details": "Bu proje, Konya Ovası'nın yüksek güneş radyasyonundan maksimum verim almak amacıyla tasarlanmıştır. Yıllık 52.000 MWh enerji üretimi hedeflenmektedir. Proje, yüksek verimli monokristal paneller ve merkezi inverter sistemi kullanmaktadır.",
+    "status": "active",
+    "created_at": datetime.now(timezone.utc).isoformat()
+},
+{
+    "project_id": str(uuid.uuid4()),
+    "name": "Karaman Rüzgar Enerjisi Santrali",
+    "type": "RES",
+    "description": "Karaman'ın yüksek rakımlı bölgelerinde konumlanan modern rüzgar enerji santrali. Bölgenin güçlü ve sürekli rüzgar potansiyelinden faydalanmaktadır.",
+    "location": "Karaman, Merkez",
+    "capacity": "40 MW",
+    "return_rate": 7.2,
+    "total_target": 11000000,
+    "funded_amount": 3850000,
+    "investors_count": 412,
+    "image_url": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
+    "details": "Bu proje 16 adet 2.5 MW kapasiteli rüzgar türbini içermektedir. Yıllık yaklaşık 95.000 MWh enerji üretimi planlanmaktadır. SCADA destekli izleme sistemi ile operasyonel verimlilik en üst düzeyde tutulmaktadır.",
+    "status": "active",
+    "created_at": datetime.now(timezone.utc).isoformat()
+},
             {"project_id": str(uuid.uuid4()), "name": "Çanakkale Rüzgar Enerjisi Santrali", "type": "RES",
              "description": "Çanakkale Biga'da Ege Denizi rüzgarlarından faydalanan modern rüzgar santrali.",
              "location": "Çanakkale, Biga", "capacity": "35 MW", "return_rate": 6.5,
@@ -947,6 +979,8 @@ async def seed_data():
              "image_url": "https://images.unsplash.com/photo-1636618732028-7e541a1cb994?crop=entropy&cs=srgb&fm=jpg&ixlib=rb-4.1.0&q=85&w=800",
              "details": "Çanakkale'nin güçlü Ege rüzgarlarından faydalanan bu proje, 14 adet 2.5 MW kapasiteli türbin içermektedir.",
              "status": "active", "created_at": datetime.now(timezone.utc).isoformat()}
+             
+             
         ])
         logger.info("Ornek projeler olusturuldu")
 
